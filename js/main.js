@@ -1804,3 +1804,11 @@ document.getElementById('audio').addEventListener('click', function () {
  }
 
 
+/// New event
+
+document.addEventListener('keyup' , (e) => {
+    if(e.key == 'Delete') {
+        toggleEraseMode()
+    }
+})
+
