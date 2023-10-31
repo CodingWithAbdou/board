@@ -87,37 +87,46 @@ addNoteButton.addEventListener("click", function () {
         });
 
         // Create a text object with custom styling
-        var noteText = new fabric.IText("اكتب هنا", {
+        var noteText = new fabric.IText('اكتب هنا', {
             left: 350,
             top: 440,
             fontSize: 20,
             fill: "black",
-            fontFamily: "Arial",
-            fontWeight: "bold",
-            lineHeight: 1.2,
-            angle: 0,
             width: 200,
-            direction: "rtl",
-        });
-        // Add the background image to the canvas first
-        canvas.add(img);
-        canvas.add(noteText);
-
-        noteText.on("mousedown", function () {
-            noteText.set({
-                selectable: false,
-                hasControls: true,
-                editable: true,
-            });
-            canvas.renderAll(); // ادخل وضع تحرير النص
+            fontFamily: 'Arial', // Use an Arabic-supporting font
+            fontSize: 20,
+            textDirection: 'rtl', // Set text direction to RTL
+            // flipX: true, // Flip the text horizontally
+            textAlign: 'left' // Adjust text alignment
+          
         });
 
-        // Make the text object selected for editing
-        canvas.setActiveObject(noteText);
-        noteText.enterEditing(); // Enter text editing mode
+        var group = new fabric.Group([img, noteText], {
+            left: 50,
+            top: 50,
+            selectable: true
+        });
+
+        canvas.add(group)
+        group.on('mousedblclick', function() {
+            noteText.enterEditing();
+            noteText.hiddenTextarea.focus();
+            noteText.set({ text: '' }); // Clear the text when double-clicked
+            canvas.renderAll();
+        });
+        
+        canvas.renderAll();
     });
 });
-
+// canvas.on('object:moving', function(e) {
+//     var obj = e.target;
+//     if (obj.type === 'group') {
+//       obj.getObjects().forEach(function(object) {
+//         object.set({ left: obj.left, top: obj.top });
+//       });
+//       canvas.renderAll();
+//     }
+//   });
 
 document.getElementById("excel").addEventListener("click", function () {
     overlayshape.style.display = "none";
