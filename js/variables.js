@@ -23,6 +23,11 @@ var shape = [1, 2, 3, 4, 5];
 
 let selectedShap = shape[0];
 
+
+
+
+/// get element from dom 
+
 var lock = document.getElementById("lock");
 var drawSquareButton = document.getElementById("square");
 var drawCircleButton = document.getElementById("circle");

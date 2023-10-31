@@ -43,6 +43,7 @@ function undo() {
         canvas.renderAll();
     }
 }
+
 function redo() {
     if (h.length > 0) {
         isRedoing = true;
@@ -87,6 +88,7 @@ function startAddingLine(o) {
     canvas.add(line);
     canvas.requestRenderAll();
 }
+
 function startDrawingLine(o) {
     if (mouseDown === true) {
         let pointer = canvas.getPointer(o.e);
@@ -118,6 +120,7 @@ function stopDrawingLine() {
     }
 }
 
+// constrol select
 function objectSelectabilty(value) {
     canvas.getObjects().forEach((o) => {
         o.set({
@@ -181,6 +184,7 @@ function startAddingSingleArrowLine(o) {
     canvas.add(line, arrowHead1);
     canvas.requestRenderAll();
 }
+
 function startDrawingSingleArrowLine(o) {
     if (mouseDown === true) {
         let pointer = canvas.getPointer(o.e);
@@ -330,6 +334,7 @@ function startAddingDoubleArrowLine(o) {
     canvas.add(line, arrowHead1, arrowHead2);
     canvas.requestRenderAll();
 }
+
 function startDrawingDoubleArrowLine(o) {
     if (mouseDown === true) {
         let pointer = canvas.getPointer(o.e);
@@ -458,6 +463,7 @@ function closeModal() {
     linkModal.style.display = "none";
     grayBackground.style.display = "none";
 }
+
 function addLink() {
     var linkTitle = document.getElementById("linkTitle").value;
     var linkURL = document.getElementById("linkURL").value;
@@ -653,4 +659,153 @@ function createPagePreview(pageNumber) {
     });
 
     return pagePreview;
+}
+
+
+
+// Function to clear the canvas with a slow fade out animation
+function clearCanvas(objjj) {
+    let opacity = 1;
+    const initialOpacity = objjj.opacity;
+    // Use Fabric.js animate method to create the fading animation
+    objjj.animate("opacity", 0, {
+        duration: 2000, // Animation duration in milliseconds
+        onChange: canvas.renderAll.bind(canvas),
+        onComplete: function () {
+            // The animation is complete, you can remove the object from the canvas if needed
+            canvas.remove(objjj);
+        },
+    });
+}
+
+
+    
+// Helper function to format time in MM:SS format
+function formatTime(timeInSeconds) {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+}
+
+
+
+
+function handleAudioFileSelect(event) {
+    const file = event.target.files[0];
+    if (file) {
+        // Set the audio source to the selected file
+        audioSource.src = URL.createObjectURL(file);
+
+        // Show the audio player
+        myAudio.style.display = "block";
+
+        // Load the audio
+        myAudio.load();
+        overlayaudio.style.display = "block";
+    } else {
+        // Hide the audio player if no file is selected
+        myAudio.style.display = "none";
+    }
+}
+
+function drawSquare() {
+    canvas.on("mouse:move", function (event) {
+        if (isDrawing && !isLocked && !isSquareDrawn) {
+            // تحقق من أن السبورة غير مقفلة وأن المربع لم يُرَسَم بالفعل
+            var currentPosition = canvas.getPointer(event.e);
+            var width = currentPosition.x - startPosition.x;
+            var height = currentPosition.y - startPosition.y;
+            switch (selectedShap) {
+                case 1:
+                    if (!listShape[countIndex]) {
+                        listShape[countIndex] = new fabric.Rect({
+                            left: startPosition.x,
+                            top: startPosition.y,
+                            width: 200,
+                            height: 200,
+                            fill: color,
+                        });
+                        canvas.add(listShape[countIndex]);
+                    } else {
+                        listShape[countIndex].set({ width: 200, height: 200 });
+                        canvas.renderAll();
+                        console.log(countIndex + "test 2");
+                    }
+                    break;
+                case 2:
+                    if (!listShape[countIndex]) {
+                        listShape[countIndex] = new fabric.Circle({
+                            left: startPosition.x,
+                            top: startPosition.y,
+                            radius: height / 2,
+                            fill: color,
+                        });
+                        canvas.add(listShape[countIndex]);
+                    } else {
+                        listShape[countIndex].set({ radius: height / 2 });
+                        canvas.renderAll();
+                        console.log(countIndex + "test 2");
+                    }
+                    break;
+                case 3:
+                    if (!listShape[countIndex]) {
+                        listShape[countIndex] = new fabric.Triangle({
+                            left: startPosition.x,
+                            top: startPosition.y,
+                            width: 200,
+                            height: 300,
+                            fill: color,
+                        });
+                        canvas.add(listShape[countIndex]);
+                    } else {
+                        listShape[countIndex].set({ width: 200, height: 300 });
+                        canvas.renderAll();
+                        console.log(countIndex + "test 2");
+                    }
+                    break;
+                case 4:
+                    if (!listShape[countIndex]) {
+                        var starPoints = [
+                            { x: 100, y: 10 }, // Top point
+                            { x: 125, y: 60 }, // Upper-right point
+                            { x: 200, y: 70 }, // Right point
+                            { x: 140, y: 115 }, // Lower-right point
+                            { x: 160, y: 190 }, // Bottom point
+                            { x: 100, y: 150 }, // Bottom-left point
+                            { x: 40, y: 190 }, // Lower-left point
+                            { x: 60, y: 115 }, // Lower-right point
+                            { x: 0, y: 70 }, // Left point
+                            { x: 75, y: 60 }, // Upper-left point
+                        ];
+                        listShape[countIndex] = new fabric.Polygon(starPoints, {
+                            left: startPosition.x,
+                            top: startPosition.y,
+                            fill: color,
+                        });
+                        canvas.add(listShape[countIndex]);
+                    } else {
+                        listShape[countIndex].set({ fill: color });
+                        canvas.renderAll();
+                        console.log(countIndex + "test 2");
+                    }
+                    break;
+                case 5:
+                    if (!listShape[countIndex]) {
+                        listShape[countIndex] = new fabric.Textbox("", {
+                            left: startPosition.x,
+                            top: startPosition.y,
+                            fontSize: 20,
+                            fontFamily: "Arial",
+                            fill: color,
+                        });
+                        canvas.add(listShape[countIndex]);
+                    } else {
+                        listShape[countIndex].set({ text: "اكتب هنا" });
+                        canvas.renderAll();
+                        console.log(countIndex + "textt 2");
+                    }
+                    break;
+            }
+        }
+    });
 }
