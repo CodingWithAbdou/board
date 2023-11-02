@@ -50,22 +50,7 @@ colorCircles.forEach(function (circle) {
     });
 });
 
-var savedCanvasData = localStorage.getItem("canvasData");
-// Check if there is saved canvas data in local storage
-if (savedCanvasData) {
 
-    canvas.loadFromJSON(savedCanvasData, function () {
-      
-        canvas.renderAll();
-    });
-}
-
-// Add an event listener to save canvas data when the page is unloaded (e.g., on refresh or close)
-window.addEventListener("beforeunload", function () {
-    // Serialize the canvas data to JSON and store it in local storage
-    var canvasData = JSON.stringify(canvas.toJSON());
-    localStorage.setItem("canvasData",  canvasData);
-});
 
 window.addEventListener("mousemove", (e) => {
     if (isDragging) {
