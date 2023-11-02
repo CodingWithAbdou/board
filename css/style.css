@@ -34,6 +34,10 @@ button {
     cursor: auto; /* Change the cursor style to a hand pointer */
 }
 /* ///////////////////////////////////////////////////////// */
+.conetent-canvas {
+    overflow: hidden;
+}
+
 .tools {
     position: absolute;
     top: 0;
@@ -64,14 +68,26 @@ button {
 }
 .toolbar {
     padding-top: 1rem;
-    flex-basis: 80%;
+    flex-basis: 70%;
     display: flex;
     justify-content: end;
 }
 
+.add_pages {
+    padding-top : 1rem;
+    display: flex
+    ;
+    align-items: center;
+    justify-content: center;
+}
+.add_pages > button {
+    font-size: 48px;
+    cursor: pointer;
+}
+
 .toolbar2 {
     padding-top : 1rem;
-    flex-basis: 15%;
+    flex-basis: 10%;
     margin-inline-end:5% ;
 }
 
@@ -95,8 +111,37 @@ button {
 }
 
 
+.box_canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.h2 {
+    position: absolute;
+    top: 44px;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
 
+.pagintion {
+    display: none;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.pagintion .btn_controll {
+    padding: .8rem 1.6rem;
+    background-color: #7b7de0;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    margin-inline: .5rem;
+}
+.btn_controll[disabled] {
+    opacity: .5;
+}
 /* ///////////////////////////////////// */
 
 #toolbar{

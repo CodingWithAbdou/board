@@ -146,7 +146,6 @@ renderButton.addEventListener("click", renderExcelToCanvas);
 // Enable object selection and drag on the canvas
 canvas.selection = true;
 
-let excelData = null; // Store workbook and sheet selector for later use
 
 document.getElementById("pdf").addEventListener("click", function () {
     overlayshape.style.display = "none";

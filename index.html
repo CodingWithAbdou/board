@@ -6,13 +6,12 @@
         <link rel="icon" href="images/favicone.png"  type="image/x-icon" id="favicon">
         <link rel="stylesheet" href="css/style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.3.1/fabric.min.js"></script> -->
-        <script src="https://unpkg.com/fabric@latest/dist/fabric.js"></script>
+        <script src="libs/fabricfile.js"></script>
+        <!-- <script src="https://unpkg.com/fabric@latest/dist/fabric.js"></script>
         <script src="https://unpkg.com/fabric@latest/src/mixins/eraser_brush.mixin.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.1/gsap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script> -->
 
 
     </head>
@@ -20,6 +19,7 @@
     
         <div class="tools">
             <div id="exist" class="exist">
+                <h2 class="h2" id="head-1" style="display: none;">الصفحة رقم 1</h2>
                 <div id="addexist">
                 <img src="images/exist.png" width="50" height="50" />
                 </div>
@@ -45,6 +45,13 @@
                     <div id="zoomOut">
                         <img id="zoom-out" src="images/zoomout.png" width="50" height="50" />
                     </div>
+                </div>
+            </div>
+            <div class="add_pages">
+                <button id="btn-Pages">+</button>
+                <div class="pagintion">
+                    <button class="prev_canvas btn_controll">السابق</button>
+                    <button class="next_canvas btn_controll">التالي</button>
                 </div>
             </div>
             <div class="toolbar">
@@ -365,11 +372,14 @@
             </div>
         </div>
         <div id="grayBackground"></div>
-        <div class="canvas conetent-canvas">
-            <canvas id="canvas" class="canvas" width="100%" height="100%"  >
-            </canvas>
+        <div class="canvas conetent-canvas" id="container_canvas">
+            <div class= "box_canvas">
+                <canvas id="canvas" class="canvas" width="100%" height="100%"  >
+                </canvas>
+            </div>
         </div>
         <script src="js/variables.js"></script>
+        <script src="js/handelPages.js"></script>
         <script src="js/canvasEvents.js"></script>
         <script src="js/functions.js"></script>
         <script src="js/toolbar1.js"></script>

@@ -1,8 +1,7 @@
-const toolbarItems = document.querySelectorAll(".toolbar_items");
-const overlays = document.querySelectorAll(".overlay");
 
 toolbarItems.forEach((item) => {
     item.addEventListener("click", () => {
+        console.log('hi')
         let bool;
         if (item.querySelector(".overlay"))
             bool = item.querySelector(".overlay").classList.contains("show");
@@ -52,11 +51,11 @@ colorCircles.forEach(function (circle) {
 });
 
 var savedCanvasData = localStorage.getItem("canvasData");
-
 // Check if there is saved canvas data in local storage
 if (savedCanvasData) {
-    // If data exists, load it into the canvas
+
     canvas.loadFromJSON(savedCanvasData, function () {
+      
         canvas.renderAll();
     });
 }
@@ -65,7 +64,7 @@ if (savedCanvasData) {
 window.addEventListener("beforeunload", function () {
     // Serialize the canvas data to JSON and store it in local storage
     var canvasData = JSON.stringify(canvas.toJSON());
-    localStorage.setItem("canvasData", canvasData);
+    localStorage.setItem("canvasData",  canvasData);
 });
 
 window.addEventListener("mousemove", (e) => {

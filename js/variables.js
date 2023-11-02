@@ -1,13 +1,9 @@
-// Get a reference to the existing canvas element
-var canvasElement = document.getElementById("canvas");
-// Create a Fabric.js canvas object from the existing canvas element
-var canvas = new fabric.Canvas(canvasElement, {
-    isDrawingMode: false, // Disable freehand drawing mode by default
-    brushColor: "#FF0000", // Default brush color
-    brushSize: 2,
-    width: window.innerWidth,
-    height: window.innerHeight, // Default brush size
-});
+
+
+// document.getElementById('btn-Pages').addEventListener('click' , ()=> {
+//   number_page
+// })
+
 var isDrawing = false;
 var isSquareDrawn = false; // متغير لتتبع ما إذا كان المربع قد رُسم بالفعل
 var startPosition = { x: 0, y: 0 };
@@ -147,3 +143,6 @@ let temporaryDrawingEnabled = false;
 const penciltime = document.getElementById("penciltime");
 var eraserButton = document.getElementById("erasepart");
 var eraseButton = document.getElementById("eraseall");
+const toolbarItems = document.querySelectorAll(".toolbar_items");
+const overlays = document.querySelectorAll(".overlay");
+let excelData = null; // Store workbook and sheet selector for later use
