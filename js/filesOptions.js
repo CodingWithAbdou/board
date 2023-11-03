@@ -19,6 +19,9 @@ pdfInput.addEventListener("change", function (event) {
 })
 
 function loadData (pdfData) {
+
+    pagePreviews.innerHTML = '';
+
     // Use PDF.js to display the PDF
     pdfjsLib.getDocument({ data: pdfData }).promise.then(function(pdf) {
         pdfDocument = pdf;
@@ -123,9 +126,12 @@ addPageButton.addEventListener("click", function () {
             });
         }
     }
-    pagePreviews.innerHTML = '';
     overlaypdf.style.display = 'none'
 });
+
+
+
+////////////////////////////////////// ------------End Pdf -----------/////////////////////////////////////////////////
 
 addNoteButton.addEventListener("click", function () {
     // Create a background image
