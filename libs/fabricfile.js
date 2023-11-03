@@ -763,3 +763,4 @@ var jsdom,virtualWindow,fabric=fabric||{version:"5.3.0"};function resizeCanvasIf
 
   /** ERASER_END */
 })();
+

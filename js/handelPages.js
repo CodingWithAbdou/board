@@ -46,21 +46,21 @@ if (localStorage.getItem('currentpage')) {
 
 // Function to create a new page
 const  createNewPage =  () => {
-  pagintion.style.display = 'flex'
-  
-  if(currentpage == 1) {
-      btnPre.setAttribute('disabled' , '')
-      document.getElementById('head-1').style.display = 'block'
-  }else {
-      btnPre.removeAttribute('disabled')
-      if(currentpage != numberPage - 1) {
-          btnNex.removeAttribute('disabled')
-      }
-  }
-  
-  numberPage++;
+    pagintion.style.display = 'flex'
+    
+    if(currentpage == 1) {
+        btnPre.setAttribute('disabled' , '')
+        document.getElementById('head-1').style.display = 'block'
+    }else {
+        btnPre.removeAttribute('disabled')
+        if(currentpage != numberPage - 1) {
+            btnNex.removeAttribute('disabled')
+        }
+    }
+    
+    numberPage++;
 
-  creathead(numberPage)
+    creathead(numberPage)
 }
 
 document.getElementById('btn-Pages').addEventListener('click' , createNewPage)

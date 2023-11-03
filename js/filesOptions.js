@@ -1,38 +1,95 @@
+var pdfInput = document.getElementById("pdfInput");
+var pagePreviews = document.getElementById("pagePreviews");
+var addPageButton = document.getElementById("addPageButton");
+var pdfDocument = null;
+var selectedPage = [];
+
+
 // Event listener for PDF input change
 pdfInput.addEventListener("change", function (event) {
-    var file = event.target.files[0];
-    if (file) {
-        // Load the PDF using PDF.js
-        pdfjsLib
-            .getDocument(URL.createObjectURL(file))
-            .promise.then(function (pdf) {
-                pdfDocument = pdf;
-                // Clear previous page previews
-                pagePreviews.innerHTML = "";
-                var rowContainer = document.createElement("div");
-                rowContainer.classList.add("page-scroll");
-                for (var i = 1; i <= pdf.numPages; i++) {
-                    // Create a page preview and append it
-                    var pagePreview = createPagePreview(i);
-                    rowContainer.appendChild(pagePreview);
 
-                    pagePreviews.appendChild(rowContainer);
-                }
-                overlaypdf.style.display = "block";
-                overlayexcel.style.display = "none";
-            })
-            .catch(function (error) {
-                console.error("Error loading PDF:", error);
-            });
+    const file = event.target.files[0];
+    if (file && file.type === 'application/pdf') {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            loadData(e.target.result)
+        };
+        reader.readAsArrayBuffer(file);
     }
-});
+})
+
+function loadData (pdfData) {
+    // Use PDF.js to display the PDF
+    pdfjsLib.getDocument({ data: pdfData }).promise.then(function(pdf) {
+        pdfDocument = pdf;
+
+
+        const rowContainer = document.createElement("div");
+        rowContainer.classList.add("page-scroll");
+        pagePreviews.appendChild(rowContainer)
+
+
+        for(let i=1 , leng = pdf._pdfInfo.numPages  ; i <= leng ; i++ ) {
+            pdf.getPage(i).then(function(page) {
+                createPdfFilesPrev(rowContainer  , page , i)
+            });
+        }
+        overlaypdf.style.display = "block";
+    });
+}
+
+function createPdfFilesPrev(rowContainer , page , pageNumber) {
+    // Create the page preview div
+    var pagePreview = document.createElement("div");
+    pagePreview.classList.add("page-preview");
+    pagePreview.dataset.pageNumber = pageNumber;
+    pagePreview.textContent = pageNumber;
+
+    const canvas = document.createElement('canvas');
+    const viewport = page.getViewport({ scale: 0.2 });
+    const context = canvas.getContext('2d');
+    canvas.height = viewport.height ;
+    canvas.width = viewport.width ;
+    
+    page.render({
+        canvasContext: context,
+        viewport: viewport,
+    });
+
+    pagePreview.appendChild(canvas)
+    rowContainer.appendChild(pagePreview)
+    
+    eventToPagePreview(pagePreview)
+}
+
+
+
+function  eventToPagePreview(pagePreview) {
+    pagePreview.addEventListener("click", function () {
+
+        var previews = pagePreviews.getElementsByClassName("page-preview");
+        var pageNumber = parseInt(this.dataset.pageNumber, 10);
+        var index = selectedPage.indexOf(pageNumber);
+        if (index == -1) {
+            selectedPage.push(pageNumber);
+            this.classList.add("selected");
+        } else {
+            selectedPage.splice(index, 1);
+            this.classList.remove("selected");
+        }
+
+        // Enable the "Add Page" button if any pages are selected
+        if (selectedPage.length > 0)  addPageButton.removeAttribute("disabled");
+        else addPageButton.setAttribute("disabled", "disabled");
+        
+    });
+}
+
 
 // Event listener for "Add Page" button click
 addPageButton.addEventListener("click", function () {
     eraseEnabled = false;
     if (pdfDocument && selectedPage.length > 0) {
-        // canvas.clear();
-
         for (var i = 0; i < selectedPage.length; i++) {
             var pageNumber = selectedPage[i];
             // Get the selected page from the PDF
@@ -66,6 +123,8 @@ addPageButton.addEventListener("click", function () {
             });
         }
     }
+    pagePreviews.innerHTML = '';
+    overlaypdf.style.display = 'none'
 });
 
 addNoteButton.addEventListener("click", function () {

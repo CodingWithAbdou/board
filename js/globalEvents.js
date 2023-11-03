@@ -69,3 +69,10 @@ window.addEventListener("mouseup", () => {
         isDragging = false;
     }
 });
+
+
+canvas.selection = false
+canvas.on({'touch:gesture': function() {
+        console.log('hi')
+    }
+});
