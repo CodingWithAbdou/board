@@ -166,6 +166,25 @@ body {
     padding: 1.5rem;
 }
 
+.boxcolor{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.brushSize{
+    width: 290px;
+    margin-right: 40px;
+    direction: rtl
+  }
+
+  .size {
+    font-size: 18px;
+    font-weight: normal;
+  }
+
+
 .overlaytext{
     position: absolute;
     top: -535px;
@@ -323,13 +342,14 @@ body {
 
 .overlaypdf{
     position: absolute;
-    top: -320px;
+    top: -350px;
     left: -1000px;
     direction: rtl;
     z-index: 1;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     display: none;
     transition: opacity 500ms;
+    width: 1200px;
     max-width: 1200px;
     border-radius: 20px;
     background-color: #F6F6F6;
@@ -741,28 +761,14 @@ body {
 
 
 
-  #boxsize{
+  .boxsize{
   display: flex;
   padding-block: 2rem;
   }
-  #size {
-    font-size: 18px;
-    font-weight: normal;
-  }
 
-  #brushSize{
-    width: 290px;
-    margin-right: 40px;
-    direction: rtl
-  }
 
  
-#boxcolor{
-    display: flex;
-    align-items: start;
-    justify-content: center;
-    gap: 2rem;
-}
+ 
 
 .boxs_color {
     display: grid;
