@@ -299,20 +299,6 @@
                                     <input type="file" id="audioFileInput" accept=".mp3, .mp2, .wav, .mpc, .ape, .flac, .aiff, .ogg" style="display: none;">
                                     <img class="icon" src="images/audio.png" width="50" height="50" />
                                 </div>
-                            
-                                <!-- Modal Content -->
-                                <div class="modal" id="linkModal">
-                                    <span class="close-btn" onclick="closeModal()">&times;</span>
-                                    <h4>عنوان الرابط</h4>
-                                    <div class="form-control" id="formtitle">
-                                        <input type="text" class="form-control" id="linkTitle" placeholder="العنوان">
-                                    </div>
-                                    <h3>الرابط</h3>
-                                    <div class="form-control" id="formlink">
-                                        <input type="text" class="form-control" id="linkURL" placeholder="URL">
-                                    </div>
-                                    <a type="button" class="save-btn" onclick="addLink()">تم</a>
-                                </div>
                             </div>
                         
                         </div>
@@ -402,28 +388,36 @@
                             <img class="icon"  src="images/shape.png" width="50" height="50" />
                         </button>
                     </div>
+
                     <div id="image"  class="toolbar_items">
                         <img class="icon"  src="images/image.png" width="50" height="50" />
                         <input type="file" id="imageUploadInput" accept="image/*" style="display: none;">
                     </div>
+
                     <div id="scissors"  class="toolbar_items scissors"  >
                         <img class="icon" src="images/scissors.svg" width="50" height="50" />
                     </div>
+
                     <div id="eraseall"  class="toolbar_items">
                         <img class="icon" src="images/eraseall.png" width="50" height="50" />
                     </div>
+
                     <div id="erasepart"  class="toolbar_items">
                         <img class="icon" src="images/erasepart.png" width="50" height="50" />
                     </div>
+
                     <div id="lock"  class="toolbar_items">
                         <img class="icon" id="lockimage" src="images/unlock.png" width="50" height="50" />
                     </div>
+
                     <div id="addUndo"  class="toolbar_items">
                         <img class="icon" id="undo" src="images/undo.png" width="50" height="50" />
-                        </div>
+                    </div>
+
                     <div id="addRedo"  class="toolbar_items">
                         <img class="icon" id="redo" src="images/redo.png" width="50" height="50" />
                     </div>   
+
                 </div>
             </div>
         </footer>
@@ -473,7 +467,24 @@
             <button id="confirmExit">نعم</button>
             <p id="text">سيتم إزالة كل شيء في السبورة</p>
         </div>
+
         <div id="grayBackground"></div>
+    <!-- Modal Content -->
+        <div class="modal" id="linkModal">
+            <div class="modal_header">
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <a type="button" class="save-btn" onclick="addLink()">اضف </a>
+            </div>
+            <div class="form-control" id="formtitle">
+                <label for="">عنوان الرابط</label>
+                <input type="text" class="form-control" id="linkTitle" placeholder="العنوان">
+            </div>
+            <h3></h3>
+            <div class="form-control" id="formlink">
+                <label for=""> الرابط</label>
+                <input type="text" class="form-control" id="linkURL" placeholder="URL">
+            </div>
+        </div>
         <!--------------------------------------------------------------------- Canvas For Draw --------------------------------------------------------------------->
    
         <script src="js/variables.js"></script>

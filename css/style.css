@@ -344,7 +344,7 @@ body {
     position: absolute;
     top: -350px;
     left: -1000px;
-    direction: rtl;
+    /* direction: rtl; */
     z-index: 1;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     display: none;
@@ -414,6 +414,80 @@ body {
 
 }
 
+
+
+/* //////////////////Models//////////////////// */
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border-radius: 20px;
+    transform: translate(-50%, -50%);
+    background-color: #FFFFFF;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    direction: rtl;
+}
+
+.modal_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1rem;
+}
+
+.modal h4{
+    font-size: 25px;
+}
+
+.modal h3{
+    font-size: 25px;
+}
+.form-control  {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-block: 1rem;
+}
+.form-control label {
+    width: 100px;
+}
+.form-control input[type=text] {
+    width: 550px;
+    height: 70px;
+    border-radius: 15px;
+    font-size: 25px;
+    padding: 10px;
+    background-color: #F2F2F2;
+    border: none;
+    direction: rtl;
+    outline: none;
+}
+
+.close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 40px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+}
+
+.save-btn {
+    background:#14C03C ;
+    color: white;
+    padding: .6rem 1.2rem;
+    font-size: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
 /****************************************************************************************
 *** MEDIA QUERY
@@ -897,86 +971,18 @@ left: 40px;
 
         /* Styles for the modal content */
 
-        #linkModal {
-            display: none;
-            position: fixed;
-            top: 40%;
-            left: 50%;
-            border-radius: 20px;
-            transform: translate(-50%, -50%);
-            background-color: #FFFFFF;
-            width: 600px;
-            height: 300px;
-            padding: 60px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 4;
-        }
-        
-        #linkModal h4{
-           font-size: 25px;
-           text-align: center;
-           position: relative;
-           bottom: 70px;
-        }
-        #linkModal h3{
-           font-size: 25px;
-           text-align: center;
-           position: relative;
-           bottom: 90px;
-        }
-        /* Style for the close button */
-        .close-btn {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            cursor: pointer;
-            font-size: 20px;
-        }
 
+        /* Style for the close button */
+    
         /* Style for form fields and button */
         .form-group {
             margin-bottom: 10px;
         }
 
         /* Style for the Save button */
-        .save-btn {
-            color: #14C03C;
-            border: none;
-            font-size: 35px;
-            font-weight: bold;
-            cursor: pointer;
-            position: relative;
-            bottom: 360px;
-            right: 40px;
-        }
-        .save-btn:hover {
-            text-decoration: none;
-            color: #14C03C;
-        }
+    
         /* Style for input fields */
-        .form-control input[type=text] {
-            width: 550px;
-            height: 70px;
-            border-radius: 15px;
-            font-size: 25px;
-            padding: 10px;
-            background-color: #F2F2F2;
-            border: none;
-            direction: rtl;
-        }
-        .form-control input[type=text]:focus {
-            outline: none;
-        }
-        #formtitle{
-            position: relative;
-            right: 30px;
-            bottom: 80px;
-        }
-        #formlink{
-            position: relative;
-            right: 30px;
-            bottom: 100px;
-        }
+     
 
      
         /* Style for the selected page preview */
