@@ -52,10 +52,10 @@ function redo() {
 }
 
 function activateAddingLine() {
-    overlaytext.style.display = "none";
-    overlayshape.style.display = "block";
-    overlaycolor.style.display = "none";
-    overlayfile.style.display = "none";
+    // overlaytext.style.display = "none";
+    // overlayshape.style.display = "block";
+    // overlaycolor.style.display = "none";
+    // overlayfile.style.display = "none";
     canvas.isDrawingMode = false;
     temporaryDrawingEnabled = false;
     isSquareDrawn = true;

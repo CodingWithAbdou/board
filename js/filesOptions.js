@@ -54,7 +54,11 @@ function createPdfFilesPrev(rowContainer , page , pageNumber) {
     var pagePreview = document.createElement("div");
     pagePreview.classList.add("page-preview");
     pagePreview.dataset.pageNumber = pageNumber;
-    pagePreview.textContent = pageNumber;
+
+    let span = document.createElement('span')
+    span.className = 'span_number_pages'
+    span.textContent = pageNumber;
+    pagePreview.appendChild(span)
 
     const canvas = document.createElement('canvas');
     const viewport = page.getViewport({ scale: 0.2 });
@@ -220,10 +224,6 @@ function loadDataWord(file , wordData ) {
 
 
 
-
-
-
-
 /////////////////////////////////////////
 const excelFileInput = document.getElementById("excelFileInput");
 // const renderButton = document.getElementById("renderButton");
@@ -312,10 +312,10 @@ canvas.selection = true;
 
 
 document.getElementById("audio").addEventListener("click", function () {
-    overlayshape.style.display = "none";
-    overlaycolor.style.display = "none";
-    overlaytext.style.display = "none";
-    overlayfile.style.display = "none";
+    // overlayshape.style.display = "none";
+    // overlaycolor.style.display = "none";
+    // overlaytext.style.display = "none";
+    // overlayfile.style.display = "none";
     // افتح مربع حوار لاختيار ملف الصورة
     document.getElementById("audioFileInput").click();
 });
