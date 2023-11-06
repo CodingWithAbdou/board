@@ -9,6 +9,15 @@
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric-gestures/1.4.2/fabric-gestures.min.js"></script> -->
         <script src="libs/fabric.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.0/mammoth.browser.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.4/html2pdf.bundle.min.js"></script> -->
+        <!-- <script src="node_modules/html2pdf.js/dist/html2pdf.js"></script> -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+        <!-- <script src="node_modules/pdfmake/build/pdfmake.min.js"></script> -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script> -->
 
         <!-- <script src="https://cdn.jsdelivr.net/npm/fabric-with-gestures@4.5.0/dist/fabric.min.js"></script> -->
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric-gestures/1.4.2/fabric-gestures.min.js"></script> -->
@@ -23,17 +32,20 @@
     </head>
     <body style='margin:0' >
     
-        <div class="tools">
+        <!--------------------------------------------------------------------- HEADER --------------------------------------------------------------------->
+        <header class="header">
             <div id="exist" class="exist">
-                <h2 class="h2" id="head-1" style="display: none;">الصفحة رقم 1</h2>
                 <div id="addexist">
-                <img src="images/exist.png" width="50" height="50" />
+                <img class="icon" src="images/exist.png" width="50" height="50" />
                 </div>
+            </div>
+            <div class="numberPages">
+                <h2 class="h2" id="head-1" style="display: none;">الصفحة رقم 1</h2>
             </div>
             <div class="video">
                 <div id="video" >
                     <div id="addVideo">
-                        <img id="startRecording" src="images/video.png" width="79" height="22" />
+                        <img class="recorde_icon" id="startRecording" src="images/video.png" width="79" height="22" />
                     </div>
                     <div id="stopVideo">
                         <img id="stopRecording"  src="images/stopvideo.svg" />
@@ -43,33 +55,43 @@
                     </div> 
                 </div>
             </div>
+        </header>
+        <!--------------------------------------------------------------------- BODY  --------------------------------------------------------------------->
+        <div class="canvas conetent-canvas" id="container_canvas">
+            <canvas id="canvas" class="canvas" width="100%" height="100%"></canvas>
+        </div>
+        <!--------------------------------------------------------------------- FOOTER --------------------------------------------------------------------->
+        <footer class="footer">
             <div  class="toolbar2">
-                <div id="toolbar2">
+                <div id="toolbar2" class="toolbar2_box">
                     <div id="zoomIn">
-                        <img id="zoom-in" src="images/zoomin.png" width="50" height="50" />
+                        <img class="icon" id="zoom-in" src="images/zoomin.png" width="50" height="50" />
                     </div>
                     <div id="zoomOut">
-                        <img id="zoom-out" src="images/zoomout.png" width="50" height="50" />
+                        <img  class="icon" id="zoom-out" src="images/zoomout.png" width="50" height="50" />
+                    </div>
+                </div>
+                <div class="add_pages">
+                    <div class="add_pages_box">
+                        <div class="pagintion">
+                            <button class="prev_canvas btn_controll"><img src="images/left.svg" alt="" width="32" height="32"></button>
+                            <button id="btn-Pages" class="btn-Pages"><img src="images/add.svg" alt="" width="32" height="32"></button>
+                            <button class="next_canvas btn_controll"><img src="images/right.svg" alt="" width="32" height="32"></button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="add_pages">
-                <button id="btn-Pages">+</button>
-                <div class="pagintion">
-                    <button class="prev_canvas btn_controll">السابق</button>
-                    <button class="next_canvas btn_controll">التالي</button>
-                </div>
-            </div>
+            
             <div class="toolbar">
-                <div id="toolbar" >
+                <div id="toolbar"  class="toolbar_box">
                     <div id="select" class="toolbar_items">
-                        <img src="images/select.png" width="50" height="50" />
+                        <img class="icon" src="images/select.png" width="50" height="50" />
                     </div>
                     <div id="penciltime" class="toolbar_items">
-                        <img src="images/penciltime.png" width="50" height="50" />
+                        <img class="icon" src="images/penciltime.png" width="50" height="50" />
                     </div>
                     <div class="pencile_contnent toolbar_items" >
-                        <div id="toolbarcolor" class="overlay overlaycolor" >
+                        <div  id="toolbarcolor" class="overlay overlaycolor" >
                             <div>
                                 <img id="brush" src="images/brush.PNG" width="290" height="40">
                             </div>
@@ -116,7 +138,7 @@
                             </div>
                         </div>
                         <button  id="pencil">
-                            <img src="images/pencil.png" width="50" height="50" />
+                            <img class="icon" src="images/pencil.png" width="50" height="50" />
                         </button>
                     </div>
                     <div   class="pencile_contnent toolbar_items">
@@ -161,7 +183,7 @@
                         
                         </div>     
                         <button id="text">
-                            <img src="images/text.png" width="50" height="50" />
+                            <img class="icon" src="images/text.png" width="50" height="50" />
                         </button>
                     </div>
                 
@@ -169,28 +191,29 @@
                         <div id="toolbarfile" class="overlay overlayfile">
                             <div id="boxfile">
                                 <div id="word">
-                                    <img src="images/word.png" width="40" height="50" />
+                                    <img class="icon" src="images/word.png" width="40" height="50" />
+                                    <input type="file" id="wordInput"  style="display: none;">
                                 </div>
                                 <div id="pdf">
-                                    <img src="images/pdf.png" width="40" height="50" />
+                                    <img  class="icon" src="images/pdf.png" width="40" height="50" />
                                     <input type="file" id="pdfInput" accept=".pdf" style="display: none;">
                                 </div>
                                 <div id="textfile">
-                                    <img  src="images/textfile.png" width="50" height="50" />
+                                    <img class="icon"  src="images/textfile.png" width="50" height="50" />
                                 </div>
                                 <div id="excel">
-                                    <img src="images/excel.png" width="50" height="50" />
+                                    <img class="icon" src="images/excel.png" width="50" height="50" />
                                     <input type="file" id="excelFileInput" accept=".xlsx" style="display: none;">
                                 </div>
                                 <div id="powerpoint">
-                                    <img src="images/powerpoint.png" width="50" height="50" />
+                                    <img class="icon" src="images/powerpoint.png" width="50" height="50" />
                                 </div>
                                 <div id="link"  onclick="showModal()">
-                                    <img src="images/link.png" width="50" height="50" />
+                                    <img class="icon" src="images/link.png" width="50" height="50" />
                                 </div>
                                 <div id="audio">
                                     <input type="file" id="audioFileInput" accept=".mp3, .mp2, .wav, .mpc, .ape, .flac, .aiff, .ogg" style="display: none;">
-                                    <img src="images/audio.png" width="50" height="50" />
+                                    <img class="icon" src="images/audio.png" width="50" height="50" />
                                 </div>
                             
                                 <!-- Modal Content -->
@@ -207,9 +230,24 @@
                                     <a type="button" class="save-btn" onclick="addLink()">تم</a>
                                 </div>
                             </div>
+                        
                         </div>
+                        <div id="toolbarpdf" class="overlay overlaypdf">
+                            <h4>اختر الصفحات التي تريد عرضها</h4>
+                            <div id="pagePreviews" class="page-scroll">
+                                
+                            </div>
+                            <button id="addPageButton" disabled>إضافة</button>
+                            <h5>الصفحات</h5>
+                        </div>
+                        <!-- <div id="toolbarexcel" class="overlay overlayexcel">
+                            <h4>اختر الصفحات التي تريد عرضها</h4>
+                            <a id="renderButton">إضافة</a>
+                            <div id="excelSheetsContainer"></div>
+                            <h5>الصفحات</h5>
+                        </div> -->
                         <button id="file" >
-                            <img src="images/file.png" width="50" height="50" />
+                            <img class="icon" src="images/file.png" width="50" height="50" />
                         </button>
                     </div>
                     
@@ -276,114 +314,83 @@
                             </div>
                         </div>
                         <button id="shape">
-                            <img src="images/shape.png" width="50" height="50" />
+                            <img class="icon"  src="images/shape.png" width="50" height="50" />
                         </button>
                     </div>
                     <div id="image"  class="toolbar_items">
-                        <img src="images/image.png" width="50" height="50" />
+                        <img class="icon"  src="images/image.png" width="50" height="50" />
                         <input type="file" id="imageUploadInput" accept="image/*" style="display: none;">
                     </div>
+                    <div id="scissors"  class="toolbar_items scissors"  >
+                        <img class="icon" src="images/scissors.svg" width="50" height="50" />
+                    </div>
                     <div id="eraseall"  class="toolbar_items">
-                        <img src="images/eraseall.png" width="50" height="50" />
+                        <img class="icon" src="images/eraseall.png" width="50" height="50" />
                     </div>
                     <div id="erasepart"  class="toolbar_items">
-                        <img src="images/erasepart.png" width="50" height="50" />
+                        <img class="icon" src="images/erasepart.png" width="50" height="50" />
                     </div>
                     <div id="lock"  class="toolbar_items">
-                        <img id="lockimage" src="images/unlock.png" width="50" height="50" />
+                        <img class="icon" id="lockimage" src="images/unlock.png" width="50" height="50" />
                     </div>
                     <div id="addUndo"  class="toolbar_items">
-                        <img id="undo" src="images/undo.png" width="50" height="50" />
+                        <img class="icon" id="undo" src="images/undo.png" width="50" height="50" />
                         </div>
                     <div id="addRedo"  class="toolbar_items">
-                        <img id="redo" src="images/redo.png" width="50" height="50" />
+                        <img class="icon" id="redo" src="images/redo.png" width="50" height="50" />
                     </div>   
                 </div>
             </div>
-        
-        
-            <!-- مربع الحوار لتسمية الفيديو -->
-            <div id="dialog">
-                <label for="filenameInput">اسم الملف:</label>
-                <input type="text" id="filenameInput" placeholder="اسم الملف">
-                <br>
-                <button id="confirmFilename">تأكيد</button>
-                <button id="cancelRecordingButton">اغلاق</button>
-            </div>
-            <div id="toolbarpdf" class="overlay overlaypdf">
-                <h4>اختر الصفحات التي تريد عرضها</h4>
-                <div id="pagePreviews" class="page-scroll">
-                    
-                </div>
-                <div id="pagePreviewContainer" class="page-preview-container">
-                    <!-- Page previews will be added here -->
-                </div>
-            
-                <!-- Separate container for page numbers -->
-                <div id="pageNumberContainer">
-                    <!-- Page numbers will be added here -->
-                </div>
-                <button id="addPageButton" disabled>إضافة</button>
-                <h5>الصفحات</h5>
-            </div>
-            <div id="toolbarexcel" class="overlay overlayexcel">
-                <h4>اختر الصفحات التي تريد عرضها</h4>
-                <a id="renderButton">إضافة</a>
-                <div id="excelSheetsContainer"></div>
-                <h5>الصفحات</h5>
-            </div>
-    
-        
-        
-        
-            <audio id="myAudio">
-                <source id="audioSource" src="" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
-            <div id="toolbaraudio" class="overlay overlayaudio">
-                <div id="driver"></div>
-                <div id="audio-controls">
-                    <img src="images/audio_img.png" width="80px" height="40px">
-                    <a id="playButton"><img src="images/play_audio.png" width="68px" height="68px"></a>
-                    <a id="pauseButton"><img src="images/pause_audio.png" width="68px" height="68px"></a>
-                    <img src="images/audio_img.png" width="80px" height="40px">
-                    <button id="seekStartButton" style="display: none;">Seek Start</button>
-                    <button id="seekEndButton" style="display: none;">Seek End</button>  
-                </div>
-                <div class="custom-slider-container">
-                    <!-- Slider background -->
-                    <div id="startTime">0:00</div>
-                    &numsp;&numsp;
-                    <div class="custom-slider">
-                        <div class="slider-bg"></div>
-                        <!-- Slider knob (circle) -->
-                        <div id="sliderknob" class="slider-knob"></div>
-                    </div>
-                    &numsp;&numsp;
-                    <div id="endTime">0:00</div>
-                    
-                </div>
-            </div>
+        </footer>
+        <!--------------------------------------------------------------------- vidio dialoge --------------------------------------------------------------------->
+        <audio id="myAudio">
+            <source id="audioSource" src="" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
 
-        
-            <div id="recentColorsContainer" style="z-index: 1000;">
+        <div id="toolbaraudio" class="overlay overlayaudio">
+            <div id="driver"></div>
+            <div id="audio-controls">
+                <img src="images/audio_img.png" width="80px" height="40px">
+                <a id="playButton"><img src="images/play_audio.png" width="68px" height="68px"></a>
+                <a id="pauseButton"><img src="images/pause_audio.png" width="68px" height="68px"></a>
+                <img src="images/audio_img.png" width="80px" height="40px">
+                <button id="seekStartButton" style="display: none;">Seek Start</button>
+                <button id="seekEndButton" style="display: none;">Seek End</button>  
+            </div>
+            <div class="custom-slider-container">
+                <div id="startTime">0:00</div>
+                &numsp;&numsp;
+                <div class="custom-slider">
+                    <div class="slider-bg"></div>
+                    <div id="sliderknob" class="slider-knob"></div>
+                </div>
+                &numsp;&numsp;
+                <div id="endTime">0:00</div>
                 
             </div>
-        
-            <div id="customAlert" class="custom-alert">
-                <p>هل تريد الخروج بالفعل ؟</p>
-                <button id="cancelExit">لا</button>
-                <button id="confirmExit">نعم</button>
-                <p id="text">سيتم إزالة كل شيء في السبورة</p>
-            </div>
+        </div> 
+
+        <div id="recentColorsContainer" style="z-index: 1000;"> 
+        </div>
+    
+
+        <div id="dialog">
+            <label for="filenameInput">اسم الملف:</label>
+            <input type="text" id="filenameInput" placeholder="اسم الملف">
+            <br>
+            <button id="confirmFilename">تأكيد</button>
+            <button id="cancelRecordingButton">اغلاق</button>
+        </div>
+        <div id="customAlert" class="custom-alert">
+            <p>هل تريد الخروج بالفعل ؟</p>
+            <button id="cancelExit">لا</button>
+            <button id="confirmExit">نعم</button>
+            <p id="text">سيتم إزالة كل شيء في السبورة</p>
         </div>
         <div id="grayBackground"></div>
-        <div class="canvas conetent-canvas" id="container_canvas">
-            <div class= "box_canvas">
-                <canvas id="canvas" class="canvas" width="100%" height="100%"  >
-                </canvas>
-            </div>
-        </div>
+        <!--------------------------------------------------------------------- Canvas For Draw --------------------------------------------------------------------->
+   
         <script src="js/variables.js"></script>
         <script src="js/handelPages.js"></script>
         <script src="js/canvasEvents.js"></script>

@@ -625,43 +625,8 @@ function renderSheetToCanvas(sheet, sheetName) {
     // Add the sheet group to the canvas and store it in the renderedSheets array
     canvas.add(sheetGroup);
     renderedSheets.push(sheetGroup);
+
 }
-// Function to create a page preview
-function createPagePreview(pageNumber) {
-    // Create the page preview div
-    var pagePreview = document.createElement("div");
-    pagePreview.classList.add("page-preview");
-    pagePreview.dataset.pageNumber = pageNumber;
-    pagePreview.textContent = pageNumber;
-
-    // Add click event to select the page
-    pagePreview.addEventListener("click", function () {
-        // Remove the 'selected' class from other previews
-        var previews = pagePreviews.getElementsByClassName("page-preview");
-        var pageNumber = parseInt(this.dataset.pageNumber, 10);
-        var index = selectedPage.indexOf(pageNumber);
-        if (index === -1) {
-            // Page not selected, so add it to the array
-            selectedPage.push(pageNumber);
-            this.classList.add("selected");
-        } else {
-            // Page already selected, so remove it from the array
-            selectedPage.splice(index, 1);
-            this.classList.remove("selected");
-        }
-
-        // Enable the "Add Page" button if any pages are selected
-        if (selectedPage.length > 0) {
-            addPageButton.removeAttribute("disabled");
-        } else {
-            addPageButton.setAttribute("disabled", "disabled");
-        }
-    });
-
-    return pagePreview;
-}
-
-
 
 // Function to clear the canvas with a slow fade out animation
 function clearCanvas(objjj) {

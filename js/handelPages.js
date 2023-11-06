@@ -16,7 +16,7 @@ var canvas = new fabric.Canvas(canvasElement, {
     height: window.innerHeight, // Default brush size
 });
 
-// sava data to local
+// // sava data to local
 window.addEventListener("beforeunload", function () {
     setData()
     localStorage.setItem("pagesData",  JSON.stringify(pagesData));
@@ -33,7 +33,7 @@ if (localStorage.getItem('currentpage')) {
         creathead(i)
     } 
     document.getElementById(`head-${currentpage}`).style.display = 'block'
-    if(numberPage > 1)  pagintion.style.display = 'flex'
+    // if(numberPage > 1)  pagintion.style.display = 'flex'
     if(currentpage == 1) btnPre.setAttribute('disabled' , '')
     if(currentpage == numberPage ) btnNex.setAttribute('disabled' , '')
 
@@ -46,8 +46,10 @@ if (localStorage.getItem('currentpage')) {
 
 // Function to create a new page
 const  createNewPage =  () => {
-    pagintion.style.display = 'flex'
-    
+    // pagintion.style.display = 'flex'
+    btnPre.removeAttribute('disabled')
+    btnNex.removeAttribute('disabled')
+
     if(currentpage == 1) {
         btnPre.setAttribute('disabled' , '')
         document.getElementById('head-1').style.display = 'block'
@@ -99,10 +101,10 @@ function getData() {
 
 
 function creathead(index) {
-        const head = document.createElement('h2');
-        head.className = 'h2';
-        head.innerHTML = `الصفحة رقم ${index}`;
-        head.id = `head-${index}`;
-        document.getElementById('exist').appendChild(head);
-        head.style.display = 'none'
+    const head = document.createElement('h2');
+    head.className = 'h2';
+    head.innerHTML = `الصفحة رقم ${index}`;
+    head.id = `head-${index}`;
+    document.querySelector('.numberPages').appendChild(head);
+    head.style.display = 'none'
 }   

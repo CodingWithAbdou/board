@@ -103,14 +103,8 @@ var cancelExitButton = document.getElementById("cancelExit");
 var grayBackground = document.getElementById("grayBackground");
 var linkModal = document.getElementById("linkModal");
 
-var pdfInput = document.getElementById("pdfInput");
-var pagePreviews = document.getElementById("pagePreviews");
-var addPageButton = document.getElementById("addPageButton");
-var pdfDocument = null;
-var selectedPage = [];
 
-const excelFileInput = document.getElementById("excelFileInput");
-const renderButton = document.getElementById("renderButton");
+
 const excelSheetsContainer = document.getElementById("excelSheetsContainer");
 let selectedSheetNames = []; // Store selected sheet names
 let renderedSheets = []; // Store references to rendered sheets

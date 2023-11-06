@@ -65,6 +65,7 @@ text.addEventListener("click", function () {
     countIndex++;
     drawSquare(5);
 });
+let addedImage = null;
 
 document.getElementById("imageUploadInput").addEventListener("change", function (event) {
     canvas.isDrawingMode = false;
@@ -78,6 +79,8 @@ document.getElementById("imageUploadInput").addEventListener("change", function 
         reader.onload = function (e) {
             // قم بإنشاء صورة Fabric.js وأضفها إلى الكانفاس
             fabric.Image.fromURL(e.target.result, function (img) {
+                addedImage = img;
+
                 img.set({
                     left: 100, // تعيين موقع الصورة على الكانفاس
                     top: 100,
@@ -90,6 +93,79 @@ document.getElementById("imageUploadInput").addEventListener("change", function 
         reader.readAsDataURL(file);
     }
 });
+
+// // Function to add an image
+// document.getElementById('imageInput').addEventListener('change', function (e) {
+//     const file = e.target.files[0];
+//     if (file) {
+//         const reader = new FileReader();
+//         reader.onload = function (event) {
+//             fabric.Image.fromURL(event.target.result, function (img) {
+//                 addedImage = img;
+//                 canvas.add(img);
+//                 canvas.renderAll();
+//             });
+//         };
+//         reader.readAsDataURL(file);
+//     }
+// });
+
+let cropRect = null;
+
+// Function to enable cropping mode
+document.getElementById('scissors').addEventListener('click', () => {
+    if (addedImage) {
+        if (cropRect) {
+            canvas.remove(cropRect);
+            cropRect = null;
+        }
+        cropRect = new fabric.Rect({
+            left: 100,
+            top: 100,
+            width: 50,
+            height: 50,
+            fill: 'rgba(0, 0, 0, 0)',
+            stroke: 'red',
+            // selectable: false,
+            transparentCorners: false, // Allows for easier resizing
+            hasControls: true, // Show resize handles
+            lockUniScaling: true, // Maintain aspect ratio during resizing
+        });
+
+        canvas.add(cropRect);
+        canvas.renderAll();
+    }
+});
+
+canvas.on('mouse:up', () => {
+    // if (addedImage && cropRect) {
+    //     const cropWidth = document.getElementById('cropWidth').value;
+    //     const cropHeight = document.getElementById('cropHeight').value;
+
+    //     if (cropWidth && cropHeight) {
+    //         cropRect.set({
+    //             width: parseInt(cropWidth),
+    //             height: parseInt(cropHeight),
+    //         });
+    //     }
+
+    //     addedImage.clipPath = cropRect;
+    //     canvas.renderAll();
+    // }
+    if (addedImage && cropRect) {
+        // cropRect.set({
+        //     width: 400,
+        //     height: 400,
+        // });
+
+        addedImage.clipPath = cropRect;
+        canvas.renderAll();
+        canvas.remove(cropRect);
+        cropRect = null;
+    }
+
+});
+
 
 
 lock.addEventListener("click", function () {

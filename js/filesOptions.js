@@ -1,8 +1,15 @@
-var pdfInput = document.getElementById("pdfInput");
-var pagePreviews = document.getElementById("pagePreviews");
-var addPageButton = document.getElementById("addPageButton");
-var pdfDocument = null;
-var selectedPage = [];
+const pdfInput = document.getElementById("pdfInput");
+const pagePreviews = document.getElementById("pagePreviews");
+const addPageButton = document.getElementById("addPageButton");
+let pdfDocument = null;
+let selectedPage = [];
+window.jsPDF = window.jspdf.jsPDF;
+
+// import { jsPDF } from "jspdf";
+document.getElementById("pdf").addEventListener("click", function () {
+    document.getElementById("pdfInput").click();
+});
+// const { jsPDF } = require(".");
 
 
 // Event listener for PDF input change
@@ -12,14 +19,15 @@ pdfInput.addEventListener("change", function (event) {
     if (file && file.type === 'application/pdf') {
         const reader = new FileReader();
         reader.onload = function(e) {
-            loadData(e.target.result)
+            loadDataPdf(e.target.result)
         };
         reader.readAsArrayBuffer(file);
+    }else {
+        console.log('error')
     }
 })
 
-function loadData (pdfData) {
-
+function loadDataPdf (pdfData) {
     pagePreviews.innerHTML = '';
 
     // Use PDF.js to display the PDF
@@ -64,8 +72,6 @@ function createPdfFilesPrev(rowContainer , page , pageNumber) {
     
     eventToPagePreview(pagePreview)
 }
-
-
 
 function  eventToPagePreview(pagePreview) {
     pagePreview.addEventListener("click", function () {
@@ -127,11 +133,102 @@ addPageButton.addEventListener("click", function () {
         }
     }
     overlaypdf.style.display = 'none'
+    selectedPage = []
 });
 
-
-
 ////////////////////////////////////// ------------End Pdf -----------/////////////////////////////////////////////////
+const wordInput = document.getElementById("wordInput");
+
+
+document.getElementById('word').addEventListener('click' , ()=> {
+    document.getElementById("wordInput").click();
+})
+
+// Event listener for PDF input change
+wordInput.addEventListener("change", function (event) {
+
+    const file = event.target.files[0];
+    if (file) {
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            loadDataWord( file , e.target.result)
+        };
+        reader.readAsArrayBuffer(file);
+    }else {
+        console.log('error')
+    }
+})
+
+
+function loadDataWord(file , wordData ) {
+    let pageCount = 0
+    // JSZip.loadAsync(wordData).then(function(zip) {
+    //     zip.file("docProps/app.xml").async("string").then(function(content) {
+    //         console.log(content)
+    //         const match = content.match(/<Pages>(\d+)<\/Pages>/);
+    //         if (match) {
+    //             pageCount = parseInt(match[1]);
+    //         }
+    //     });
+    //     // fetchAndDisplayPage(currentPage);
+    // })
+
+
+    if (file.name.endsWith('.docx')) {
+        // console.log(wordData)
+        console.log(wordData)
+
+        mammoth.convertToHtml({ arrayBuffer: wordData })
+            .then(function(result) {
+                // console.log(result)
+                const htmlContent = result.value
+                console.log(htmlContent)
+                // Create a PDF using jspdf
+
+                const pdf = new jsPDF();
+                pdf.html(htmlContent, {
+                    callback: function (pdf) {
+                        pdf.save('converted_document.pdf');
+                    }
+                });
+
+                // Optional: Display the PDF in an iframe
+                const pdfDataUri = pdf.output('datauristring');
+                console.log(pdfDataUri)
+                // pdfPreview.innerHTML = `<iframe width="100%" height="500" src="${pdfDataUri}"></iframe>`;
+            })
+            .catch(function(error) {
+                console.error('Error converting .docx document:', error);
+            });
+    }
+
+}
+
+
+
+
+////////////////////////////////////// ------------End Word -----------/////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////
+const excelFileInput = document.getElementById("excelFileInput");
+// const renderButton = document.getElementById("renderButton");
+
+
 
 addNoteButton.addEventListener("click", function () {
     // Create a background image
@@ -206,20 +303,12 @@ document.getElementById("excel").addEventListener("click", function () {
 excelFileInput.addEventListener("change", handleFileSelect);
 
 // Event listener for render button click
-renderButton.addEventListener("click", renderExcelToCanvas);
+// renderButton.addEventListener("click", renderExcelToCanvas);
 
 // Enable object selection and drag on the canvas
 canvas.selection = true;
 
 
-document.getElementById("pdf").addEventListener("click", function () {
-    overlayshape.style.display = "none";
-    overlaycolor.style.display = "none";
-    overlaytext.style.display = "none";
-    overlayfile.style.display = "none";
-    // افتح مربع حوار لاختيار ملف الصورة
-    document.getElementById("pdfInput").click();
-});
 
 
 document.getElementById("audio").addEventListener("click", function () {
