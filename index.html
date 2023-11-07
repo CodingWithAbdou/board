@@ -275,29 +275,29 @@
                         <div id="toolbarfile" class="overlay overlayfile">
                             <div id="boxfile">
                                 <div id="word">
-                                    <img class="icon" src="images/word.png" width="40" height="50" />
+                                    <img  src="images/word.png" width="40" height="50" />
                                     <input type="file" id="wordInput"  style="display: none;">
                                 </div>
                                 <div id="pdf">
-                                    <img  class="icon" src="images/pdf.png" width="40" height="50" />
+                                    <img   src="images/pdf.png" width="40" height="50" />
                                     <input type="file" id="pdfInput" accept=".pdf" style="display: none;">
                                 </div>
                                 <div id="textfile">
-                                    <img class="icon"  src="images/textfile.png" width="50" height="50" />
+                                    <img   src="images/textfile.png" width="50" height="50" />
                                 </div>
                                 <div id="excel">
-                                    <img class="icon" src="images/excel.png" width="50" height="50" />
+                                    <img  src="images/excel.png" width="50" height="50" />
                                     <input type="file" id="excelFileInput" accept=".xlsx" style="display: none;">
                                 </div>
                                 <div id="powerpoint">
-                                    <img class="icon" src="images/powerpoint.png" width="50" height="50" />
+                                    <img src="images/powerpoint.png" width="50" height="50" />
                                 </div>
                                 <div id="link"  onclick="showModal()">
-                                    <img class="icon" src="images/link.png" width="50" height="50" />
+                                    <img  src="images/link.png" width="50" height="50" />
                                 </div>
                                 <div id="audio">
                                     <input type="file" id="audioFileInput" accept=".mp3, .mp2, .wav, .mpc, .ape, .flac, .aiff, .ogg" style="display: none;">
-                                    <img class="icon" src="images/audio.png" width="50" height="50" />
+                                    <img  src="images/audio.png" width="50" height="50" />
                                 </div>
                             </div>
                         
@@ -417,7 +417,6 @@
                     <div id="addRedo"  class="toolbar_items">
                         <img class="icon" id="redo" src="images/redo.png" width="50" height="50" />
                     </div>   
-
                 </div>
             </div>
         </footer>
@@ -428,7 +427,8 @@
         </audio>
 
         <div id="toolbaraudio" class="overlay overlayaudio">
-            <div id="driver"></div>
+            <div id="driver" class="driver"></div>
+            <button class="btn-close_audio" id="btn-close_audio"><img src="images/close.svg" alt=""></button>
             <div id="audio-controls">
                 <img src="images/audio_img.png" width="80px" height="40px">
                 <a id="playButton"><img src="images/play_audio.png" width="68px" height="68px"></a>
@@ -441,18 +441,18 @@
                 <div id="startTime">0:00</div>
                 &numsp;&numsp;
                 <div class="custom-slider">
+                    <input type="range" id="range" class="range" step="1" value="0" max="100" data-range="">
                     <div class="slider-bg"></div>
-                    <div id="sliderknob" class="slider-knob"></div>
+                    <!-- <div id="sliderknob" class="slider-knob"></div> -->
                 </div>
                 &numsp;&numsp;
                 <div id="endTime">0:00</div>
-                
             </div>
         </div> 
 
-        <div id="recentColorsContainer" style="z-index: 1000;"> 
-        </div>
-    
+        <!-- <div id="recentColorsContainer" style="z-index: 1000;"> 
+        </div> -->
+        <!--------------------------------------------------------------------- Models --------------------------------------------------------------------->
 
         <div id="dialog">
             <label for="filenameInput">اسم الملف:</label>
@@ -469,7 +469,7 @@
         </div>
 
         <div id="grayBackground"></div>
-    <!-- Modal Content -->
+        <!-- Modal Content -->
         <div class="modal" id="linkModal">
             <div class="modal_header">
                 <span class="close-btn" onclick="closeModal()">&times;</span>

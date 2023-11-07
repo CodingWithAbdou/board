@@ -338,13 +338,11 @@ body {
     border-radius: 20px;
 }
 
-
-
 .overlaypdf{
     position: absolute;
     top: -350px;
     left: -1000px;
-    /* direction: rtl; */
+    direction: rtl;
     z-index: 1;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     display: none;
@@ -414,6 +412,130 @@ body {
 
 }
 
+.overlayaudio{
+    display: none;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    position: absolute;
+    transition: opacity 500ms;
+    z-index: 1;
+    border-radius: 20px;
+    background-color: #F6F6F6;
+    padding: 1rem;
+    top: 100px;
+    left: 100px;
+}
+.overlayaudio img {
+    pointer-events: none;
+
+}
+
+.btn-close_audio{
+    position: absolute;
+    top: 5px;
+    left: 15px;
+    cursor: pointer;
+}
+.driver{
+    width: 80px;
+    height: 7px;
+    position: relative;
+    left: 50%;
+    top: -30px;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    background-color: #B3B3B3;
+    cursor: all-scroll;
+    user-select: none;
+}
+
+#audio-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#playButton{
+    cursor: pointer;
+}
+#pauseButton{
+    cursor: pointer;
+    display: none;
+}
+
+
+.custom-slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+#startTime{
+    color: #36B673;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#endTime{
+    color: #36B673;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.custom-slider {
+    flex-grow: 1;
+    height: 10px;
+    background-color: #ccc;
+    position: relative;
+    border-radius: 5px;
+}
+
+.slider-knob {
+    width: 20px;
+    height: 20px;
+    background-color: #36B673;
+    border-radius: 50%;
+    position: absolute;
+    border: 1px solid white;
+    top: 50%;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+}
+
+.range {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    width: 100%;
+    position: absolute;
+    top: -3px;
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    z-index: 2;
+}
+
+.range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #36B673;
+}
+
+.slider-bg {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(to right, #36B673 0%, #36B673 0%);
+    border-radius: 5px;
+    pointer-events: none;
+}
 
 
 /* //////////////////Models//////////////////// */
@@ -996,139 +1118,29 @@ left: 40px;
             font-weight: bold;
         }
 
-        .custom-slider-container {
-            width: 237px;
-            position: relative;
-            top: 50px;
-            left: 5px;
-        }
 
         /* Style for the custom slider track */
-        .custom-slider {
-            flex-grow: 1;
-            height: 10px;
-            background-color: #ccc;
-            position: relative;
-            border-radius: 5px;
-        }
+   
 
-        /* Style for the custom slider knob (circle) */
-        .slider-knob {
-            width: 20px;
-            height: 20px;
-            background-color: #36B673;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            border: 2px solid white;
-            cursor: pointer;
-            transform: translate(-50%, -50%);
-        }
 
 
         /* Add more styling as needed */
 
       /* Style for the custom slider container */
-      .custom-slider-container {
-        width: 337px;
-        position: relative;
-        top: 20px;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-    }
 
-    #endTime{
-     color: #36B673;
-     font-size: 15px;
-     font-weight: bold;
-    }
-    #startTime{
-        color: #36B673;
-        font-size: 15px;
-        font-weight: bold;
-    }
-
-    #driver{
-        position: relative;
-        left: 35%;
-        height: 5px;
-        bottom: 10px;
-        border-radius: 10px;
-        width: 80px;
-        background-color: #B3B3B3;
-    }
-    .overlayaudio{
-        display: none;
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        position: absolute;
-        padding-left: 30px;
-        padding-top: 15px;
-        bottom: 10;
-        left: 0;
-        right: 0;
-        transition: opacity 500ms;
-        height: 143px;
-        width: 382px;
-        z-index: 1;
-        border-radius: 20px;
-        background-color: #F6F6F6;
-    }
-
+  
     /* Style for the custom slider track */
-    .custom-slider {
-        flex-grow: 1;
-        height: 10px;
-        background-color: #ccc;
-        position: relative;
-        border-radius: 5px;
-    }
+
 
     /* Style for the custom slider knob (circle) */
-    .slider-knob {
-        width: 20px;
-        height: 20px;
-        background-color: #36B673;
-        border-radius: 50%;
-        position: absolute;
-        border: 1px solid white;
-        top: 50%;
-        cursor: pointer;
-        transform: translate(-50%, -50%);
-    }
 
-    /* Style for the audio controls */
-    #audio-controls {
-      position: relative;
-      display: flex;
-      top: 22px;
-      left: 45px;
-    }
 
     /* Add more styling as needed */
 
     /* Style for slider background */
-    .slider-bg {
-        position: absolute;
-        height: 100%;
-        background: linear-gradient(to right, #36B673 0%, #36B673 0%);
-        border-radius: 5px;
-        pointer-events: none;
-    }
-    #playButton{
-    position: relative;
-    cursor: pointer;
-    bottom: 10px;
-    margin: 0px 5px;
-    
-    }
-    #pauseButton{
-    cursor: pointer;
-    position: relative;
-    bottom: 10px;
-    margin: 0px 5px;
-    display: none;
-    }
+
+
+  
 
         #excelSheetsContainer {
             display: flex;

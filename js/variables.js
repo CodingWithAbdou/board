@@ -126,8 +126,6 @@ const sliderknob1 = document.getElementById("sliderknob");
 const sliderBg = document.querySelector(".slider-bg");
 let isDragging = false;
 
-let offsetX = 0;
-let offsetY = 0;
 
 let isPinchZooming = false;
 let initialDistance = 0;

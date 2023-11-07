@@ -212,15 +212,152 @@ function loadDataWord(file , wordData ) {
 
 
 
-////////////////////////////////////// ------------End Word -----------/////////////////////////////////////////////////
+////////////////////////////////////// ------------ Audio -----------/////////////////////////////////////////////////
+
+document.getElementById("audio").addEventListener("click", function () {
+    document.getElementById("audioFileInput").click();
+});
+// Initialize slider position
+
+audioFileInput.addEventListener("change", handleAudioFileSelect);
+
+function handleAudioFileSelect(event) {
+    const file = event.target.files[0];
+    if (file) {
+        // Set the audio source to the selected file
+        audioSource.src = URL.createObjectURL(file);
+
+        // Show the audio player
+        myAudio.style.display = "block";
+
+        // Load the audio
+        myAudio.load();
+        overlayaudio.style.display = "block";
+    } else {
+        // Hide the audio player if no file is selected
+        myAudio.style.display = "none";
+    }
+}
+
+// Pause audio
+pauseButton.addEventListener("click", () => {
+    playButton.style.display = "block";
+    pauseButton.style.display = "none";
+    audio.pause();
+});
+
+// Seek to the start of the audio
+seekStartButton.addEventListener("click", () => {
+    audio.currentTime = 0;
+});
+
+// Seek to the end of the audio
+seekEndButton.addEventListener("click", () => {
+    audio.currentTime = audio.duration;
+});
+
+// Play audio
+playButton.addEventListener("click", () => {
+    playButton.style.display = "none";
+    pauseButton.style.display = "block";
+    audio.play();
+    sliderBar.style.background = `linear-gradient(to right, #0caf3d ${0}%, #ccc ${0}%)`;
+});
+
+// Update the end time when the audio time updates
+audio.addEventListener("timeupdate", () => {
+    const currentTime = audio.currentTime;
+    const duration = audio.duration;
+    if (!isNaN(audio.duration)) {
+        // Format the duration as minutes and seconds
+        const minutes = Math.floor(audio.duration / 60);
+        const seconds = Math.floor(audio.duration % 60);
+        const formattedDuration =
+            minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        endTime.textContent = formattedDuration;
+    } else {
+        // If the duration is NaN, display "0:00"
+        endTime.textContent = "0:00";
+    }
+    // endTime.textContent = formatTime(duration);
+    startTime.textContent = formatTime(currentTime);
+
+    // Calculate the progress percentage
+    const progress = (currentTime / duration) * 100;
+
+    // Update the custom slider position
+    const sliderWidth = progress;
+    // sliderKnob.style.left = sliderWidth + "%";
+    document.getElementById('range').value = sliderWidth
+    // Update the background color of the slider based on progress
+    sliderBg.style.width = progress + "%";
+});
+
+overlayaudio.addEventListener("mousedown", (e) => {
+    if(e.target.id == 'driver') {
+        isDragging = true;
+    }else {
+        isDragging = false;
+    }
+
+    offsetX = e.clientX - overlayaudio.getBoundingClientRect().left;
+    offsetY = e.clientY - overlayaudio.getBoundingClientRect().top;
+});
+
+overlayaudio.addEventListener("mouseup", () => {
+    isDragging = false;
+});
+
+window.addEventListener("mousemove", (e) => {
+    if (isDragging ) {
+        const left = e.clientX - offsetX;
+        const top = e.clientY - offsetY;
+
+        overlayaudio.style.left = left + "px";
+        overlayaudio.style.top = top + "px";
+    }
+});
+
+
+document.getElementById('btn-close_audio').addEventListener('click' , () => {
+    overlayaudio.style.display = 'none'
+    overlayaudio.style.top = '100px'
+    overlayaudio.style.left = '100px'
+    audioSource.src = ''
+})
+
+// // Handle custom slider knob dragging
+// let isDraggingKnob = false
+
+// sliderKnob.addEventListener("mousedown", () => {
+//     isDraggingKnob = true;
+//     audio.pause();
+// });
+
+
+// sliderKnob.addEventListener("mouseup", () => {
+//     isDraggingKnob = false;
+// });
 
 
 
+// window.addEventListener("mousemove", (e) => {
+//     if (isDraggingKnob) {
+//         const clickX = e.clientX - sliderBar.getBoundingClientRect().left;
+//         const sliderWidth = (clickX / sliderBar.clientWidth) * 100;
+//         sliderKnob.style.left = sliderWidth + "%";
+//     }
+// });
 
-
-
-
-
+// window.addEventListener("mouseup", () => {
+//     if (isDragging) {
+//         const sliderWidth = parseFloat(sliderKnob.style.left);
+//         const seekTime = (sliderWidth / 100) * audio.duration;
+//         audio.currentTime = seekTime;
+//         audio.play();
+//         isDragging = false;
+//     }
+// });
 
 
 
@@ -311,99 +448,3 @@ canvas.selection = true;
 
 
 
-document.getElementById("audio").addEventListener("click", function () {
-    // overlayshape.style.display = "none";
-    // overlaycolor.style.display = "none";
-    // overlaytext.style.display = "none";
-    // overlayfile.style.display = "none";
-    // افتح مربع حوار لاختيار ملف الصورة
-    document.getElementById("audioFileInput").click();
-});
-// Initialize slider position
-
-audioFileInput.addEventListener("change", handleAudioFileSelect);
-
-overlayaudio.addEventListener("mousedown", (e) => {
-    isDragging = true;
-
-    // حساب الإزاحة بين موقع الماوس وموقع العنصر
-    offsetX = e.clientX - overlayaudio.getBoundingClientRect().left;
-    offsetY = e.clientY - overlayaudio.getBoundingClientRect().top;
-});
-
-overlayaudio.addEventListener("mousemove", (e) => {
-    if (isDragging) {
-        // حساب الموقع الجديد للعنصر بناءً على حركة الماوس
-        const left = e.clientX - offsetX;
-        const top = e.clientY - offsetY;
-
-        // تحديث موقع العنصر
-        overlayaudio.style.left = left + "px";
-        overlayaudio.style.top = top + "px";
-    }
-});
-
-overlayaudio.addEventListener("mouseup", () => {
-    isDragging = false;
-});
-
-// Play audio
-playButton.addEventListener("click", () => {
-    playButton.style.display = "none";
-    pauseButton.style.display = "block";
-    audio.play();
-    sliderBar.style.background = `linear-gradient(to right, #0caf3d ${0}%, #ccc ${0}%)`;
-});
-
-// Pause audio
-pauseButton.addEventListener("click", () => {
-    playButton.style.display = "block";
-    pauseButton.style.display = "none";
-    audio.pause();
-});
-
-// Seek to the start of the audio
-seekStartButton.addEventListener("click", () => {
-    audio.currentTime = 0;
-});
-
-// Seek to the end of the audio
-seekEndButton.addEventListener("click", () => {
-    audio.currentTime = audio.duration;
-});
-
-// Update the end time when the audio time updates
-audio.addEventListener("timeupdate", () => {
-    const currentTime = audio.currentTime;
-    const duration = audio.duration;
-    if (!isNaN(audio.duration)) {
-        // Format the duration as minutes and seconds
-        const minutes = Math.floor(audio.duration / 60);
-        const seconds = Math.floor(audio.duration % 60);
-        const formattedDuration =
-            minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-        endTime.textContent = formattedDuration;
-    } else {
-        // If the duration is NaN, display "0:00"
-        endTime.textContent = "0:00";
-    }
-    // endTime.textContent = formatTime(duration);
-    startTime.textContent = formatTime(currentTime);
-
-    // Calculate the progress percentage
-    const progress = (currentTime / duration) * 100;
-
-    // Update the custom slider position
-    const sliderWidth = progress;
-    sliderKnob.style.left = sliderWidth + "%";
-
-    // Update the background color of the slider based on progress
-    sliderBg.style.width = progress + "%";
-});
-
-
-// Handle custom slider knob dragging
-sliderKnob.addEventListener("mousedown", () => {
-    isDragging = true;
-    audio.pause();
-});

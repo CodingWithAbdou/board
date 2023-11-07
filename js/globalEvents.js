@@ -52,24 +52,6 @@ colorCircles.forEach(function (circle) {
 
 
 
-window.addEventListener("mousemove", (e) => {
-    if (isDragging) {
-        const clickX = e.clientX - sliderBar.getBoundingClientRect().left;
-        const sliderWidth = (clickX / sliderBar.clientWidth) * 100;
-        sliderKnob.style.left = sliderWidth + "%";
-    }
-});
-
-window.addEventListener("mouseup", () => {
-    if (isDragging) {
-        const sliderWidth = parseFloat(sliderKnob.style.left);
-        const seekTime = (sliderWidth / 100) * audio.duration;
-        audio.currentTime = seekTime;
-        audio.play();
-        isDragging = false;
-    }
-});
-
 
 canvas.selection = false
 canvas.on({'touch:gesture': function() {

@@ -655,23 +655,7 @@ function formatTime(timeInSeconds) {
 
 
 
-function handleAudioFileSelect(event) {
-    const file = event.target.files[0];
-    if (file) {
-        // Set the audio source to the selected file
-        audioSource.src = URL.createObjectURL(file);
 
-        // Show the audio player
-        myAudio.style.display = "block";
-
-        // Load the audio
-        myAudio.load();
-        overlayaudio.style.display = "block";
-    } else {
-        // Hide the audio player if no file is selected
-        myAudio.style.display = "none";
-    }
-}
 
 function drawSquare() {
     canvas.on("mouse:move", function (event) {
