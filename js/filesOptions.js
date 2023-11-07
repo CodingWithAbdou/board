@@ -283,37 +283,6 @@ const fillingRanges = (e) => {
     sliderBg.style.width = `${(playerRangeControl.value / playerRangeControl.max) * 100 }%`
 };
 
-// Update the end time when the audio time updates
-// audio.addEventListener("timeupdate", () => {
-//     const currentTime = audio.currentTime;
-//     const duration = audio.duration;
-//     if (!isNaN(audio.duration)) {
-//         // Format the duration as minutes and seconds
-//         const minutes = Math.floor(audio.duration / 60);
-//         const seconds = Math.floor(audio.duration % 60);
-//         const formattedDuration =
-//             minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-//         endTime.textContent = formattedDuration;
-//     } else {
-//         // If the duration is NaN, display "0:00"
-//         endTime.textContent = "0:00";
-//     }
-//     // endTime.textContent = formatTime(duration);
-//     startTime.textContent = formatTime(currentTime);
-
-//     // Calculate the progress percentage
-//     const progress = (currentTime / duration) * 100;
-
-//     // Update the custom slider position
-//     const sliderWidth = progress;
-//     document.getElementById('range').max = Math.ceil(duration);
-
-//     // sliderKnob.style.left = sliderWidth + "%";
-//     document.getElementById('range').value = progress
-//     // Update the background color of the slider based on progress
-//     sliderBg.style.width = progress + "%";
-// });
-
 
 const updataDuration = () => {
   playerRangeControl.max = Math.ceil(audio.duration);
@@ -329,16 +298,6 @@ const request = () => {
   };
 
   playerRangeControl.addEventListener("input", request);
-
-
-
-
-// const request = () => {
-//     audio.currentTime = document.getElementById('range').value;
-//     timeRunning.textContent = formatTime(audio.currentTime);
-//   };
-  
-//   document.getElementById('range').addEventListener("input", request);
 
 
 overlayaudio.addEventListener("mousedown", (e) => {
@@ -371,6 +330,7 @@ document.getElementById('btn-close_audio').addEventListener('click' , () => {
     overlayaudio.style.display = 'none'
     overlayaudio.style.top = '100px'
     overlayaudio.style.left = '100px'
+    audio.pause();
     audioSource.src = ''
 })
 
