@@ -227,9 +227,12 @@ function handleAudioFileSelect(event) {
         // Set the audio source to the selected file
         audioSource.src = URL.createObjectURL(file);
 
+        
         // Show the audio player
+        document.getElementById('range').value = '0'
         myAudio.style.display = "block";
 
+        
         // Load the audio
         myAudio.load();
         overlayaudio.style.display = "block";
@@ -238,12 +241,22 @@ function handleAudioFileSelect(event) {
         myAudio.style.display = "none";
     }
 }
-
+let intervalForSet;
 // Pause audio
 pauseButton.addEventListener("click", () => {
     playButton.style.display = "block";
     pauseButton.style.display = "none";
     audio.pause();
+    clearInterval(intervalForSet);
+});
+
+// Play audio
+playButton.addEventListener("click", () => {
+    playButton.style.display = "none";
+    pauseButton.style.display = "block";
+    audio.play();
+    sliderBar.style.background = `linear-gradient(to right, #0caf3d ${0}%, #ccc ${0}%)`;
+    intervalForSet = setInterval(changTimeRunning, 500);
 });
 
 // Seek to the start of the audio
@@ -256,42 +269,77 @@ seekEndButton.addEventListener("click", () => {
     audio.currentTime = audio.duration;
 });
 
-// Play audio
-playButton.addEventListener("click", () => {
-    playButton.style.display = "none";
-    pauseButton.style.display = "block";
-    audio.play();
-    sliderBar.style.background = `linear-gradient(to right, #0caf3d ${0}%, #ccc ${0}%)`;
-});
+const playerRangeControl = document.getElementById('range');
+
+const changTimeRunning = () => {
+  playerRangeControl.value = audio.currentTime;
+  startTime.textContent = formatTime(audio.currentTime);
+
+  fillingRanges();
+//   isSoundsEnd();
+};
+
+const fillingRanges = (e) => {
+    sliderBg.style.width = `${(playerRangeControl.value / playerRangeControl.max) * 100 }%`
+};
 
 // Update the end time when the audio time updates
-audio.addEventListener("timeupdate", () => {
-    const currentTime = audio.currentTime;
-    const duration = audio.duration;
-    if (!isNaN(audio.duration)) {
-        // Format the duration as minutes and seconds
-        const minutes = Math.floor(audio.duration / 60);
-        const seconds = Math.floor(audio.duration % 60);
-        const formattedDuration =
-            minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-        endTime.textContent = formattedDuration;
-    } else {
-        // If the duration is NaN, display "0:00"
-        endTime.textContent = "0:00";
-    }
-    // endTime.textContent = formatTime(duration);
-    startTime.textContent = formatTime(currentTime);
+// audio.addEventListener("timeupdate", () => {
+//     const currentTime = audio.currentTime;
+//     const duration = audio.duration;
+//     if (!isNaN(audio.duration)) {
+//         // Format the duration as minutes and seconds
+//         const minutes = Math.floor(audio.duration / 60);
+//         const seconds = Math.floor(audio.duration % 60);
+//         const formattedDuration =
+//             minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+//         endTime.textContent = formattedDuration;
+//     } else {
+//         // If the duration is NaN, display "0:00"
+//         endTime.textContent = "0:00";
+//     }
+//     // endTime.textContent = formatTime(duration);
+//     startTime.textContent = formatTime(currentTime);
 
-    // Calculate the progress percentage
-    const progress = (currentTime / duration) * 100;
+//     // Calculate the progress percentage
+//     const progress = (currentTime / duration) * 100;
 
-    // Update the custom slider position
-    const sliderWidth = progress;
-    // sliderKnob.style.left = sliderWidth + "%";
-    document.getElementById('range').value = sliderWidth
-    // Update the background color of the slider based on progress
-    sliderBg.style.width = progress + "%";
-});
+//     // Update the custom slider position
+//     const sliderWidth = progress;
+//     document.getElementById('range').max = Math.ceil(duration);
+
+//     // sliderKnob.style.left = sliderWidth + "%";
+//     document.getElementById('range').value = progress
+//     // Update the background color of the slider based on progress
+//     sliderBg.style.width = progress + "%";
+// });
+
+
+const updataDuration = () => {
+  playerRangeControl.max = Math.ceil(audio.duration);
+  endTime.textContent = formatTime(Number(audio.duration));
+};
+
+audio.addEventListener("loadeddata", updataDuration);
+
+
+const request = () => {
+    audio.currentTime = playerRangeControl.value;
+    startTime.textContent = formatTime(audio.currentTime);
+  };
+
+  playerRangeControl.addEventListener("input", request);
+
+
+
+
+// const request = () => {
+//     audio.currentTime = document.getElementById('range').value;
+//     timeRunning.textContent = formatTime(audio.currentTime);
+//   };
+  
+//   document.getElementById('range').addEventListener("input", request);
+
 
 overlayaudio.addEventListener("mousedown", (e) => {
     if(e.target.id == 'driver') {
@@ -326,38 +374,6 @@ document.getElementById('btn-close_audio').addEventListener('click' , () => {
     audioSource.src = ''
 })
 
-// // Handle custom slider knob dragging
-// let isDraggingKnob = false
-
-// sliderKnob.addEventListener("mousedown", () => {
-//     isDraggingKnob = true;
-//     audio.pause();
-// });
-
-
-// sliderKnob.addEventListener("mouseup", () => {
-//     isDraggingKnob = false;
-// });
-
-
-
-// window.addEventListener("mousemove", (e) => {
-//     if (isDraggingKnob) {
-//         const clickX = e.clientX - sliderBar.getBoundingClientRect().left;
-//         const sliderWidth = (clickX / sliderBar.clientWidth) * 100;
-//         sliderKnob.style.left = sliderWidth + "%";
-//     }
-// });
-
-// window.addEventListener("mouseup", () => {
-//     if (isDragging) {
-//         const sliderWidth = parseFloat(sliderKnob.style.left);
-//         const seekTime = (sliderWidth / 100) * audio.duration;
-//         audio.currentTime = seekTime;
-//         audio.play();
-//         isDragging = false;
-//     }
-// });
 
 
 
