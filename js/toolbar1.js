@@ -194,7 +194,40 @@ document.getElementById("image").addEventListener("click", function () {
 });
 
 
+
+const eraserButton = document.getElementById("erasepart");
+const eraseButton = document.getElementById("eraseall");
+
 eraseButton.addEventListener("click", toggleEraseMode);
+
+function toggleEraseMode() {
+    eraseEnabled = !eraseEnabled;
+    canvas.isDrawingMode = false;
+    isSquareDrawn = true;
+    if (eraseEnabled) {
+        isErasing = false;
+        canvas.selection = false; // Disable object selection
+        canvas.forEachObject(function (obj) {
+            obj.selection = false; // Disable selection for all objects
+        });
+    }
+    // Attach a click event listener to the canvas
+    canvas.on("mouse:move", function (event) {
+        if (isMouseDown) {
+            if (eraseEnabled && event.target) {
+                if (!(event.target instanceof fabric.Image)) {
+                    canvas.remove(event.target); // Remove the clicked object if it's not an image
+                }
+            }
+            if (isErasing) {
+                eraseEnabled = false;
+                const { offsetX, offsetY } = event.e;
+                lastMouseX = offsetX;
+                lastMouseY = offsetY;
+            }
+        }
+    });
+}
 
 eraserButton.addEventListener("click", function () {
     isErasing = !isErasing;
@@ -206,11 +239,24 @@ eraserButton.addEventListener("click", function () {
         canvas.freeDrawingBrush = eraser;
         eraser.color = canvas.backgroundColor;
         eraser.width = 40;
-        // Disable object selection while erasing
+        // Add a condition to prevent erasing the watermark
+        canvas.on('before:erasing', function (options) {
+            var target = options.target;
+            if (target) {
+                // Check if the target has a specific property that identifies it as the watermark
+                if (target.isWatermark) {
+                    options.cancel = true; // Cancel the erasing operation for the watermark
+                }
+            }
+        });
     } else {
         canvas.selection = true; // Re-enable object selection when not erasing
     }
 });
+
+
+
+
 
 document.getElementById("addUndo").addEventListener("click", undo);
 document.getElementById("addRedo").addEventListener("click", redo);
