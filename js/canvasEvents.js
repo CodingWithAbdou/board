@@ -2,9 +2,6 @@ canvas.on("mouse:down", function (event) {
     isMouseDown = true;
 });
 
-canvas.on("mouse:down", function (event) {
-    isMouseDown = true;
-});
 
 canvas.on("mouse:down", function (event) {
     if (!isLocked && !isSquareDrawn) {

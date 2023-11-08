@@ -1,7 +1,11 @@
 
-document.addEventListener('keydown', (event) => {
-    const key = event.key; 
-    if (key === "Delete") {
-        toggleEraseMode()
+
+document.addEventListener('keydown', function (e) {
+    if (e.keyCode === 46 || e.keyCode === 8) {
+        const activeObject = canvas.getActiveObject();
+        if (activeObject) {
+            canvas.remove(activeObject);
+            canvas.renderAll();
+        }
     }
 });

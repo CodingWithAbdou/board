@@ -53,8 +53,8 @@ colorCircles.forEach(function (circle) {
 
 
 
-canvas.selection = false
-canvas.on({'touch:gesture': function() {
-        console.log('hi')
-    }
-});
+// canvas.selection = false
+// canvas.on({'touch:gesture': function() {
+//         console.log('hi')
+//     }
+// });
