@@ -758,3 +758,12 @@ function drawSquare() {
         }
     });
 }
+
+
+// fabric.Image.fromURL('background.jpg', function (img) {
+//     img.set({ selectable: false }); // تجعل الصورة غير قابلة للتحرير
+//     canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+//         width: canvas.width,
+//         height: canvas.height,
+//     });
+// });

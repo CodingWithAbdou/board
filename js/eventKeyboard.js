@@ -1,5 +1,4 @@
 
-
 document.addEventListener('keydown', function (e) {
     if (e.keyCode === 46 || e.keyCode === 8) {
         const activeObject = canvas.getActiveObject();

@@ -53,8 +53,25 @@ colorCircles.forEach(function (circle) {
 
 
 
-// canvas.selection = false
-// canvas.on({'touch:gesture': function() {
-//         console.log('hi')
-//     }
-// });
+canvas.selection = false
+
+
+// تعيين خلفية بيضاء للكانفا
+canvas.backgroundColor = 'white';
+
+// إنشاء معالج Hammer.js
+const mc = new Hammer(canvas.upperCanvasEl);
+
+// تمكين التقريب والتبعيد
+mc.get('pinch').set({ enable: true });
+
+// معالج للتقريب والتبعيد
+mc.on('pinch', function (e) {
+    const zoom = canvas.getZoom();
+    const newZoom = zoom * e.scale;
+
+    // تحديد حدود الزووم المسموح بها
+    if (newZoom > 0.5 && newZoom < 5) {
+        canvas.zoomToPoint({ x: e.center.x, y: e.center.y }, newZoom);
+    }
+});
