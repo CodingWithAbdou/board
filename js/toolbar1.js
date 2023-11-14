@@ -65,6 +65,7 @@ text.addEventListener("click", function () {
     countIndex++;
     drawSquare(5);
 });
+
 let addedImage = null;
 
 document.getElementById("imageUploadInput").addEventListener("change", function (event) {
@@ -86,8 +87,11 @@ document.getElementById("imageUploadInput").addEventListener("change", function 
                     top: 100,
                     scaleX: 0.5, // تعيين مقياس الصورة
                     scaleY: 0.5,
+                    protected: true
                 });
                 canvas.add(img);
+                protectedImages.push(img);
+
             });
         };
         reader.readAsDataURL(file);
@@ -228,7 +232,9 @@ function toggleEraseMode() {
         }
     });
 }
-
+function saveCanvasState() {
+    canvasHistory.push(canvas.getObjects().map(obj => obj.toObject(['selectable', 'evented', 'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'lockUniScaling', 'lockSkewingX', 'lockSkewingY', 'visible'])));
+}
 eraserButton.addEventListener("click", function () {
     isErasing = !isErasing;
     canvas.selectable = false;
@@ -239,22 +245,47 @@ eraserButton.addEventListener("click", function () {
         canvas.freeDrawingBrush = eraser;
         eraser.color = canvas.backgroundColor;
         eraser.width = 40;
-        // Add a condition to prevent erasing the watermark
-        canvas.on('before:erasing', function (options) {
-            var target = options.target;
-            if (target) {
-                // Check if the target has a specific property that identifies it as the watermark
-                if (target.isWatermark) {
-                    options.cancel = true; // Cancel the erasing operation for the watermark
-                }
-            }
-        });
     } else {
-        canvas.selection = true; // Re-enable object selection when not erasing
+        canvas.selection = true; // إعادة تمكين اختيار الكائنات عند عدم استخدام الممحاة
     }
+    saveCanvasState();
 });
 
+// الحدث mouse:down للتحقق من العناصر قبل عملية الممحاة
+canvas.on('mouse:down', function (event) {
+    if(isErasing ) {
 
+    }
+    if (isErasing && event.target) {
+
+        var target = event.target;
+        // تحقق مما إذا كان الكائن هو صورة
+        if (target instanceof fabric.Image) {
+            // isMouseDown = false
+            canvas.selection = true;
+            // Toggle eraser mode off
+            isErasing = false;
+            // Reset the drawing mode to the regular mode
+            canvas.isDrawingMode = false;
+    
+            return;
+        }else {
+            isMouseDown = true;
+            if (!isLocked && !isSquareDrawn) {
+                // تحقق من أن السبورة غير مقفلة وأن المربع لم يُرَسَم بالفعل
+                isDrawing = true;
+                startPosition = canvas.getPointer(event.e);
+            }
+        }
+        // استمر في عملية الممحاة لغير الصور
+    }
+});
+// الحدث mouse:down للتحقق من العناصر قبل عملية الممحاة
+canvas.on('mouse:down', function (event) {
+
+  
+    
+});
 
 
 

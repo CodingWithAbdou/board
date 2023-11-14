@@ -38,10 +38,17 @@ function updateBrushSize() {
 }
 
 function undo() {
-    if (canvas._objects.length > 0) {
-        h.push(canvas._objects.pop());
-        canvas.renderAll();
-    }
+    if (canvasHistory.length > 1) {
+        canvas.clear();
+        canvas.loadFromJSON(canvasHistory[canvasHistory.length - 2], function () {
+          canvas.renderAll();
+        });
+        canvasHistory.pop();
+      }
+    // if (canvas._objects.length > 0) {
+    //     h.push(canvas._objects.pop());
+    //     canvas.renderAll();
+    // }
 }
 
 function redo() {

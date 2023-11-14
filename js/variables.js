@@ -1,4 +1,5 @@
 
+var protectedImages = [];
 
 // document.getElementById('btn-Pages').addEventListener('click' , ()=> {
 //   number_page
@@ -136,3 +137,5 @@ const penciltime = document.getElementById("penciltime");
 const toolbarItems = document.querySelectorAll(".toolbar_items");
 const overlays = document.querySelectorAll(".overlay");
 let excelData = null; // Store workbook and sheet selector for later use
+
+var canvasHistory = [];
