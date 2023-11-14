@@ -134,8 +134,6 @@ let initialScale = 1;
 
 let temporaryDrawingEnabled = false;
 const penciltime = document.getElementById("penciltime");
-const toolbarItems = document.querySelectorAll(".toolbar_items");
-const overlays = document.querySelectorAll(".overlay");
 let excelData = null; // Store workbook and sheet selector for later use
 
 var canvasHistory = [];

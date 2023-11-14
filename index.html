@@ -86,14 +86,14 @@
             
             <div class="toolbar">
                 <div id="toolbar"  class="toolbar_box">
-                    <div  class="toolbar_items">
-                        <button id="select">
+                    <div  class="">
+                        <button id="select" class="toolbar_items">
                             <img class="icon" src="images/select.png" width="50" height="50" />
                         </button>
                     </div>
 
-                    <div  class="pencile_contnent toolbar_items relative">
-                        <button id="penciltime">
+                    <div  class="pencile_contnent  relative">
+                        <button id="penciltime" class="toolbar_items">
                             <img class="icon" src="images/penciltime.png" width="50" height="50" />
                         </button>
                         <div  id="toolbarcolortime" class="overlay overlaycolor" >
@@ -145,7 +145,10 @@
                     </div>
 
 
-                    <div class="pencile_contnent toolbar_items relative" >
+                    <div class="pencile_contnent  relative" >
+                        <button  id="pencil" class="toolbar_items">
+                            <img class="icon" src="images/pencil.png" width="50" height="50" />
+                        </button>
                         <div  id="toolbarcolor" class="overlay overlaycolor" >
                             <div>
                                 <img id="brush" src="images/brush.PNG" width="290" height="40">
@@ -192,13 +195,10 @@
                                 </div>
                             </div>
                         </div>
-                        <button  id="pencil">
-                            <img class="icon" src="images/pencil.png" width="50" height="50" />
-                        </button>
                     </div>
 
-                    <div class="pencile_contnent toolbar_items relative">
-                        <button id="text">
+                    <div class="pencile_contnent  relative">
+                        <button id="text" class="toolbar_items">
                             <img class="icon" src="images/text.png" width="50" height="50" />
                         </button>
                         <div id="toolbartext" class="overlay overlaytext">
@@ -273,7 +273,10 @@
                         </div>     
                     </div>
                 
-                    <div  class="pencile_contnent toolbar_items relative">
+                    <div  class="pencile_contnent  relative">
+                        <button id="file"  class="toolbar_items">
+                            <img class="icon" src="images/file.png" width="50" height="50" />
+                        </button>
                         <div id="toolbarfile" class="overlay overlayfile">
                             <div id="boxfile">
                                 <div id="word">
@@ -319,12 +322,13 @@
                             <div id="excelSheetsContainer"></div>
                             <h5>الصفحات</h5>
                         </div> -->
-                        <button id="file" >
-                            <img class="icon" src="images/file.png" width="50" height="50" />
-                        </button>
+                        
                     </div>
                     
-                    <div  class="pencile_contnent toolbar_items relative">
+                    <div  class="pencile_contnent  relative">
+                        <button id="shape" class="toolbar_items">
+                            <img class="icon"  src="images/shape.png" width="50" height="50" />
+                        </button>
                         <div id="toolbarshape" class="overlay overlayshape">
                             <div  class="box_color1">
                                 <div id="boxcolor1"> 
@@ -386,38 +390,49 @@
                                 </div> 
                             </div>
                         </div>
-                        <button id="shape">
-                            <img class="icon"  src="images/shape.png" width="50" height="50" />
-                        </button>
                     </div>
 
-                    <div id="image"  class="toolbar_items">
-                        <img class="icon"  src="images/image.png" width="50" height="50" />
+                    <div id="image"  class="">
+                        <button class="toolbar_items">
+                            <img class="icon"  src="images/image.png" width="50" height="50" />
+                        </button>
                         <input type="file" id="imageUploadInput" accept="image/*" style="display: none;">
                     </div>
 
-                    <div id="scissors"  class="toolbar_items scissors"  >
-                        <img class="icon" src="images/scissors.svg" width="50" height="50" />
+                    <div id="scissors"  class=" scissors"  >
+                        <button class="toolbar_items">
+                            <img class="icon" src="images/scissors.svg" width="50" height="50" />
+                        </button>
                     </div>
 
-                    <div id="eraseall"  class="toolbar_items">
-                        <img class="icon" src="images/eraseall.png" width="50" height="50" />
+                    <div id="eraseall"  class="">
+                        <button class="toolbar_items">
+                            <img class="icon" src="images/eraseall.png" width="50" height="50" />
+                        </button>
                     </div>
 
-                    <div id="erasepart"  class="toolbar_items">
-                        <img class="icon" src="images/erasepart.png" width="50" height="50" />
+                    <div id="erasepart"  class="">
+                        <button class="toolbar_items">
+                            <img class="icon" src="images/erasepart.png" width="50" height="50" />
+                        </button>
                     </div>
 
-                    <div id="lock"  class="toolbar_items">
-                        <img class="icon" id="lockimage" src="images/unlock.png" width="50" height="50" />
+                    <div id="lock"  class="">
+                        <button class="toolbar_items">
+                            <img class="icon" id="lockimage" src="images/unlock.png" width="50" height="50" />
+                        </button>
                     </div>
 
-                    <div id="addUndo"  class="toolbar_items">
-                        <img class="icon" id="undo" src="images/undo.png" width="50" height="50" />
+                    <div id="addUndo"  class="">
+                        <button class="toolbar_items">
+                            <img class="icon" id="undo" src="images/undo.png" width="50" height="50" />
+                        </button>
                     </div>
 
-                    <div id="addRedo"  class="toolbar_items">
-                        <img class="icon" id="redo" src="images/redo.png" width="50" height="50" />
+                    <div id="addRedo"  class="">
+                        <button class="toolbar_items">
+                            <img class="icon" id="redo" src="images/redo.png" width="50" height="50" />
+                        </button>
                     </div>   
                 </div>
             </div>
