@@ -55,6 +55,7 @@ document.querySelectorAll("#toolbarcolor .color-circle").forEach(function (circl
         canvas.isDrawingMode = true;
         eraseEnabled = false;
         circle.classList.add('border_2')
+        
         updateBrushColor(color);
         updateBrushSize()
     });
@@ -68,10 +69,8 @@ document.querySelectorAll("#toolbartext .color-circle").forEach(function (circle
         });
         canvas.isDrawingMode = true;
         eraseEnabled = false;
-        circle.classList.add('border_2')
-        updateBrushColor(color);
-        updateBrushSize()
-    });
+        circle.classList.add('border_2')        
+      });
 });
 
 document.querySelectorAll("#toolbarshape .color-circle").forEach(function (circle) {

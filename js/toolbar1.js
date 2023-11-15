@@ -70,7 +70,7 @@ document.getElementById("pencil").addEventListener("click", function () {
     updateBrushColor(color);
     canvas.renderAll(); // Redraw the canvas
 });
-
+// let isAddingText = false;
 text.addEventListener("click", function () {
     temporaryDrawingEnabled = false;
     selectedShap = 5;
