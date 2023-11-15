@@ -30,9 +30,15 @@ penciltime.addEventListener("click", function () {
     } else {
         canvas.isDrawingMode = false;
     }
-    // Set drawing properties
-    canvas.freeDrawingBrush.width = parseInt(brushSize.value, 10);
-    canvas.freeDrawingBrush.color = color;
+    let color;
+    document.querySelectorAll('#toolbarcolortime .color-circle').forEach(element => {
+        if(element.classList.contains('border_2')) {
+            color = element.style.backgroundColor
+        }
+    })
+    updateBrushSizeTime();
+    updateBrushColor(color);
+    let timeoutId;
 
     canvas.on("path:created", function (event) {
         // The event object contains the drawn path
@@ -42,7 +48,7 @@ penciltime.addEventListener("click", function () {
             timeoutId = setTimeout(clearCanvas(path), 2000);
         }
     });
-    let timeoutId;
+    
 });
 
 document.getElementById("pencil").addEventListener("click", function () {
@@ -54,6 +60,14 @@ document.getElementById("pencil").addEventListener("click", function () {
     eraseEnabled = false;
     addingSingleArrowLineBtnClicked = false;
     addingLineBtnClicked = false;
+    let color;
+    document.querySelectorAll('#toolbarcolor .color-circle').forEach(element => {
+        if(element.classList.contains('border_2')) {
+            color = element.style.backgroundColor
+        }
+    })
+    updateBrushSize();
+    updateBrushColor(color);
     canvas.renderAll(); // Redraw the canvas
 });
 

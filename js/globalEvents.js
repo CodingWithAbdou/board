@@ -29,34 +29,68 @@ toolbarItems.forEach((item) => {
 document.querySelector(".canvas").addEventListener("click", () => {
 });
 
+var colorCircles = document.querySelectorAll(".overlaycolor .color-circle");
 // Add event listeners to color circles
-// colorCircles.forEach(function (circle) {
-//     circle.addEventListener("click", function () {
-//         color = circle.style.backgroundColor;
-//         colorCircles.forEach(function (c) {
-//             c.style.border = "none";
-//         });
-//         // حصول على النص المحدد حالياً
-//         var activeObject = canvas.getActiveObject();
 
-//         // التحقق من أن النص المحدد هو نص
-//         if (activeObject && activeObject.type === "textbox") {
-//             // تحديث حجم الخط للنص المحدد
-//             activeObject.set({ fill: color });
-//             canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
-//         }
-//         canvas.isDrawingMode = true;
-//         eraseEnabled = false;
-//         circle.style.border = "2px solid black";
-//         updateBrushColor(color);
-//         //  console.log(color);
-//     });
-// });
+document.querySelectorAll("#toolbarcolortime .color-circle").forEach(function (circle) {
+    circle.addEventListener("click", function () {
+        color = circle.style.backgroundColor;
+        document.querySelectorAll("#toolbarcolortime .color-circle").forEach(function (c) {
+            c.classList.remove('border_2')
+        });
+        canvas.isDrawingMode = true;
+        eraseEnabled = false;
+        circle.classList.add('border_2')
+        updateBrushColor(color);
+        updateBrushSizeTime()
+    });
+});
+
+document.querySelectorAll("#toolbarcolor .color-circle").forEach(function (circle) {
+    circle.addEventListener("click", function () {
+        color = circle.style.backgroundColor;
+        document.querySelectorAll("#toolbarcolor .color-circle").forEach(function (c) {
+            c.classList.remove('border_2')
+        });
+        canvas.isDrawingMode = true;
+        eraseEnabled = false;
+        circle.classList.add('border_2')
+        updateBrushColor(color);
+        updateBrushSize()
+    });
+});
+
+document.querySelectorAll("#toolbartext .color-circle").forEach(function (circle) {
+    circle.addEventListener("click", function () {
+        color = circle.style.backgroundColor;
+        document.querySelectorAll("#toolbartext .color-circle").forEach(function (c) {
+            c.classList.remove('border_2')
+        });
+        canvas.isDrawingMode = true;
+        eraseEnabled = false;
+        circle.classList.add('border_2')
+        updateBrushColor(color);
+        updateBrushSize()
+    });
+});
+
+document.querySelectorAll("#toolbarshape .color-circle").forEach(function (circle) {
+    circle.addEventListener("click", function () {
+        color = circle.style.backgroundColor;
+        document.querySelectorAll("#toolbarshape .color-circle").forEach(function (c) {
+            c.classList.remove('border_2')
+        });
+        canvas.isDrawingMode = true;
+        eraseEnabled = false;
+        circle.classList.add('border_2')
+        updateBrushColor(color);
+        updateBrushSize()
+    });
+});
 
 
 
 
-canvas.selection = false
 
 
 // تعيين خلفية بيضاء للكانفا

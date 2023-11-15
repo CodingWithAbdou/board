@@ -32,9 +32,15 @@ function updateBrushColor(color) {
 }
 
 // Function to update brush size
+
 function updateBrushSize() {
-    var brushSize = document.getElementById("brushSize");
+    let brushSize = document.getElementById("brushSize");
     canvas.freeDrawingBrush.width = parseInt(brushSize.value, 10);
+}
+function updateBrushSizeTime() {
+   
+    let brushSizeTime =  document.getElementById('brushSizetime');
+    canvas.freeDrawingBrush.width = parseInt(brushSizeTime.value, 10);
 }
 
 function undo() {
