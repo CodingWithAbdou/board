@@ -1,4 +1,6 @@
 drawStarButton.addEventListener("click", function () {
+    isDrawing = true
+
     canvas.isDrawingMode = false;
     selectedShap = 4;
     isSquareDrawn = false;
@@ -9,6 +11,8 @@ drawStarButton.addEventListener("click", function () {
 });
 
 drawTriangleButton.addEventListener("click", function () {
+    isDrawing = true
+
     canvas.isDrawingMode = false;
     selectedShap = 3;
     isSquareDrawn = false;
@@ -19,6 +23,8 @@ drawTriangleButton.addEventListener("click", function () {
 });
 
 drawCircleButton.addEventListener("click", function () {
+    isDrawing = true
+
     canvas.isDrawingMode = false;
     selectedShap = 2;
     isSquareDrawn = false;
@@ -29,6 +35,8 @@ drawCircleButton.addEventListener("click", function () {
 });
 
 drawSquareButton.addEventListener("click", function () {
+    isDrawing = true
+
     canvas.isDrawingMode = false;
     selectedShap = 1;
     isSquareDrawn = false;

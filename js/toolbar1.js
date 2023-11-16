@@ -38,6 +38,7 @@ penciltime.addEventListener("click", function () {
     })
     updateBrushSizeTime();
     updateBrushColor(color);
+    canvas.renderAll(); // Redraw the canvas
     let timeoutId;
 
     canvas.on("path:created", function (event) {
@@ -70,16 +71,44 @@ document.getElementById("pencil").addEventListener("click", function () {
     updateBrushColor(color);
     canvas.renderAll(); // Redraw the canvas
 });
+let isAddingText = false;
+
 // let isAddingText = false;
 text.addEventListener("click", function () {
+    isAddingText = !isAddingText;
+    changeCursor();
+    isDrawing = true
     temporaryDrawingEnabled = false;
     selectedShap = 5;
     isSquareDrawn = false;
     eraseEnabled = false;
     countIndex++;
     drawSquare(5);
+    
 });
-
+function changeCursor() {
+    if (isAddingText) {
+        canvas.defaultCursor = 'text';
+    } else {
+        canvas.defaultCursor = 'default';
+    }
+}
+canvas.on('mouse:down', function(options) {
+    if (isAddingText) {
+        const pointer = canvas.getPointer(options.e);
+        const text = new fabric.Textbox('اكتب هنا', {
+            left: pointer.x,
+            top: pointer.y,
+            fontFamily: 'Arial',
+            fontSize: 18,
+            fill: color,
+        });
+        canvas.add(text);
+        canvas.setActiveObject(text);
+        isAddingText = false;
+        changeCursor();
+    }
+});
 let addedImage = null;
 
 document.getElementById("imageUploadInput").addEventListener("change", function (event) {

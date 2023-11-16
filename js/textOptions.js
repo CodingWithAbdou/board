@@ -118,6 +118,18 @@ underlineButton.addEventListener("click", function () {
         canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
     }
 });
+let textDirection = 'leftToRight';
+
+document.getElementById('align').addEventListener("click", function () {
+    var activeObject = canvas.getActiveObject();
+    console.log(activeObject)
+    if (activeObject && activeObject.type === "textbox") {
+        // textDirection = (textDirection === 'leftToRight') ? 'rightToLeft' : 'leftToRight';
+        canvas.renderAll(); 
+    }
+});
+
+
 
 // إضافة حدث عند تغيير حجم الخط
 document.getElementById("fontFamilySelect").addEventListener("input", function () {

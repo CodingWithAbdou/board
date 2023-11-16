@@ -20,6 +20,7 @@ toolbarItems.forEach((item) => {
         box_item = item
 
         if(number_click  > 0) {
+            if(!item.nextElementSibling) return
             if (number_click % 2 == 0)   item.nextElementSibling.classList.add('show')
             else   item.nextElementSibling.classList.remove('show')
         }
@@ -67,10 +68,28 @@ document.querySelectorAll("#toolbartext .color-circle").forEach(function (circle
         document.querySelectorAll("#toolbartext .color-circle").forEach(function (c) {
             c.classList.remove('border_2')
         });
-        canvas.isDrawingMode = true;
+        var activeObject = canvas.getActiveObject();
+
+              // التحقق من أن النص المحدد هو نص
+              if (activeObject && activeObject.type === 'textbox') {
+                // تحديث حجم الخط للنص المحدد
+                activeObject.set({ fill: color });
+                canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
+              }
+        canvas.defaultCursor = 'text';
+        console.log(canvas.defaultCursor)
         eraseEnabled = false;
         circle.classList.add('border_2')        
-      });
+        canvas.isDrawingMode = false;
+        isAddingText = true;
+    // changeCursor();
+    isDrawing = true
+    temporaryDrawingEnabled = false;
+    selectedShap = 5;
+    isSquareDrawn = false;
+    eraseEnabled = false;
+    countIndex++;
+    });
 });
 
 document.querySelectorAll("#toolbarshape .color-circle").forEach(function (circle) {
@@ -82,8 +101,16 @@ document.querySelectorAll("#toolbarshape .color-circle").forEach(function (circl
         canvas.isDrawingMode = true;
         eraseEnabled = false;
         circle.classList.add('border_2')
-        updateBrushColor(color);
-        updateBrushSize()
+        var activeObject = canvas.getActiveObject();
+
+        // // التحقق من أن النص المحدد هو نص
+        // if (activeObject && activeObject.type === 'textbox') {
+        // // تحديث حجم الخط للنص المحدد
+        // activeObject.set({ fill: color });
+        // canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
+        // }
+        // updateBrushColor(color);
+        // updateBrushSize()
     });
 });
 

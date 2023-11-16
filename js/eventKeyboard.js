@@ -1,16 +1,14 @@
 
 document.addEventListener('keydown', function (e) {
-    if (e.keyCode === 46 || e.keyCode === 8) {
-        const activeObject = canvas.getActiveObject();
-        if (activeObject) {
-            if (activeObject.type === 'path') {
-                canvas.remove(activeObject);
-            } else {
-                activeObject.getObjects().forEach(function (obj) {
-                    canvas.remove(obj);
-                });
-            }
+    if (e.keyCode === 46 ) {
+        const activeObjects = canvas.getActiveObjects();
 
+        if (activeObjects && activeObjects.length > 0) {
+            activeObjects.forEach(object => {
+                canvas.remove(object);
+            });
+    
+            canvas.discardActiveObject();
             canvas.renderAll();
         }
     }

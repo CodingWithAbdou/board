@@ -751,22 +751,21 @@ function drawSquare() {
                         console.log(countIndex + "test 2");
                     }
                     break;
-                case 5:
-                    if (!listShape[countIndex]) {
-                        listShape[countIndex] = new fabric.Textbox("", {
-                            left: startPosition.x,
-                            top: startPosition.y,
-                            fontSize: 20,
-                            fontFamily: "Arial",
-                            fill: color,
-                        });
-                        canvas.add(listShape[countIndex]);
-                    } else {
-                        listShape[countIndex].set({ text: "اكتب هنا" });
-                        canvas.renderAll();
-                        console.log(countIndex + "textt 2");
-                    }
-                    break;
+                // case 5:
+                //     if (!listShape[countIndex]) {
+                //         listShape[countIndex] = new fabric.Textbox("", {
+                //             left: startPosition.x,
+                //             top: startPosition.y,
+                //             fontSize: 20,
+                //             fontFamily: "Arial",
+                //             fill: color,
+                //         });
+                //         canvas.add(listShape[countIndex]);
+                //     } else {
+                //         listShape[countIndex].set({ text: "اكتب هنا" });
+                //         canvas.renderAll();
+                //     }
+                //     break;
             }
         }
     });

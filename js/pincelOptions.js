@@ -15,7 +15,6 @@ document.getElementById('brushSizetime').addEventListener("input", function () {
     let color;
     document.querySelectorAll('#toolbarcolor .color-circle').forEach(element => {
         if(element.classList.contains('border_2')) {
-            console.log(element.style.backgroundColor)
             color = element.style.backgroundColor
         }
     })
