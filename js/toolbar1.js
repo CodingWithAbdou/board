@@ -125,7 +125,6 @@ canvas.on('mouse:down', function(options) {
         canvas.add(text);
         canvas.setActiveObject(text);
         isAddingText = false;
-        changeCursor();
     }
 });
 let addedImage = null;
@@ -179,29 +178,29 @@ document.getElementById("imageUploadInput").addEventListener("change", function 
 let cropRect = null;
 
 // Function to enable cropping mode
-document.getElementById('scissors').addEventListener('click', () => {
-    if (addedImage) {
-        if (cropRect) {
-            canvas.remove(cropRect);
-            cropRect = null;
-        }
-        cropRect = new fabric.Rect({
-            left: 100,
-            top: 100,
-            width: 50,
-            height: 50,
-            fill: 'rgba(0, 0, 0, 0)',
-            stroke: 'red',
-            // selectable: false,
-            transparentCorners: false, // Allows for easier resizing
-            hasControls: true, // Show resize handles
-            lockUniScaling: true, // Maintain aspect ratio during resizing
-        });
+// document.getElementById('scissors').addEventListener('click', () => {
+//     if (addedImage) {
+//         if (cropRect) {
+//             canvas.remove(cropRect);
+//             cropRect = null;
+//         }
+//         cropRect = new fabric.Rect({
+//             left: 100,
+//             top: 100,
+//             width: 50,
+//             height: 50,
+//             fill: 'rgba(0, 0, 0, 0)',
+//             stroke: 'red',
+//             // selectable: false,
+//             transparentCorners: false, // Allows for easier resizing
+//             hasControls: true, // Show resize handles
+//             lockUniScaling: true, // Maintain aspect ratio during resizing
+//         });
 
-        canvas.add(cropRect);
-        canvas.renderAll();
-    }
-});
+//         canvas.add(cropRect);
+//         canvas.renderAll();
+//     }
+// });
 
 canvas.on('mouse:up', () => {
     // if (addedImage && cropRect) {
@@ -266,88 +265,117 @@ const eraseButton = document.getElementById("eraseall");
 
 eraseButton.addEventListener("click", toggleEraseMode);
 
+
+let isMouseDown;
+canvas.on('mouse:down', function (event) {
+    isMouseDown = true;
+});
+canvas.on('mouse:up', function (event) {
+    isMouseDown = false;
+});
+
+
+// Function to toggle erase mode
 function toggleEraseMode() {
-    eraseEnabled = !eraseEnabled;
+    eraseEnabled = true;
+    canvas.selectable = false;
     canvas.isDrawingMode = false;
     isSquareDrawn = true;
+    canvas.defaultCursor = 'crosshair';
+    canvas.hoverCursor = 'crosshair';
+
     if (eraseEnabled) {
         isErasing = false;
         canvas.selection = false; // Disable object selection
         canvas.forEachObject(function (obj) {
             obj.selection = false; // Disable selection for all objects
         });
-    }
+    } 
     // Attach a click event listener to the canvas
-    canvas.on("mouse:move", function (event) {
-        if (isMouseDown) {
-            if (eraseEnabled && event.target) {
-                if (!(event.target instanceof fabric.Image)) {
-                    canvas.remove(event.target); // Remove the clicked object if it's not an image
-                }
-            }
-            if (isErasing) {
-                eraseEnabled = false;
-                const { offsetX, offsetY } = event.e;
-                lastMouseX = offsetX;
-                lastMouseY = offsetY;
-            }
-        }
-    });
+canvas.on('mouse:down', function (event) {
+    if(isMouseDown){
+    if (eraseEnabled && event.target) {
+        // canvas.remove(event.target); // Remove the clicked object
+        console.log(event.target.type)
+        removeAllShapesAndPaths(event.target);
+    }
+    if(isErasing){
+        eraseEnabled = false;
+        const { offsetX, offsetY } = event.e;
+        lastMouseX = offsetX;
+        lastMouseY = offsetY;
+    }
 }
+});
+}
+
+function removeAllShapesAndPaths(obj) {
+    console.log(event.type)
+        if (obj.type != 'image') {
+            canvas.remove(obj);
+        }
+}
+
+// Example usage:
+
+
+
 function saveCanvasState() {
     canvasHistory.push(canvas.getObjects().map(obj => obj.toObject(['selectable', 'evented', 'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'lockUniScaling', 'lockSkewingX', 'lockSkewingY', 'visible'])));
 }
+
+let eraseIsImage = false
+let isMakeItErease = false
 eraserButton.addEventListener("click", function () {
-    isErasing = !isErasing;
+    isErasing = true;
     canvas.selectable = false;
-    if (isErasing) {
+
+    if (isErasing && !isMakeItErease) {
         canvas.selection = false;
         canvas.isDrawingMode = true;
-        var eraser = new fabric.EraserBrush(canvas);
+         eraser = new fabric.EraserBrush(canvas);
         canvas.freeDrawingBrush = eraser;
-        eraser.color = canvas.backgroundColor;
-        eraser.width = 40;
+        eraser.width = 40
+        isMakeItErease  = true
     } else {
         canvas.selection = true; // إعادة تمكين اختيار الكائنات عند عدم استخدام الممحاة
     }
-    saveCanvasState();
+    // saveCanvasState();
 });
 
 // الحدث mouse:down للتحقق من العناصر قبل عملية الممحاة
 canvas.on('mouse:down', function (event) {
-    if(isErasing ) {
+    if (isErasing && event.target) {
 
+        var target = event.target;
+        if (target.type == 'image') {
+            canvas.selection = true;
+            canvas.isDrawingMode = false;
+        }else {
+            canvas.selection = false;
+            canvas.isDrawingMode = true;
+
+        }
     }
+});
+
+canvas.on('mouse:move' , function(event) {
     if (isErasing && event.target) {
 
         var target = event.target;
         // تحقق مما إذا كان الكائن هو صورة
-        if (target instanceof fabric.Image) {
-            // isMouseDown = false
+        console.log(target.type)
+        if (target.type == 'image') {
             canvas.selection = true;
-            // Toggle eraser mode off
-            isErasing = false;
-            // Reset the drawing mode to the regular mode
             canvas.isDrawingMode = false;
-    
-            return;
         }else {
-            isMouseDown = true;
-            if (!isLocked && !isSquareDrawn) {
-                // تحقق من أن السبورة غير مقفلة وأن المربع لم يُرَسَم بالفعل
-                isDrawing = true;
-                startPosition = canvas.getPointer(event.e);
-            }
-        }
-        // استمر في عملية الممحاة لغير الصور
-    }
-});
-// الحدث mouse:down للتحقق من العناصر قبل عملية الممحاة
-canvas.on('mouse:down', function (event) {
+            canvas.selection = false;
+            canvas.isDrawingMode = true;
 
-  
-    
-});
+        }
+    }
+})
+
 
 
 

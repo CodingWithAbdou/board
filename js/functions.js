@@ -1,30 +1,30 @@
-// Function to toggle erase mode
-function toggleEraseMode() {
-    eraseEnabled = !eraseEnabled;
-    canvas.isDrawingMode = false;
-    isSquareDrawn = true;
-    if (eraseEnabled) {
-        isErasing = false;
-        canvas.selection = false; // Disable object selection
-        canvas.forEachObject(function (obj) {
-            obj.selection = false; // Disable selection for all objects
-        });
-    }
-    // Attach a click event listener to the canvas
-    canvas.on("mouse:move", function (event) {
-        if (isMouseDown) {
-            if (eraseEnabled && event.target) {
-                canvas.remove(event.target); // Remove the clicked object
-            }
-            if (isErasing) {
-                eraseEnabled = false;
-                const { offsetX, offsetY } = event.e;
-                lastMouseX = offsetX;
-                lastMouseY = offsetY;
-            }
-        }
-    });
-}
+// // Function to toggle erase mode
+// function toggleEraseMode() {
+//     eraseEnabled = !eraseEnabled;
+//     canvas.isDrawingMode = false;
+//     isSquareDrawn = true;
+//     if (eraseEnabled) {
+//         isErasing = false;
+//         canvas.selection = false; // Disable object selection
+//         canvas.forEachObject(function (obj) {
+//             obj.selection = false; // Disable selection for all objects
+//         });
+//     }
+//     // Attach a click event listener to the canvas
+//     canvas.on("mouse:move", function (event) {
+//         if (isMouseDown) {
+//             if (eraseEnabled && event.target) {
+//                 canvas.remove(event.target); // Remove the clicked object
+//             }
+//             if (isErasing) {
+//                 eraseEnabled = false;
+//                 const { offsetX, offsetY } = event.e;
+//                 lastMouseX = offsetX;
+//                 lastMouseY = offsetY;
+//             }
+//         }
+//     });
+// }
 
 // Function to update brush color
 function updateBrushColor(color) {

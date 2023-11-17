@@ -109,7 +109,8 @@ document.querySelectorAll("#toolbarshape .color-circle").forEach(function (circl
 
         var activeObject = canvas.getActiveObject();
               // التحقق من أن النص المحدد هو نص
-        if (activeObject && activeObject.type === 'triangle' || activeObject.type === 'circle' || activeObject.type === 'polygon' || activeObject.type === 'rect'  ) {
+        if (!activeObject) return
+        if ( activeObject.type === 'triangle' || activeObject.type === 'circle' || activeObject.type === 'polygon' || activeObject.type === 'rect'  ) {
         // تحديث حجم الخط للنص المحدد
         activeObject.set({ fill: color });
         canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير

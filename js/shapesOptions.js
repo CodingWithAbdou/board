@@ -8,10 +8,10 @@ let countStars = 0;
 
 drawStarButton.addEventListener("click", function () {
     let stars = [];
-    isCreatingStar = true;
+    let isCreatingStar = true;
     isCreatingCircle = false;
     isCreatingRectangle = false;
-
+    isCreatingTriangle = false 
     canvas.selection = false;
     canvas.defaultCursor = 'crosshair';
     canvas.hoverCursor = 'crosshair';
@@ -104,6 +104,7 @@ drawTriangleButton.addEventListener("click", function () {
     isCreatingTriangle = true;
     isCreatingCircle = false;
     isCreatingRectangle = false;
+    isCreatingStar = false;
 
       canvas.selection = false;
       canvas.defaultCursor = 'crosshair';
@@ -173,6 +174,7 @@ drawCircleButton.addEventListener("click", function () {
   
   isCreatingTriangle = false;
   isCreatingRectangle = false;
+  isCreatingStar = false;
 
 
   canvas.selection = false;
@@ -241,6 +243,7 @@ drawSquareButton.addEventListener("click", function () {
     isCreatingRectangle = true;
     isCreatingTriangle = false;
     isCreatingCircle = false;
+    isCreatingStar = false;
 
       canvas.selection = false;
       canvas.defaultCursor = 'crosshair';
