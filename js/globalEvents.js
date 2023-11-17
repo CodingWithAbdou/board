@@ -26,6 +26,7 @@ toolbarItems.forEach((item) => {
             if (number_click % 2 == 0)   item.nextElementSibling.classList.add('show')
             else   item.nextElementSibling.classList.remove('show')
         }
+        isMakeItErease = false
     })
 });
 

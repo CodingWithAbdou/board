@@ -333,12 +333,13 @@ eraserButton.addEventListener("click", function () {
     isErasing = true;
     canvas.selectable = false;
 
-    if (isErasing && !isMakeItErease) {
+    if (isErasing ) {
         canvas.selection = false;
         canvas.isDrawingMode = true;
          eraser = new fabric.EraserBrush(canvas);
         canvas.freeDrawingBrush = eraser;
         eraser.width = 40
+        eraser.fill = 'white'
         isMakeItErease  = true
     } else {
         canvas.selection = true; // إعادة تمكين اختيار الكائنات عند عدم استخدام الممحاة
