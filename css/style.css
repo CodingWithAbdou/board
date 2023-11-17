@@ -797,7 +797,7 @@ body {
 
 #stopVideo{
     float: right;
-    margin-bottom: 40px;
+
     display: none;
     cursor: pointer;
     
@@ -806,13 +806,22 @@ body {
 
 #pauseVideo{
     float: right;
-    margin-bottom: 40px;
+
     margin-right: 10px;
     display: none;
     cursor: pointer;
     
 }
 #pauseVideo:hover { opacity: 0.5; }
+#closeVideo{
+    float: right;
+
+    margin-right: 10px;
+    display: none;
+    cursor: pointer;
+    
+}
+#closeVideo:hover { opacity: 0.5; }
 
 #addexist{
     cursor: pointer;  

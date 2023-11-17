@@ -149,7 +149,10 @@ document.getElementById("imageUploadInput").addEventListener("change", function 
                     scaleX: 0.5, // تعيين مقياس الصورة
                     scaleY: 0.5,
                     protected: true
+                    
                 });
+                img.set('stackingIndex', 9999);
+
                 canvas.add(img);
                 protectedImages.push(img);
 

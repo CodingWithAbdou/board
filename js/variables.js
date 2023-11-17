@@ -81,19 +81,7 @@ var counterInput = document.getElementById("counterInput");
 var zoomLevel = 1.0; // 100%
 var zoomInButton = document.getElementById("zoomIn");
 var zoomOutButton = document.getElementById("zoomOut");
-let mediaRecorder;
-let recordedChunks = [];
-let isRecordingPaused = false;
 
-const startRecordingButton = document.getElementById("startRecording");
-const stopRecordingButton = document.getElementById("stopRecording");
-const pauseResumeRecordingButton = document.getElementById("pauseRecording");
-const stopVideo = document.getElementById("stopVideo");
-const addVideo = document.getElementById("addVideo");
-const pauseVideo = document.getElementById("pauseVideo");
-const filenameInput = document.getElementById("filenameInput");
-const confirmFilenameButton = document.getElementById("confirmFilename");
-const dialog = document.getElementById("dialog");
 
 // Audio stream
 let audioStream;
