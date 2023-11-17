@@ -370,9 +370,7 @@ addNoteButton.addEventListener("click", function () {
             width: 200,
             fontFamily: 'Arial', // Use an Arabic-supporting font
             fontSize: 20,
-            textDirection: 'rtl', // Set text direction to RTL
             // flipX: true, // Flip the text horizontally
-            textAlign: 'left' // Adjust text alignment
           
         });
 

@@ -143,10 +143,10 @@ function objectSelectabilty(value) {
 }
 
 function activateAddingSingleArrowLine() {
-    overlaytext.style.display = "none";
-    overlayshape.style.display = "block";
-    overlaycolor.style.display = "none";
-    overlayfile.style.display = "none";
+    // overlaytext.style.display = "none";
+    // overlayshape.style.display = "block";
+    // overlaycolor.style.display = "none";
+    // overlayfile.style.display = "none";
     canvas.isDrawingMode = false;
     isSquareDrawn = true;
     temporaryDrawingEnabled = false;
@@ -274,10 +274,10 @@ function stopDrawingSingleArrowLine() {
 }
 
 function activateAddingDoubleArrowLine() {
-    overlaytext.style.display = "none";
-    overlayshape.style.display = "block";
-    overlaycolor.style.display = "none";
-    overlayfile.style.display = "none";
+    // overlaytext.style.display = "none";
+    // overlayshape.style.display = "block";
+    // overlaycolor.style.display = "none";
+    // overlayfile.style.display = "none";
     canvas.isDrawingMode = false;
     isSquareDrawn = true;
     addingLineBtnClicked = false;

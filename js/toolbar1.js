@@ -20,6 +20,8 @@ document.getElementById("select").addEventListener("click", function () {
 
 
 penciltime.addEventListener("click", function () {
+    isAddingText = false;
+
     temporaryDrawingEnabled = !temporaryDrawingEnabled;
     if (temporaryDrawingEnabled) {
         canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
@@ -53,6 +55,7 @@ penciltime.addEventListener("click", function () {
 });
 
 document.getElementById("pencil").addEventListener("click", function () {
+    isAddingText = false;
     temporaryDrawingEnabled = false;
     canvas.isDrawingMode = true;
     isErasing = false; // Always switch to drawing mode when clicking the "Pen" button
@@ -69,31 +72,47 @@ document.getElementById("pencil").addEventListener("click", function () {
     })
     updateBrushSize();
     updateBrushColor(color);
+    
     canvas.renderAll(); // Redraw the canvas
 });
 let isAddingText = false;
 
 // let isAddingText = false;
 text.addEventListener("click", function () {
-    isAddingText = !isAddingText;
-    changeCursor();
+
+  
+    
+    eraseEnabled = false;
+    canvas.isDrawingMode = false;
+    isAddingText = true;
+    canvas.defaultCursor = 'text';
     isDrawing = true
     temporaryDrawingEnabled = false;
     selectedShap = 5;
     isSquareDrawn = false;
     eraseEnabled = false;
     countIndex++;
-    drawSquare(5);
-    
+    canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
+
 });
-function changeCursor() {
-    if (isAddingText) {
-        canvas.defaultCursor = 'text';
-    } else {
-        canvas.defaultCursor = 'default';
-    }
-}
+
+document.getElementById('shape').addEventListener('click' , ()=> {
+    canvas.isDrawingMode = false;
+    isSquareDrawn = true;
+    temporaryDrawingEnabled = false;
+    isErasing = false;
+})
+
 canvas.on('mouse:down', function(options) {
+    let color;
+    document.querySelectorAll('#toolbartext .color-circle').forEach(element => {
+        if(element.classList.contains('border_2')) {
+            color = element.style.backgroundColor
+        }
+    })
+    if(!color){
+        color = 'black'
+    }
     if (isAddingText) {
         const pointer = canvas.getPointer(options.e);
         const text = new fabric.Textbox('اكتب هنا', {

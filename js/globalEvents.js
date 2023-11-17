@@ -5,6 +5,8 @@ let number_click = 0
 
 toolbarItems.forEach((item) => {
     item.addEventListener("click", (event) => {
+        if(item.id != 'text') isAddingText = false;
+
         if (box_item == item) number_click++
         else   number_click = 0
 
@@ -71,11 +73,12 @@ document.querySelectorAll("#toolbartext .color-circle").forEach(function (circle
         var activeObject = canvas.getActiveObject();
 
               // التحقق من أن النص المحدد هو نص
-              if (activeObject && activeObject.type === 'textbox') {
-                // تحديث حجم الخط للنص المحدد
-                activeObject.set({ fill: color });
-                canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
-              }
+        if (activeObject && activeObject.type === 'textbox') {
+        // تحديث حجم الخط للنص المحدد
+        activeObject.set({ fill: color });
+        canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
+        }
+
         canvas.defaultCursor = 'text';
         console.log(canvas.defaultCursor)
         eraseEnabled = false;
@@ -98,7 +101,7 @@ document.querySelectorAll("#toolbarshape .color-circle").forEach(function (circl
         document.querySelectorAll("#toolbarshape .color-circle").forEach(function (c) {
             c.classList.remove('border_2')
         });
-        canvas.isDrawingMode = true;
+        // canvas.isDrawingMode = true;
         eraseEnabled = false;
         circle.classList.add('border_2')
         var activeObject = canvas.getActiveObject();
@@ -109,7 +112,7 @@ document.querySelectorAll("#toolbarshape .color-circle").forEach(function (circl
         // activeObject.set({ fill: color });
         // canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
         // }
-        // updateBrushColor(color);
+        updateBrushColor(color);
         // updateBrushSize()
     });
 });
