@@ -106,6 +106,14 @@ document.querySelectorAll("#toolbarshape .color-circle").forEach(function (circl
         circle.classList.add('border_2')
         var activeObject = canvas.getActiveObject();
 
+
+        var activeObject = canvas.getActiveObject();
+              // التحقق من أن النص المحدد هو نص
+        if (activeObject && activeObject.type === 'triangle' || activeObject.type === 'circle' || activeObject.type === 'polygon' || activeObject.type === 'rect'  ) {
+        // تحديث حجم الخط للنص المحدد
+        activeObject.set({ fill: color });
+        canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
+        }
         // // التحقق من أن النص المحدد هو نص
         // if (activeObject && activeObject.type === 'textbox') {
         // // تحديث حجم الخط للنص المحدد
