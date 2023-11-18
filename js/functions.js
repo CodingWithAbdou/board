@@ -43,32 +43,9 @@ function updateBrushSizeTime() {
     canvas.freeDrawingBrush.width = parseInt(brushSizeTime.value, 10);
 }
 
-function undo() {
-    if (canvasHistory.length > 1) {
-        canvas.clear();
-        canvas.loadFromJSON(canvasHistory[canvasHistory.length - 2], function () {
-          canvas.renderAll();
-        });
-        canvasHistory.pop();
-      }
-    // if (canvas._objects.length > 0) {
-    //     h.push(canvas._objects.pop());
-    //     canvas.renderAll();
-    // }
-}
 
-function redo() {
-    if (h.length > 0) {
-        isRedoing = true;
-        canvas.add(h.pop());
-    }
-}
 
 function activateAddingLine() {
-    // overlaytext.style.display = "none";
-    // overlayshape.style.display = "block";
-    // overlaycolor.style.display = "none";
-    // overlayfile.style.display = "none";
     canvas.isDrawingMode = false;
     temporaryDrawingEnabled = false;
     isSquareDrawn = true;
@@ -76,11 +53,19 @@ function activateAddingLine() {
     if (addingLineBtnClicked === false) {
         addingLineBtnClicked = true;
 
+  
         canvas.on({
-            "mouse:down": startAddingLine,
-            "mouse:move": startDrawingLine,
-            "mouse:up": stopDrawingLine,
-        });
+            "mouse:down": function (event) {
+              startAddingLine(event);
+            },
+            "mouse:move": function (event) {
+              startDrawingLine(event);
+            },
+            "mouse:up": function (event) {
+              stopDrawingLine(event);
+              saveCanvasState()
+            }
+          });
         canvas.selection = false;
         canvas.hoverCursor = "auto";
         objectSelectabilty(false);
@@ -143,10 +128,6 @@ function objectSelectabilty(value) {
 }
 
 function activateAddingSingleArrowLine() {
-    // overlaytext.style.display = "none";
-    // overlayshape.style.display = "block";
-    // overlaycolor.style.display = "none";
-    // overlayfile.style.display = "none";
     canvas.isDrawingMode = false;
     isSquareDrawn = true;
     temporaryDrawingEnabled = false;
@@ -155,10 +136,17 @@ function activateAddingSingleArrowLine() {
         addingSingleArrowLineBtnClicked = true;
 
         canvas.on({
-            "mouse:down": startAddingSingleArrowLine,
-            "mouse:move": startDrawingSingleArrowLine,
-            "mouse:up": stopDrawingSingleArrowLine,
-        });
+            "mouse:down": function (event) {
+                startAddingSingleArrowLine(event);
+            },
+            "mouse:move": function (event) {
+                startDrawingSingleArrowLine(event);
+            },
+            "mouse:up": function (event) {
+                stopDrawingSingleArrowLine(event);
+              saveCanvasState()
+            }
+          });
         canvas.selection = false;
         canvas.hoverCursor = "auto";
         objectSelectabilty(false);
@@ -274,10 +262,6 @@ function stopDrawingSingleArrowLine() {
 }
 
 function activateAddingDoubleArrowLine() {
-    // overlaytext.style.display = "none";
-    // overlayshape.style.display = "block";
-    // overlaycolor.style.display = "none";
-    // overlayfile.style.display = "none";
     canvas.isDrawingMode = false;
     isSquareDrawn = true;
     addingLineBtnClicked = false;
@@ -286,10 +270,17 @@ function activateAddingDoubleArrowLine() {
         addingDoubleArrowLineBtnClicked = true;
 
         canvas.on({
-            "mouse:down": startAddingDoubleArrowLine,
-            "mouse:move": startDrawingDoubleArrowLine,
-            "mouse:up": stopDrawingDoubleArrowLine,
-        });
+            "mouse:down": function (event) {
+                startAddingDoubleArrowLine(event);
+            },
+            "mouse:move": function (event) {
+                startDrawingDoubleArrowLine(event);
+            },
+            "mouse:up": function (event) {
+                stopDrawingDoubleArrowLine(event);
+              saveCanvasState()
+            }
+          });
         canvas.selection = false;
         canvas.hoverCursor = "auto";
         objectSelectabilty(false);

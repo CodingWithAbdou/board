@@ -1,14 +1,18 @@
 
 
-var isCreatingShape = false;
 
 var startX, startY, shape;
 
 let countStars = 0;
+let stars = [];
+
+let isCreatingTriangle = false;
+let isCreatingCircle = false;
+let  isCreatingRectangle = false;
+let isCreatingStar = false;
 
 drawStarButton.addEventListener("click", function () {
-    let stars = [];
-    let isCreatingStar = true;
+     isCreatingStar = true;
     isCreatingCircle = false;
     isCreatingRectangle = false;
     isCreatingTriangle = false 
@@ -88,19 +92,23 @@ drawStarButton.addEventListener("click", function () {
 
     canvas.on('mouse:up', function () {
         if (isCreatingStar) {
+            saveCanvasState()
             isCreatingStar = false;
             canvas.selection = true;
             canvas.defaultCursor = 'default';
             canvas.hoverCursor = 'default';
+            canvas.setActiveObject(stars[countStars]);
             countStars++;
         }
     });
+
+    return isCreatingStar
 });
 
 
 let countTriangles = 0;
+let triangles =[];
 drawTriangleButton.addEventListener("click", function () {
-    let triangles =[];
     isCreatingTriangle = true;
     isCreatingCircle = false;
     isCreatingRectangle = false;
@@ -157,20 +165,21 @@ drawTriangleButton.addEventListener("click", function () {
 
       canvas.on('mouse:up', function () {
         if (isCreatingTriangle) {
+          saveCanvasState()
           isCreatingTriangle = false;
           canvas.selection = true;
           canvas.defaultCursor = 'default';
           canvas.hoverCursor = 'default';
+          canvas.setActiveObject(triangles[countTriangles]);
           countTriangles++;
         }
       });
 });
 let countCircles = 0;
+let  circles = []
 
 drawCircleButton.addEventListener("click", function () {
-  var circle;
-  let  circles = []
-  var isCreatingCircle = true;
+   isCreatingCircle = true;
   
   isCreatingTriangle = false;
   isCreatingRectangle = false;
@@ -228,19 +237,21 @@ drawCircleButton.addEventListener("click", function () {
   
   canvas.on('mouse:up', function () {
     if (isCreatingCircle) {
+      saveCanvasState()
       isCreatingCircle = false;
       canvas.selection = true;
       canvas.defaultCursor = 'default';
       canvas.hoverCursor = 'default';
+      canvas.setActiveObject(circles[countCircles]);
       countCircles++
     }
   });
   });
   let countRectangles = 0;
+  let rectangles = [];
 
 drawSquareButton.addEventListener("click", function () {
-    let rectangles = [];
-    isCreatingRectangle = true;
+     isCreatingRectangle = true;
     isCreatingTriangle = false;
     isCreatingCircle = false;
     isCreatingStar = false;
@@ -295,10 +306,13 @@ drawSquareButton.addEventListener("click", function () {
 
       canvas.on('mouse:up', function () {
         if (isCreatingRectangle) {
+          saveCanvasState()
           isCreatingRectangle = false;
           canvas.selection = true;
           canvas.defaultCursor = 'default';
           canvas.hoverCursor = 'default';
+          canvas.setActiveObject(rectangles[countRectangles]);
+
           countRectangles++
         }
       });

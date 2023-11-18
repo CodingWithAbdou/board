@@ -131,6 +131,7 @@ addPageButton.addEventListener("click", function () {
                     });
 
                     // Add the PDF image to the Fabric.js canvas
+                    saveCanvasState()
                     canvas.add(pdfImage);
                 });
             });
@@ -379,7 +380,7 @@ addNoteButton.addEventListener("click", function () {
             top: 50,
             selectable: true
         });
-
+        saveCanvasState()
         canvas.add(group)
         group.on('mousedblclick', function() {
             noteText.enterEditing();
