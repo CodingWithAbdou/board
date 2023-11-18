@@ -330,6 +330,7 @@ let isMakeItErease = false
 eraserButton.addEventListener("click", function () {
     isErasing = true;
     canvas.selectable = false;
+    eraseEnabled = false;
 
     if (isErasing && !isMakeItErease) {
         canvas.selection = false;

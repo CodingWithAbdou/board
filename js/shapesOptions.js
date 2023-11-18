@@ -3,19 +3,122 @@
 
 var startX, startY, shape;
 
-let countStars = 0;
-let stars = [];
-
 let isCreatingTriangle = false;
 let isCreatingCircle = false;
-let  isCreatingRectangle = false;
+let  isCreatingSquare = false;
 let isCreatingStar = false;
 
+
+// let isCreatingStar = false;
+let startDrawing = false;
+let star, initialPoints, initialCenter, initialDistances;
+
+
 drawStarButton.addEventListener("click", function () {
-     isCreatingStar = true;
+  isCreatingStar = true;
+  isCreatingTriangle = false;
+  isCreatingCircle = false;
+  isCreatingSquare = false;
+
+  canvas.selection = false;
+  canvas.defaultCursor = 'crosshair';
+  canvas.hoverCursor = 'crosshair';
+});
+
+canvas.on('mouse:down', function (options) {
+  if (isCreatingStar) {
+      let color;
+      document.querySelectorAll('#toolbarshape .color-circle').forEach(element => {
+          if (element.classList.contains('border_2')) {
+              color = element.style.backgroundColor;
+          }
+      });
+
+      if (!color) {
+          color = 'transparent';
+      }
+
+      startX = options.e.clientX;
+      startY = options.e.clientY;
+
+      initialPoints = [
+          { x: 100, y: 10 },
+          { x: 125, y: 60 },
+          { x: 200, y: 70 },
+          { x: 140, y: 115 },
+          { x: 160, y: 190 },
+          { x: 100, y: 150 },
+          { x: 40, y: 190 },
+          { x: 60, y: 115 },
+          { x: 0, y: 70 },
+          { x: 75, y: 60 }
+      ];
+
+      initialCenter = {
+          x: startX,
+          y: startY
+      };
+
+      star = new fabric.Polygon(initialPoints, {
+          left: initialCenter.x,
+          top: initialCenter.y,
+          fill: color,
+          stroke: 'black',
+          strokeWidth: 2,
+          selectable: true,
+      });
+
+      canvas.add(star);
+      startDrawing = true;
+  }
+});
+
+canvas.on('mouse:move', function (options) {
+  if (isCreatingStar && startDrawing) {
+      let currentX = options.e.clientX;
+      let currentY = options.e.clientY;
+
+      let deltaX = currentX - startX;
+      let deltaY = currentY - startY;
+
+      // Calculate the distance between the initial and current points
+      let currentDistance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
+
+      // Adjust the scale factor based on the change in distance
+      let scaleFactor = currentDistance / initialDistances;
+
+      // Set the new scale factor for the star
+      star.set({
+          scaleX: scaleFactor,
+          scaleY: scaleFactor,
+      });
+
+      canvas.renderAll();
+  }
+});
+
+canvas.on('mouse:up', function () {
+  if (isCreatingStar && startDrawing) {
+      saveCanvasState();
+      isCreatingStar = false;
+      canvas.selection = true;
+      canvas.defaultCursor = 'default';
+      canvas.hoverCursor = 'default';
+      startDrawing = false;
+      document.getElementById("select").click()
+  }
+});
+
+
+let countTriangles = 0;
+let triangles = [];
+
+drawTriangleButton.addEventListener("click", function () {
+    isCreatingTriangle = true;
     isCreatingCircle = false;
-    isCreatingRectangle = false;
-    isCreatingTriangle = false 
+    isCreatingSquare = false;
+    isCreatingStar = false;
+
     canvas.selection = false;
     canvas.defaultCursor = 'crosshair';
     canvas.hoverCursor = 'crosshair';
@@ -24,65 +127,43 @@ drawStarButton.addEventListener("click", function () {
         let color;
         document.querySelectorAll('#toolbarshape .color-circle').forEach(element => {
             if (element.classList.contains('border_2')) {
-                color = element.style.backgroundColor;
+                color = element.style.backgroundColor
             }
-        });
+        })
         if (!color) {
-            color = 'transparent';
+            color = 'transparent'
         }
-        if (isCreatingStar) {
-            let starPoints = [
-                { x: 100, y: 10 }, // Top point
-                { x: 125, y: 60 }, // Upper-right point
-                { x: 200, y: 70 }, // Right point
-                { x: 140, y: 115 }, // Lower-right point
-                { x: 160, y: 190 }, // Bottom point
-                { x: 100, y: 150 }, // Bottom-left point
-                { x: 40, y: 190 }, // Lower-left point
-                { x: 60, y: 115 }, // Lower-right point
-                { x: 0, y: 70 }, // Left point
-                { x: 75, y: 60 } // Upper-left point
-            ];
+        if (isCreatingTriangle) {
+            startX = options.e.clientX;
+            startY = options.e.clientY;
 
-            stars[countStars] = new fabric.Polygon(starPoints, {
-                left: options.e.clientX,
-                top: options.e.clientY,
+            triangles[countTriangles] = new fabric.Triangle({
+                left: startX,
+                top: startY,
+                width: 0,
+                height: 0,
                 fill: color,
                 stroke: 'black',
                 strokeWidth: 2,
-                selectable: true
+                selectable: true,
             });
 
-            canvas.add(stars[countStars]);
+            canvas.add(triangles[countTriangles]);
         }
     });
 
     canvas.on('mouse:move', function (options) {
-        if (isCreatingStar) {
-            if (stars[countStars]) {
-                let offsetX = options.e.clientX - stars[countStars].left;
-                let offsetY = options.e.clientY - stars[countStars].top;
+        if (isCreatingTriangle) {
+            if (triangles[countTriangles]) {
+                var width = options.e.clientX - startX;
+                var height = options.e.clientY - startY;
 
-                let starPoints = [
-                    { x: 100, y: 10 }, // Top point
-                    { x: 125, y: 60 }, // Upper-right point
-                    { x: 200, y: 70 }, // Right point
-                    { x: 140, y: 115 }, // Lower-right point
-                    { x: 160, y: 190 }, // Bottom point
-                    { x: 100, y: 150 }, // Bottom-left point
-                    { x: 40, y: 190 }, // Lower-left point
-                    { x: 60, y: 115 }, // Lower-right point
-                    { x: 0, y: 70 }, // Left point
-                    { x: 75, y: 60 } // Upper-left point
-                ];
-
-                starPoints = starPoints.map(point => ({
-                    x: point.x + offsetX,
-                    y: point.y + offsetY
-                }));
-
-                stars[countStars].set({
-                    points: starPoints
+                // Manually set the position based on the initial click point
+                triangles[countTriangles].set({
+                    left: width > 0 ? startX : options.e.clientX,
+                    top: height > 0 ? startY : options.e.clientY,
+                    width: Math.abs(width),
+                    height: Math.abs(height),
                 });
 
                 canvas.renderAll();
@@ -91,236 +172,174 @@ drawStarButton.addEventListener("click", function () {
     });
 
     canvas.on('mouse:up', function () {
-        if (isCreatingStar) {
+        if (isCreatingTriangle) {
             saveCanvasState()
-            isCreatingStar = false;
+            isCreatingTriangle = false;
             canvas.selection = true;
             canvas.defaultCursor = 'default';
             canvas.hoverCursor = 'default';
-            canvas.setActiveObject(stars[countStars]);
-            countStars++;
+            canvas.setActiveObject(triangles[countTriangles]);
+            countTriangles++;
+            document.getElementById("select").click()
+        }
+    });
+});
+
+let countCircles = 0;
+let circles = [];
+
+drawCircleButton.addEventListener("click", function () {
+    isCreatingCircle = true;
+    isCreatingTriangle = false;
+    isCreatingSquare = false;
+    isCreatingStar = false;
+
+    canvas.selection = false;
+    canvas.defaultCursor = 'crosshair';
+    canvas.hoverCursor = 'crosshair';
+
+    canvas.on('mouse:down', function (options) {
+        let color;
+        document.querySelectorAll('#toolbarshape .color-circle').forEach(element => {
+            if (element.classList.contains('border_2')) {
+                color = element.style.backgroundColor
+            }
+        })
+        if (!color) {
+            color = 'transparent'
+        }
+        if (isCreatingCircle) {
+            startX = options.e.clientX;
+            startY = options.e.clientY;
+
+            circles[countCircles] = new fabric.Circle({
+                left: startX,
+                top: startY,
+                radius: 0,
+                fill: color,
+                stroke: 'black',
+                strokeWidth: 2,
+                selectable: true,
+            });
+
+            canvas.add(circles[countCircles]);
         }
     });
 
-    return isCreatingStar
+    canvas.on('mouse:move', function (options) {
+        if (isCreatingCircle) {
+            if (circles[countCircles]) {
+                var radius = Math.sqrt(
+                    Math.pow(options.e.clientX - startX, 2) +
+                    Math.pow(options.e.clientY - startY, 2)
+                );
+
+                circles[countCircles].set({
+                    radius: radius,
+                });
+
+                canvas.renderAll();
+            }
+        }
+    });
+
+    canvas.on('mouse:up', function () {
+        if (isCreatingCircle) {
+            saveCanvasState()
+            isCreatingCircle = false;
+            canvas.selection = true;
+            canvas.defaultCursor = 'default';
+            canvas.hoverCursor = 'default';
+            canvas.setActiveObject(circles[countCircles]);
+            countCircles++;
+            document.getElementById("select").click()
+
+        }
+    });
 });
 
-
-let countTriangles = 0;
-let triangles =[];
-drawTriangleButton.addEventListener("click", function () {
-    isCreatingTriangle = true;
-    isCreatingCircle = false;
-    isCreatingRectangle = false;
-    isCreatingStar = false;
-
-      canvas.selection = false;
-      canvas.defaultCursor = 'crosshair';
-      canvas.hoverCursor = 'crosshair';
-
-      canvas.on('mouse:down', function (options) {
-        let color;
-    document.querySelectorAll('#toolbarshape .color-circle').forEach(element => {
-        if(element.classList.contains('border_2')) {
-            color = element.style.backgroundColor
-        }
-    })
-    if(!color){
-        color = 'transparent'
-    }
-        if (isCreatingTriangle) {
-          startX = options.e.clientX;
-          startY = options.e.clientY;
-
-          triangles[countTriangles] = new fabric.Triangle({
-            left: startX,
-            top: startY,
-            width: 0,
-            height: 0,
-            fill : color,
-            stroke: 'black',
-            strokeWidth: 2,
-            selectable: true,
-          });
-
-          canvas.add(triangles[countTriangles]);
-        }
-      });
-
-      canvas.on('mouse:move', function (options) {
-        if (isCreatingTriangle) {
-          if (triangles[countTriangles]) {
-            var width = options.e.clientX - startX;
-            var height = options.e.clientY - startY;
-
-            triangles[countTriangles].set({
-              width: width,
-              height: height,
-            });
-
-            canvas.renderAll();
-          }
-        }
-      });
-
-      canvas.on('mouse:up', function () {
-        if (isCreatingTriangle) {
-          saveCanvasState()
-          isCreatingTriangle = false;
-          canvas.selection = true;
-          canvas.defaultCursor = 'default';
-          canvas.hoverCursor = 'default';
-          canvas.setActiveObject(triangles[countTriangles]);
-          countTriangles++;
-        }
-      });
-});
-let countCircles = 0;
-let  circles = []
-
-drawCircleButton.addEventListener("click", function () {
-   isCreatingCircle = true;
-  
-  isCreatingTriangle = false;
-  isCreatingRectangle = false;
-  isCreatingStar = false;
-
-
-  canvas.selection = false;
-  canvas.defaultCursor = 'crosshair';
-  canvas.hoverCursor = 'crosshair';
-  
-  canvas.on('mouse:down', function (options) {
-    let color;
-    document.querySelectorAll('#toolbarshape .color-circle').forEach(element => {
-        if(element.classList.contains('border_2')) {
-            color = element.style.backgroundColor
-        }
-    })
-    if(!color){
-        color = 'transparent'
-    }
-    if (isCreatingCircle) {
-      startX = options.e.clientX;
-      startY = options.e.clientY;
-  
-      circles[countCircles] = new fabric.Circle({
-        left: startX,
-        top: startY,
-        radius: 0,
-        fill: color,
-        stroke : 'black' ,
-        strokeWidth: 2,
-        selectable: true,
-      });
-  
-      canvas.add(circles[countCircles]);
-    }
-  });
-  
-  canvas.on('mouse:move', function (options) {
-    if (isCreatingCircle) {
-      if (circles[countCircles]) {
-        var radius = Math.sqrt(
-          Math.pow(options.e.clientX - startX, 2) +
-          Math.pow(options.e.clientY - startY, 2)
-        );
-  
-        circles[countCircles].set({
-          radius: radius,
-        });
-  
-        canvas.renderAll();
-      }
-    }
-  });
-  
-  canvas.on('mouse:up', function () {
-    if (isCreatingCircle) {
-      saveCanvasState()
-      isCreatingCircle = false;
-      canvas.selection = true;
-      canvas.defaultCursor = 'default';
-      canvas.hoverCursor = 'default';
-      canvas.setActiveObject(circles[countCircles]);
-      countCircles++
-    }
-  });
-  });
-  let countRectangles = 0;
-  let rectangles = [];
+let countSquares = 0;
+let squares = [];
 
 drawSquareButton.addEventListener("click", function () {
-     isCreatingRectangle = true;
+    isCreatingSquare = true;
     isCreatingTriangle = false;
     isCreatingCircle = false;
     isCreatingStar = false;
 
-      canvas.selection = false;
-      canvas.defaultCursor = 'crosshair';
-      canvas.hoverCursor = 'crosshair';
-      canvas.on('mouse:down', function (options) {
-        // ++
+    canvas.selection = false;
+    canvas.defaultCursor = 'crosshair';
+    canvas.hoverCursor = 'crosshair';
+
+    canvas.on('mouse:down', function (options) {
         let color;
         document.querySelectorAll('#toolbarshape .color-circle').forEach(element => {
-            if(element.classList.contains('border_2')) {
+            if (element.classList.contains('border_2')) {
                 color = element.style.backgroundColor
             }
         })
-        if(!color){
+        if (!color) {
             color = 'transparent'
         }
-        if (isCreatingRectangle) {
-          startX = options.e.clientX;
-          startY = options.e.clientY;
+        if (isCreatingSquare) {
+            startX = options.e.clientX;
+            startY = options.e.clientY;
 
-          rectangles[countRectangles] = new fabric.Rect({
-            left: startX,
-            top: startY,
-            width: 0,
-            height: 0,
-            fill : color,
-            stroke : 'black' ,
-            strokeWidth: 2,
-            selectable: true,
-          });
-          canvas.add(rectangles[countRectangles]);
-        }
-      });
-
-      canvas.on('mouse:move', function (options) {
-        if (isCreatingRectangle) {
-          if (rectangles[countRectangles]) {
-            var width = options.e.clientX - startX;
-            var height = options.e.clientY - startY;
-
-            rectangles[countRectangles].set({
-              width: width,
-              height: height,
+            squares[countSquares] = new fabric.Rect({
+                left: startX,
+                top: startY,
+                width: 0,
+                height: 0,
+                fill: color,
+                stroke: 'black',
+                strokeWidth: 2,
+                selectable: true,
             });
 
-            canvas.renderAll();
-          }
+            canvas.add(squares[countSquares]);
         }
-      });
+    });
 
-      canvas.on('mouse:up', function () {
-        if (isCreatingRectangle) {
-          saveCanvasState()
-          isCreatingRectangle = false;
-          canvas.selection = true;
-          canvas.defaultCursor = 'default';
-          canvas.hoverCursor = 'default';
-          canvas.setActiveObject(rectangles[countRectangles]);
+    canvas.on('mouse:move', function (options) {
+        if (isCreatingSquare) {
+            if (squares[countSquares]) {
+                var width = options.e.clientX - startX;
+                var height = options.e.clientY - startY;
+                var sideLength = Math.min(Math.abs(width), Math.abs(height));
 
-          countRectangles++
+                // Calculate the correct position based on the mouse movement
+                squares[countSquares].set({
+                    left: width > 0 ? startX : options.e.clientX,
+                    top: height > 0 ? startY : options.e.clientY,
+                    width: sideLength,
+                    height: sideLength,
+                });
+
+                canvas.renderAll();
+            }
         }
-      });
+    });
 
+    canvas.on('mouse:up', function () {
+        if (isCreatingSquare) {
+            saveCanvasState()
+            isCreatingSquare = false;
+            canvas.selection = true;
+            canvas.defaultCursor = 'default';
+            canvas.hoverCursor = 'default';
+            canvas.setActiveObject(squares[countSquares]);
+            countSquares++;
+            document.getElementById("select").click()
+
+        }
+    });
 });
+
 
 addingLineBtn.addEventListener("click", activateAddingLine);
 
 addingSingleArrowLineBtn.addEventListener("click",activateAddingSingleArrowLine);
 
 addingDoubleArrowLineBtn.addEventListener("click",activateAddingDoubleArrowLine);
+
+

@@ -46,33 +46,35 @@ function updateBrushSizeTime() {
 
 
 function activateAddingLine() {
+    
     canvas.isDrawingMode = false;
     temporaryDrawingEnabled = false;
     isSquareDrawn = true;
     addingSingleArrowLineBtnClicked = false;
-    if (addingLineBtnClicked === false) {
-        addingLineBtnClicked = true;
+    if(addingLineBtnClicked===false){
+        addingLineBtnClicked= true;
 
-  
         canvas.on({
-            "mouse:down": function (event) {
-              startAddingLine(event);
-            },
-            "mouse:move": function (event) {
-              startDrawingLine(event);
-            },
-            "mouse:up": function (event) {
-              stopDrawingLine(event);
-              saveCanvasState()
-            }
-          });
+            'mouse:down':startAddingLine,
+            'mouse:move':startDrawingLine,
+            'mouse:up':stopDrawingLine
+        });
         canvas.selection = false;
-        canvas.hoverCursor = "auto";
+        canvas.hoverCursor = 'auto';
         objectSelectabilty(false);
     }
 }
 
 function startAddingLine(o) {
+      let color;
+    document.querySelectorAll('#toolbarshape .color-circle').forEach(element => {
+        if (element.classList.contains('border_2')) {
+            color = element.style.backgroundColor
+        }
+    })
+    if (!color) {
+        color = 'black'
+    }
     mouseDown = true;
     let pointer = canvas.getPointer(o.e);
     line = new fabric.Line([pointer.x, pointer.y, pointer.x, pointer.y], {
@@ -103,7 +105,8 @@ function startDrawingLine(o) {
 function stopDrawingLine() {
     if (mouseDown) {
         mouseDown = false;
-
+        saveCanvasState()
+        document.getElementById("select").click()
         canvas.off({
             "mouse:down": startAddingLine,
             "mouse:move": startDrawingLine,
@@ -113,7 +116,8 @@ function stopDrawingLine() {
         addingLineBtnClicked = false;
         canvas.selection = true;
         canvas.hoverCursor = "auto";
-        objectSelectabilty(true);
+        objectSelectabilty(true);              
+
         canvas.requestRenderAll();
     }
 }
@@ -132,28 +136,30 @@ function activateAddingSingleArrowLine() {
     isSquareDrawn = true;
     temporaryDrawingEnabled = false;
     addingLineBtnClicked = false;
-    if (addingSingleArrowLineBtnClicked === false) {
-        addingSingleArrowLineBtnClicked = true;
+    if(addingSingleArrowLineBtnClicked===false){
+        addingSingleArrowLineBtnClicked= true;
 
         canvas.on({
-            "mouse:down": function (event) {
-                startAddingSingleArrowLine(event);
-            },
-            "mouse:move": function (event) {
-                startDrawingSingleArrowLine(event);
-            },
-            "mouse:up": function (event) {
-                stopDrawingSingleArrowLine(event);
-              saveCanvasState()
-            }
-          });
+            'mouse:down':startAddingSingleArrowLine,
+            'mouse:move':startDrawingSingleArrowLine,
+            'mouse:up':stopDrawingSingleArrowLine
+        });
         canvas.selection = false;
-        canvas.hoverCursor = "auto";
+        canvas.hoverCursor = 'auto';
         objectSelectabilty(false);
     }
 }
 
 function startAddingSingleArrowLine(o) {
+    let color;
+    document.querySelectorAll('#toolbarshape .color-circle').forEach(element => {
+        if (element.classList.contains('border_2')) {
+            color = element.style.backgroundColor
+        }
+    })
+    if (!color) {
+        color = 'black'
+    }
     mouseDown = true;
     let pointer = canvas.getPointer(o.e);
     line = new fabric.Line([pointer.x, pointer.y, pointer.x, pointer.y], {
@@ -246,6 +252,8 @@ function startDrawingSingleArrowLine(o) {
 function stopDrawingSingleArrowLine() {
     if (mouseDown) {
         mouseDown = false;
+        saveCanvasState()
+        document.getElementById("select").click()
 
         canvas.off({
             "mouse:down": startAddingSingleArrowLine,
@@ -270,16 +278,9 @@ function activateAddingDoubleArrowLine() {
         addingDoubleArrowLineBtnClicked = true;
 
         canvas.on({
-            "mouse:down": function (event) {
-                startAddingDoubleArrowLine(event);
-            },
-            "mouse:move": function (event) {
-                startDrawingDoubleArrowLine(event);
-            },
-            "mouse:up": function (event) {
-                stopDrawingDoubleArrowLine(event);
-              saveCanvasState()
-            }
+            'mouse:down':startAddingDoubleArrowLine,
+            'mouse:move':startDrawingDoubleArrowLine,
+            'mouse:up':stopDrawingDoubleArrowLine
           });
         canvas.selection = false;
         canvas.hoverCursor = "auto";
@@ -288,6 +289,15 @@ function activateAddingDoubleArrowLine() {
 }
 
 function startAddingDoubleArrowLine(o) {
+    let color;
+    document.querySelectorAll('#toolbarshape .color-circle').forEach(element => {
+        if (element.classList.contains('border_2')) {
+            color = element.style.backgroundColor
+        }
+    })
+    if (!color) {
+        color = 'black'
+    }
     mouseDown = true;
     let pointer = canvas.getPointer(o.e);
     line = new fabric.Line([pointer.x, pointer.y, pointer.x, pointer.y], {
@@ -318,9 +328,9 @@ function startAddingDoubleArrowLine(o) {
     );
     arrowHead2 = new fabric.Polygon(
         [
-            { x: 0, y: 0 },
-            { x: -20, y: -10 },
-            { x: -20, y: 10 },
+            { x: 0, y: -10 },
+            { x: 0, y: 10 },
+            { x: -20, y: 0 },
         ],
         {
             id: "arrow-head",
@@ -329,12 +339,13 @@ function startAddingDoubleArrowLine(o) {
             fill: color,
             selectable: false,
             hasControls: false,
-            top: pointer.y,
+            top: pointer.y ,
             left: pointer.x,
             originX: "center",
             originY: "center",
         }
     );
+
     canvas.add(line, arrowHead1, arrowHead2);
     canvas.requestRenderAll();
 }
@@ -347,10 +358,6 @@ function startDrawingDoubleArrowLine(o) {
             y2: pointer.y,
         });
         arrowHead1.set({
-            left: pointer.x,
-            top: pointer.y,
-        });
-        arrowHead2.set({
             left: pointer.x,
             top: pointer.y,
         });
@@ -422,6 +429,8 @@ function startDrawingDoubleArrowLine(o) {
 function stopDrawingDoubleArrowLine() {
     if (mouseDown) {
         mouseDown = false;
+        saveCanvasState()
+        document.getElementById("select").click()
 
         canvas.off({
             "mouse:down": startAddingDoubleArrowLine,
