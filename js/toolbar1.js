@@ -104,7 +104,7 @@ canvas.on('mouse:down', function(options) {
         var activeObject = canvas.getActiveObject();
 
               // التحقق من أن النص المحدد هو نص
-        if (activeObject && activeObject.type === 'textbox') {
+        if (activeObject && activeObject.type === 'textbox' && isAddingText == true) {
             isAddingText = false
             document.getElementById('select').click()
         }

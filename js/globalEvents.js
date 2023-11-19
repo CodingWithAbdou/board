@@ -79,6 +79,7 @@ document.querySelectorAll("#toolbartext .color-circle").forEach(function (circle
         activeObject.set({ fill: color });
         canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
         }
+        // isAddingText = false;
         eraseEnabled = false;
         circle.classList.add('border_2')        
     });
@@ -97,7 +98,6 @@ document.querySelectorAll("#toolbarshape .color-circle").forEach(function (circl
 
 
         var activeObject = canvas.getActiveObject();
-              // التحقق من أن النص المحدد هو نص
         if (!activeObject) return
         if ( activeObject.type === 'triangle' || activeObject.type === 'circle' || activeObject.type === 'polygon' || activeObject.type === 'rect'  ) {
         // تحديث حجم الخط للنص المحدد
