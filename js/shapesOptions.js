@@ -229,10 +229,8 @@ drawCircleButton.addEventListener("click", function () {
     canvas.on('mouse:move', function (options) {
         if (isCreatingCircle) {
             if (circles[countCircles]) {
-                var radius = Math.sqrt(
-                    Math.pow(options.e.clientX - startX, 2) +
-                    Math.pow(options.e.clientY - startY, 2)
-                );
+                // Calculate the average of horizontal and vertical distances
+                var radius = Math.abs((options.e.clientX - startX) + (options.e.clientY - startY)) / 2;
 
                 circles[countCircles].set({
                     radius: radius,
@@ -253,7 +251,6 @@ drawCircleButton.addEventListener("click", function () {
             canvas.setActiveObject(circles[countCircles]);
             countCircles++;
             document.getElementById("select").click()
-
         }
     });
 });
@@ -305,6 +302,8 @@ drawSquareButton.addEventListener("click", function () {
             if (squares[countSquares]) {
                 var width = options.e.clientX - startX;
                 var height = options.e.clientY - startY;
+                // var height = options.e.clientY - startY;
+
                 var sideLength = Math.min(Math.abs(width), Math.abs(height));
 
                 // Calculate the correct position based on the mouse movement

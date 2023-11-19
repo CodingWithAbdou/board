@@ -1,6 +1,6 @@
 // Add an event listener for the minus button
 minusButton.addEventListener("click", function () {
-    isAddingText = false;
+    // isAddingText = false;
 
     var currentValue = parseInt(counterInput.value, 10);
     if (currentValue > 1) {
@@ -20,7 +20,7 @@ minusButton.addEventListener("click", function () {
 
 // Add an event listener for the plus button
 plusButton.addEventListener("click", function () {
-    isAddingText = false;
+    // isAddingText = false;
 
     var currentValue = parseInt(counterInput.value, 10) + 1;
     // حصول على النص المحدد حالياً
@@ -36,7 +36,7 @@ plusButton.addEventListener("click", function () {
 });
 
 boldButton.addEventListener("click", function () {
-    isAddingText = false;
+    // isAddingText = false;
 
     // حصول على النص المحدد حالياً
     var activeObject = canvas.getActiveObject();
@@ -63,7 +63,7 @@ normalButton.addEventListener("click", function () {
 
     // التحقق من أن النص المحدد هو نص
     if (activeObject && activeObject.type === "textbox") {
-        isAddingText = false;
+        // isAddingText = false;
 
         // تحديث حجم الخط للنص المحدد
         activeObject.set({
@@ -84,7 +84,7 @@ normalButton.addEventListener("click", function () {
 });
 
 italicButton.addEventListener("click", function () {
-    isAddingText = false;
+    // isAddingText = false;
 
     // Get the currently selected text object
     var activeObject = canvas.getActiveObject();
@@ -109,8 +109,9 @@ italicButton.addEventListener("click", function () {
     }
 });
 
+
 underlineButton.addEventListener("click", function () {
-    isAddingText = false;
+    // isAddingText = false;
 
     // حصول على النص المحدد حالياً
     var activeObject = canvas.getActiveObject();
@@ -146,7 +147,7 @@ let textDirection = 'leftToRight';
 let fontFamily = 'Arial'
 // إضافة حدث عند تغيير حجم الخط
 document.getElementById("fontFamilySelect").addEventListener("input", function () {
-    isAddingText = false;
+    // isAddingText = false;
     fontFamily =  this.value ; 
     // حصول على النص المحدد حالياً
     var activeObject = canvas.getActiveObject();

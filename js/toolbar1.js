@@ -101,6 +101,13 @@ document.getElementById('shape').addEventListener('click' , ()=> {
 })
 
 canvas.on('mouse:down', function(options) {
+        var activeObject = canvas.getActiveObject();
+
+              // التحقق من أن النص المحدد هو نص
+        if (activeObject && activeObject.type === 'textbox') {
+            isAddingText = false
+            document.getElementById('select').click()
+        }
     let color;
     let fontSizeText = document.getElementById('counterInput').value
     document.querySelectorAll('#toolbartext .color-circle').forEach(element => {
@@ -125,6 +132,7 @@ canvas.on('mouse:down', function(options) {
         });
         canvas.add(text);
         canvas.setActiveObject(text);
+        document.getElementById('select').click()
         isAddingText = false;
     }
 });

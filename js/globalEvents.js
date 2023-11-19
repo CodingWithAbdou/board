@@ -79,7 +79,6 @@ document.querySelectorAll("#toolbartext .color-circle").forEach(function (circle
         activeObject.set({ fill: color });
         canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
         }
-        isAddingText = false;
         eraseEnabled = false;
         circle.classList.add('border_2')        
     });
