@@ -85,8 +85,25 @@ document.querySelectorAll('.btn_controll').forEach(btn => {
         
         getData()
         document.getElementById(`head-${currentpage}`).style.display = 'block'
+        checkIfDataAudio()
     })
 })
+
+function checkIfDataAudio() {
+    if(audioData[currentpage]) {
+        console.log(audioData)
+        if(audioData[currentpage].isActive &&  audioData[currentpage].data != '') {
+            addAudio (audioData[currentpage].data) 
+        }else {
+            closeAudio()
+        }
+    }else {
+        closeAudio()
+    }
+
+}
+
+
 
 function setData() {
     pagesData['page' + currentpage] =  JSON.stringify(canvas.toJSON())

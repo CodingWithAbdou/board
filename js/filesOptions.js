@@ -138,6 +138,7 @@ addPageButton.addEventListener("click", function () {
         }
     }
     overlaypdf.style.display = 'none'
+    pdfInput.value = ''
     selectedPage = []
 });
 
@@ -219,29 +220,37 @@ document.getElementById("audio").addEventListener("click", function () {
     document.getElementById("audioFileInput").click();
 });
 // Initialize slider position
-
+audioData = {}
 audioFileInput.addEventListener("change", handleAudioFileSelect);
 
 function handleAudioFileSelect(event) {
     const file = event.target.files[0];
     if (file) {
+        audioFileInput.value = ''
+        audioSource.src = ''
+        audioData[currentpage] = {data : URL.createObjectURL(file) , isActive : true}
         // Set the audio source to the selected file
-        audioSource.src = URL.createObjectURL(file);
-
-        
-        // Show the audio player
-        document.getElementById('range').value = '0'
-        myAudio.style.display = "block";
-
-        
-        // Load the audio
-        myAudio.load();
-        overlayaudio.style.display = "block";
+        addAudio (audioData[currentpage].data)
     } else {
-        // Hide the audio player if no file is selected
         myAudio.style.display = "none";
     }
 }
+
+function addAudio (data) {
+    audioSource.src = data ;
+        
+    // Show the audio player
+    document.getElementById('range').value = '0'
+    myAudio.style.display = "block";
+
+    // Load the audio
+    myAudio.load();
+    overlayaudio.style.display = "block";
+
+}
+
+
+
 let intervalForSet;
 // Pause audio
 pauseButton.addEventListener("click", () => {
@@ -328,12 +337,17 @@ window.addEventListener("mousemove", (e) => {
 
 
 document.getElementById('btn-close_audio').addEventListener('click' , () => {
+    closeAudio()
+})
+
+function closeAudio() {
+    audioData[currentpage] = {data : '' , isActive : false}
     overlayaudio.style.display = 'none'
     overlayaudio.style.top = '100px'
     overlayaudio.style.left = '100px'
     audio.pause();
     audioSource.src = ''
-})
+}
 
 
 ////////////////////////////////////// ------------ Audio -----------/////////////////////////////////////////////////
