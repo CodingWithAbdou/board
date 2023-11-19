@@ -504,6 +504,7 @@ function addLink() {
 
     // linkText.on("mousedown", 
     // });
+    document.getElementById('select').click()
 
     canvas.add(linkText);
     closeModal();

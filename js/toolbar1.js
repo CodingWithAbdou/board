@@ -330,10 +330,10 @@ function removeAllShapesAndPaths(obj) {
 
 
 
-function saveCanvasState() {
-    console.log('ok')
-    canvasHistory.push(canvas.getObjects().map(obj => obj.toObject(['selectable', 'evented', 'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'lockUniScaling', 'lockSkewingX', 'lockSkewingY', 'visible'])));
-}
+// function saveCanvasState() {
+//     console.log('ok')
+//     canvasHistory.push(canvas.getObjects().map(obj => obj.toObject(['selectable', 'evented', 'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'lockUniScaling', 'lockSkewingX', 'lockSkewingY', 'visible'])));
+// }
 
 let eraseIsImage = false
 let isMakeItErease = false
@@ -401,8 +401,9 @@ let dataForUndoRedo = []
 dataForUndoRedo.push(canvas.toJSON()) 
 let countUndo = 0 ;
 let postion = 0 ;
-
+let firstUndo = true
 function saveCanvasState() {
+    console.log()
     if(JSON.stringify(canvas.toJSON()) == JSON.stringify(dataForUndoRedo[dataForUndoRedo.length - 1])) return
     dataForUndoRedo.push(canvas.toJSON())
 }
@@ -410,19 +411,29 @@ function saveCanvasState() {
 
 
   function undo(){
-    canvas.remove()
-    postion = dataForUndoRedo.length - 1 - countUndo
-    canvas.loadFromJSON(dataForUndoRedo[dataForUndoRedo.length - 1 - countUndo], function () {
-        canvas.renderAll();
-    });
-    if(dataForUndoRedo.length > countUndo){
+  
+      if(dataForUndoRedo.length > countUndo){
+        if(firstUndo)  {
+            dataForUndoRedo.push(canvas.toJSON())
+            firstUndo = false
+            countUndo++
+        }else if (countUndo == dataForUndoRedo.length + 1 )
+          canvas.remove()
+          postion = dataForUndoRedo.length - 1 - countUndo
+          console.log(dataForUndoRedo)
+          console.log(postion)
+        canvas.loadFromJSON(dataForUndoRedo[postion], function () {
+            canvas.renderAll();
+        });
         countUndo++
     }
   }
 
   function redo(){
-   canvas.remove()
-    if(countUndo > 0) {
+      if(countUndo > 0) {
+        console.log(dataForUndoRedo)
+        console.log(postion + 1)
+        canvas.remove()
         canvas.loadFromJSON(dataForUndoRedo[++postion], function () {
             canvas.renderAll();
         });

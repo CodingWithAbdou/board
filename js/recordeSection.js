@@ -19,7 +19,7 @@ startRecordingButton.addEventListener('click', async () => {
   startRecordingButton.disabled = true;
   stopRecordingButton.disabled = false;
   isSave = true;
-
+  
   await navigator.mediaDevices
     .getDisplayMedia({
       video: true,
@@ -87,7 +87,6 @@ const createRecorder = (stream, mimeType) => {
     if (isSave) {
       saveFile(recordedChunks);
     }
-
     stopVideo.style.display = 'none';
     addVideo.style.display = 'block';
     pauseVideo.style.display = 'none';

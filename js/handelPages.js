@@ -69,6 +69,7 @@ document.getElementById('btn-Pages').addEventListener('click' , createNewPage)
 
 document.querySelectorAll('.btn_controll').forEach(btn => {
     btn.addEventListener('click' , ()=> {
+        dataForUndoRedo = []
         setData()
         if(btn.classList.contains('next_canvas')) currentpage++
         if(btn.classList.contains('prev_canvas')) currentpage--
@@ -91,7 +92,6 @@ document.querySelectorAll('.btn_controll').forEach(btn => {
 
 function checkIfDataAudio() {
     if(audioData[currentpage]) {
-        console.log(audioData)
         if(audioData[currentpage].isActive &&  audioData[currentpage].data != '') {
             addAudio (audioData[currentpage].data) 
         }else {
