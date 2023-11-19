@@ -112,7 +112,7 @@ italicButton.addEventListener("click", function () {
 
 underlineButton.addEventListener("click", function () {
     // isAddingText = false;
-
+    console.log('ok')
     // حصول على النص المحدد حالياً
     var activeObject = canvas.getActiveObject();
 
