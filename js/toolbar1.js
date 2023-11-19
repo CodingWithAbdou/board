@@ -22,7 +22,7 @@ document.getElementById("select").addEventListener("click", function () {
 penciltime.addEventListener("click", function () {
     isAddingText = false;
 
-    temporaryDrawingEnabled = !temporaryDrawingEnabled;
+    temporaryDrawingEnabled = true
     if (temporaryDrawingEnabled) {
         canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
         canvas.isDrawingMode = true;

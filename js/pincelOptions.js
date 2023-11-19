@@ -18,6 +18,7 @@ document.getElementById('brushSizetime').addEventListener("input", function () {
             color = element.style.backgroundColor
         }
     })
+    console.log(color)
     updateBrushSizeTime()
     updateBrushColor(color);
 });
