@@ -352,6 +352,7 @@ eraserButton.addEventListener("click", function () {
 //     saveCanvasState()
 // });
 
+canvas.on('mouse:down:before' , saveCanvasState )
 
 canvas.on('mouse:down', function (event) {
     if (isErasing && event.target) {
