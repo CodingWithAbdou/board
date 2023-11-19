@@ -1,7 +1,10 @@
 // Add an event listener for the minus button
 minusButton.addEventListener("click", function () {
+    isAddingText = false;
+
     var currentValue = parseInt(counterInput.value, 10);
     if (currentValue > 1) {
+        currentValue = parseInt(counterInput.value, 10) -1 
         counterInput.value = currentValue - 1;
     }
     // حصول على النص المحدد حالياً
@@ -17,20 +20,24 @@ minusButton.addEventListener("click", function () {
 
 // Add an event listener for the plus button
 plusButton.addEventListener("click", function () {
-    var currentValue = parseInt(counterInput.value, 10);
-    counterInput.value = currentValue + 1;
+    isAddingText = false;
+
+    var currentValue = parseInt(counterInput.value, 10) + 1;
     // حصول على النص المحدد حالياً
     var activeObject = canvas.getActiveObject();
 
+    counterInput.value = currentValue ;
     // التحقق من أن النص المحدد هو نص
     if (activeObject && activeObject.type === "textbox") {
         // تحديث حجم الخط للنص المحدد
-        activeObject.set({ fontSize: currentValue });
+        activeObject.set({ fontSize: currentValue  });
         canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
     }
 });
 
 boldButton.addEventListener("click", function () {
+    isAddingText = false;
+
     // حصول على النص المحدد حالياً
     var activeObject = canvas.getActiveObject();
     // التحقق من أن النص المحدد هو نص
@@ -56,6 +63,8 @@ normalButton.addEventListener("click", function () {
 
     // التحقق من أن النص المحدد هو نص
     if (activeObject && activeObject.type === "textbox") {
+        isAddingText = false;
+
         // تحديث حجم الخط للنص المحدد
         activeObject.set({
             fontWeight:
@@ -75,6 +84,8 @@ normalButton.addEventListener("click", function () {
 });
 
 italicButton.addEventListener("click", function () {
+    isAddingText = false;
+
     // Get the currently selected text object
     var activeObject = canvas.getActiveObject();
 
@@ -99,6 +110,8 @@ italicButton.addEventListener("click", function () {
 });
 
 underlineButton.addEventListener("click", function () {
+    isAddingText = false;
+
     // حصول على النص المحدد حالياً
     var activeObject = canvas.getActiveObject();
 
@@ -130,18 +143,18 @@ let textDirection = 'leftToRight';
 // });
 
 
-
+let fontFamily = 'Arial'
 // إضافة حدث عند تغيير حجم الخط
 document.getElementById("fontFamilySelect").addEventListener("input", function () {
-    var newFontFamily = this.value;
-
+    isAddingText = false;
+    fontFamily =  this.value ; 
     // حصول على النص المحدد حالياً
     var activeObject = canvas.getActiveObject();
-
     // التحقق من أن النص المحدد هو نص
     if (activeObject && activeObject.type === "textbox") {
-        // تحديث حجم الخط للنص المحدد
-        activeObject.set({ fontFamily: newFontFamily });
+        
+        activeObject.set({ fontFamily: fontFamily });
         canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
     }
+    return fontFamily;
 });

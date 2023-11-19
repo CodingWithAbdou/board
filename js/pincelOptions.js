@@ -13,7 +13,7 @@ document.getElementById("brushSize").addEventListener("input", function () {
 });
 document.getElementById('brushSizetime').addEventListener("input", function () {
     let color;
-    document.querySelectorAll('#toolbarcolor .color-circle').forEach(element => {
+    document.querySelectorAll('#toolbarcolortime .color-circle').forEach(element => {
         if(element.classList.contains('border_2')) {
             color = element.style.backgroundColor
         }

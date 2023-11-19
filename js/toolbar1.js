@@ -102,6 +102,7 @@ document.getElementById('shape').addEventListener('click' , ()=> {
 
 canvas.on('mouse:down', function(options) {
     let color;
+    let fontSizeText = document.getElementById('counterInput').value
     document.querySelectorAll('#toolbartext .color-circle').forEach(element => {
         if(element.classList.contains('border_2')) {
             color = element.style.backgroundColor
@@ -111,13 +112,15 @@ canvas.on('mouse:down', function(options) {
         color = 'black'
     }
     if (isAddingText) {
-        saveCanvasState()
+        
+        // saveCanvasState()
         const pointer = canvas.getPointer(options.e);
         const text = new fabric.Textbox('اكتب هنا', {
             left: pointer.x,
             top: pointer.y,
             fontFamily: 'Arial',
-            fontSize: 18,
+            fontSize: fontSizeText,
+            fontFamily: fontFamily,
             fill: color,
         });
         canvas.add(text);
@@ -150,7 +153,7 @@ document.getElementById("imageUploadInput").addEventListener("change", function 
                     
                 });
                 img.set('stackingIndex', 9999);
-                saveCanvasState()
+                // saveCanvasState()
                 canvas.add(img);
                 protectedImages.push(img);
 
@@ -295,23 +298,21 @@ function toggleEraseMode() {
     // Attach a click event listener to the canvas
 canvas.on('mouse:down', function (event) {
     if(isMouseDown){
-    if (eraseEnabled && event.target) {
-        // canvas.remove(event.target); // Remove the clicked object
-        console.log(event.target.type)
-        removeAllShapesAndPaths(event.target);
+        if (eraseEnabled && event.target) {
+            removeAllShapesAndPaths(event.target);
+        }
+        if(isErasing){
+            eraseEnabled = false;
+            const { offsetX, offsetY } = event.e;
+            lastMouseX = offsetX;
+            lastMouseY = offsetY;
+        }
     }
-    if(isErasing){
-        eraseEnabled = false;
-        const { offsetX, offsetY } = event.e;
-        lastMouseX = offsetX;
-        lastMouseY = offsetY;
-    }
-}
 });
+
 }
 
 function removeAllShapesAndPaths(obj) {
-    console.log(event.type)
         if (obj.type != 'image') {
             canvas.remove(obj);
         }
@@ -322,6 +323,7 @@ function removeAllShapesAndPaths(obj) {
 
 
 function saveCanvasState() {
+    console.log('ok')
     canvasHistory.push(canvas.getObjects().map(obj => obj.toObject(['selectable', 'evented', 'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'lockUniScaling', 'lockSkewingX', 'lockSkewingY', 'visible'])));
 }
 
@@ -344,12 +346,17 @@ eraserButton.addEventListener("click", function () {
         canvas.selection = true; // إعادة تمكين اختيار الكائنات عند عدم استخدام الممحاة
     }
 });
+// canvas.on('object:added', saveCanvasState);
+// canvas.on('object:removed', saveCanvasState);
+// canvas.on('object:modified', function(event) {
+//     saveCanvasState()
+// });
 
 
 canvas.on('mouse:down', function (event) {
     if (isErasing && event.target) {
         var target = event.target;
-        saveCanvasState()
+        // saveCanvasState()
         if (target.type == 'image') {
             canvas.selection = true;
             canvas.isDrawingMode = false;
@@ -361,21 +368,9 @@ canvas.on('mouse:down', function (event) {
 });
 canvas.on('mouse:up', function (event) {
     if (isErasing && event.target) {
-        saveCanvasState()
+        // saveCanvasState()
     }
 })
-
-
-let dataForUndoRedo = []
-dataForUndoRedo.push(canvas.toJSON()) 
-let countUndo = 0 ;
-let postion = 0 ;
-function saveCanvasState() {
-    if(JSON.stringify(canvas.toJSON()) == JSON.stringify(dataForUndoRedo[dataForUndoRedo.length - 1])) return
-    dataForUndoRedo.push(canvas.toJSON())
-}
-
-
 canvas.on('mouse:move' , function(event) {
     if (isErasing && event.target) {
 
@@ -393,15 +388,17 @@ canvas.on('mouse:move' , function(event) {
 })
 
 
-var isRedoing = false;
-var h = [];
+let dataForUndoRedo = []
+dataForUndoRedo.push(canvas.toJSON()) 
+let countUndo = 0 ;
+let postion = 0 ;
 
-  canvas.on('object:added',function(){
-    if(!isRedoing){
-      h = [];
-    }
-    isRedoing = false;
-  });
+function saveCanvasState() {
+    if(JSON.stringify(canvas.toJSON()) == JSON.stringify(dataForUndoRedo[dataForUndoRedo.length - 1])) return
+    dataForUndoRedo.push(canvas.toJSON())
+}
+
+
 
   function undo(){
     canvas.remove()
@@ -423,30 +420,6 @@ var h = [];
         countUndo--
     } 
   }
-
-//   function redo(){
-    
-//     if (redoStack.length > 0) {
-//         const currentState = fabrikBoard.getState();
-//         undoStack.push(currentState);
-
-//         const nextState = redoStack.pop();
-//         fabrikBoard.setState(nextState);
-//       }
-//   }
-
-//   canvas.on('object:modified', () => {
-//     saveToUndoStack();
-//   });
-
-
-
-// canvas.on('object:added',function(){
-//     saveToUndoStack();
-//   });
-  
-
-
 
   document.getElementById("addUndo").addEventListener("click", undo);
   document.getElementById("addRedo").addEventListener("click", redo);

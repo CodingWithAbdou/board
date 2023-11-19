@@ -99,7 +99,7 @@ canvas.on('mouse:move', function (options) {
 
 canvas.on('mouse:up', function () {
   if (isCreatingStar && startDrawing) {
-      saveCanvasState();
+      // saveCanvasState();
       isCreatingStar = false;
       canvas.selection = true;
       canvas.defaultCursor = 'default';
@@ -173,7 +173,7 @@ drawTriangleButton.addEventListener("click", function () {
 
     canvas.on('mouse:up', function () {
         if (isCreatingTriangle) {
-            saveCanvasState()
+            // saveCanvasState()
             isCreatingTriangle = false;
             canvas.selection = true;
             canvas.defaultCursor = 'default';
@@ -245,7 +245,7 @@ drawCircleButton.addEventListener("click", function () {
 
     canvas.on('mouse:up', function () {
         if (isCreatingCircle) {
-            saveCanvasState()
+            // saveCanvasState()
             isCreatingCircle = false;
             canvas.selection = true;
             canvas.defaultCursor = 'default';
@@ -322,7 +322,7 @@ drawSquareButton.addEventListener("click", function () {
 
     canvas.on('mouse:up', function () {
         if (isCreatingSquare) {
-            saveCanvasState()
+            // saveCanvasState()
             isCreatingSquare = false;
             canvas.selection = true;
             canvas.defaultCursor = 'default';

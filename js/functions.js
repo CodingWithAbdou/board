@@ -105,7 +105,8 @@ function startDrawingLine(o) {
 function stopDrawingLine() {
     if (mouseDown) {
         mouseDown = false;
-        saveCanvasState()
+        // saveCanvasState()
+        canvas.selection = true;
         document.getElementById("select").click()
         canvas.off({
             "mouse:down": startAddingLine,
@@ -252,7 +253,9 @@ function startDrawingSingleArrowLine(o) {
 function stopDrawingSingleArrowLine() {
     if (mouseDown) {
         mouseDown = false;
-        saveCanvasState()
+        // saveCanvasState()
+        canvas.selection = true;
+
         document.getElementById("select").click()
 
         canvas.off({
@@ -429,7 +432,9 @@ function startDrawingDoubleArrowLine(o) {
 function stopDrawingDoubleArrowLine() {
     if (mouseDown) {
         mouseDown = false;
-        saveCanvasState()
+        // saveCanvasState()
+                canvas.selection = true;
+
         document.getElementById("select").click()
 
         canvas.off({
@@ -480,7 +485,8 @@ function closeModal() {
 function addLink() {
     var linkTitle = document.getElementById("linkTitle").value;
     var linkURL = document.getElementById("linkURL").value;
-    isSquareDrawn = true;
+    isSquareDrawn = false;
+    isMouseDown = false
     canvas.isDrawingMode = false;
     var linkText = new fabric.Text(linkTitle, {
         left: 200,
@@ -490,17 +496,19 @@ function addLink() {
         fill: "#008CF7",
         underline: true,
     });
-
-    linkText.on("mousedown", function (event) {
+    linkText.on('mousedblclick',function (event) {
         canvas.selection = true;
-        if (event.e.detail === 2) {
-            window.open(linkURL, "_blank");
-        }
+        window.open(linkURL, "_blank");
+        document.getElementById('select').click()
     });
+
+    // linkText.on("mousedown", 
+    // });
 
     canvas.add(linkText);
     closeModal();
 }
+
 
 function handleFileSelect(event) {
     const file = event.target.files[0];
