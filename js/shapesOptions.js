@@ -42,21 +42,21 @@ canvas.on('mouse:down', function (options) {
       startY = options.e.clientY;
 
       initialPoints = [
-          { x: 100, y: 10 },
-          { x: 125, y: 60 },
-          { x: 200, y: 70 },
-          { x: 140, y: 115 },
           { x: 160, y: 190 },
           { x: 100, y: 150 },
           { x: 40, y: 190 },
           { x: 60, y: 115 },
           { x: 0, y: 70 },
-          { x: 75, y: 60 }
+          { x: 75, y: 60 },
+          { x: 100, y: 10 },
+          { x: 125, y: 60 },
+          { x: 200, y: 70 },
+          { x: 140, y: 115 },
       ];
 
       star = new fabric.Polygon(initialPoints, {
-          left: startX,
-          top: startY,
+          left: startX - 150,
+          top: startY - 150,
           fill: color,
           stroke: 'black',
           strokeWidth: 2,
@@ -67,17 +67,26 @@ canvas.on('mouse:down', function (options) {
   }
 });
 
-canvas.on('mouse:move', function (options) {
-  if (isCreatingStar && startDrawing) {
-      let currentX = options.e.clientX;
-      let currentY = options.e.clientY;
-
-      console.log(currentX)
-      console.log(currentY)
-
-      canvas.renderAll();
-  }
-});
+// canvas.on('mouse:move', function (options) {
+//   if (isCreatingStar && startDrawing) {
+//       let currentX = options.e.clientX;
+//       let currentY = options.e.clientY;
+//       initialPoints = [
+//         { x: 160, y: 290 },
+//         { x: 100, y: 150 },
+//         { x: 40, y: 190 },
+//         { x: 60, y: 115 },
+//         { x: 0, y: 70 },
+//         { x: 75, y: 60 },
+//         { x: 100, y: 10 },
+//         { x: 125, y: 60 },
+//         { x: 200, y: 70 },
+//         { x: 140, y: 115 },
+//     ];
+//     star.set( star.set({ points: initialPoints }) )
+//       canvas.renderAll();
+//   }
+// });
 
 canvas.on('mouse:up', function () {
   if (isCreatingStar && startDrawing) {
@@ -142,6 +151,8 @@ drawTriangleButton.addEventListener("click", function () {
                 var height = options.e.clientY - startY;
 
                 // Manually set the position based on the initial click point
+                console.log('width' , width)
+                console.log()
                 triangles[countTriangles].set({
                     left: width > 0 ? startX : options.e.clientX,
                     top: height > 0 ? startY : options.e.clientY,
