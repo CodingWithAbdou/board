@@ -318,6 +318,15 @@ canvas.on('mouse:down', function (event) {
     }
 });
 
+canvas.on('mouse:move', function (event) {
+    if(isMouseDown && eraseEnabled && event.target) {
+        removeAllShapesAndPaths(event.target)
+    }
+});
+canvas.on('mouse:up', function (event) {
+    isMouseDown = false
+});
+
 }
 
 function removeAllShapesAndPaths(obj) {
@@ -325,15 +334,6 @@ function removeAllShapesAndPaths(obj) {
             canvas.remove(obj);
         }
 }
-
-// Example usage:
-
-
-
-// function saveCanvasState() {
-//     console.log('ok')
-//     canvasHistory.push(canvas.getObjects().map(obj => obj.toObject(['selectable', 'evented', 'lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'lockUniScaling', 'lockSkewingX', 'lockSkewingY', 'visible'])));
-// }
 
 let eraseIsImage = false
 let isMakeItErease = false
