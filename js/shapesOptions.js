@@ -54,21 +54,15 @@ canvas.on('mouse:down', function (options) {
           { x: 75, y: 60 }
       ];
 
-      initialCenter = {
-          x: startX,
-          y: startY
-      };
-
       star = new fabric.Polygon(initialPoints, {
-          left: initialCenter.x,
-          top: initialCenter.y,
+          left: startX,
+          top: startY,
           fill: color,
           stroke: 'black',
           strokeWidth: 2,
           selectable: true,
       });
 
-      canvas.add(star);
       startDrawing = true;
   }
 });
@@ -78,20 +72,8 @@ canvas.on('mouse:move', function (options) {
       let currentX = options.e.clientX;
       let currentY = options.e.clientY;
 
-      let deltaX = currentX - startX;
-      let deltaY = currentY - startY;
-
-      // Calculate the distance between the initial and current points
-      let currentDistance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
-
-      // Adjust the scale factor based on the change in distance
-      let scaleFactor = currentDistance / initialDistances;
-
-      // Set the new scale factor for the star
-      star.set({
-          scaleX: scaleFactor,
-          scaleY: scaleFactor,
-      });
+      console.log(currentX)
+      console.log(currentY)
 
       canvas.renderAll();
   }
@@ -105,6 +87,7 @@ canvas.on('mouse:up', function () {
       canvas.defaultCursor = 'default';
       canvas.hoverCursor = 'default';
       startDrawing = false;
+      canvas.add(star);
       document.getElementById("select").click()
   }
 });

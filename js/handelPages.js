@@ -8,12 +8,21 @@ let currentpage = 1
 
 var canvasElement = document.getElementById(`canvas`);
 // Create a Fabric.js canvas object from the existing canvas element
+let heightCanvas = 0 
+let widthCanvas = window.innerWidth - 20
+if(widthCanvas > 875 ) {
+    heightCanvas = window.innerHeight -160
+}else {
+    heightCanvas = window.innerHeight -210
+}
+
+
 var canvas = new fabric.Canvas(canvasElement, {
     isDrawingMode: false, // Disable freehand drawing mode by default
     brushColor: "#FF0000", // Default brush color
     brushSize: 2,
-    width: window.innerWidth,
-    height: window.innerHeight, // Default brush size
+    width: widthCanvas ,
+    height: heightCanvas, // Default brush size
 });
 
 // // sava data to local
