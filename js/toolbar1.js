@@ -398,47 +398,57 @@ canvas.on('mouse:move' , function(event) {
 
 
 let dataForUndoRedo = []
-dataForUndoRedo.push(canvas.toJSON()) 
-let countUndo = 0 ;
+
+// let countUndo = 0 ;
 let postion = 0 ;
 let firstUndo = true
+let firstRndo = true
+// let isPostion =false
+
+let isclickUndo = false
+let isclickRndo = false
+
+
 function saveCanvasState() {
-    console.log()
+  if(temporaryDrawingEnabled ) return
     if(JSON.stringify(canvas.toJSON()) == JSON.stringify(dataForUndoRedo[dataForUndoRedo.length - 1])) return
-    dataForUndoRedo.push(canvas.toJSON())
+    
+    if(postion != 0 || postion != dataForUndoRedo.length - 1) {
+        dataForUndoRedo.length = postion + 1
+    }
+    dataForUndoRedo[postion++] = canvas.toJSON()
+    isclickUndo = false
+    isclickRndo = false
+    console.log(dataForUndoRedo)
 }
 
 
 
   function undo(){
-  
-      if(dataForUndoRedo.length > countUndo){
-        if(firstUndo)  {
-            dataForUndoRedo.push(canvas.toJSON())
-            firstUndo = false
-            countUndo++
-        }else if (countUndo == dataForUndoRedo.length + 1 )
-          canvas.remove()
-          postion = dataForUndoRedo.length - 1 - countUndo
-          console.log(dataForUndoRedo)
-          console.log(postion)
-        canvas.loadFromJSON(dataForUndoRedo[postion], function () {
-            canvas.renderAll();
-        });
-        countUndo++
+    if(isclickUndo == false && isclickRndo ==false && dataForUndoRedo.length != 0) {
+        dataForUndoRedo[postion] = canvas.toJSON()
     }
-  }
+    isclickUndo = true
+    isclickRndo = false
+    
+    console.log(postion)
+    if(postion == 0) return
+    canvas.loadFromJSON(dataForUndoRedo[--postion], function () {
+        canvas.renderAll();
+    });
+
+}
 
   function redo(){
-      if(countUndo > 0) {
-        console.log(dataForUndoRedo)
-        console.log(postion + 1)
-        canvas.remove()
-        canvas.loadFromJSON(dataForUndoRedo[++postion], function () {
-            canvas.renderAll();
-        });
-        countUndo--
-    } 
+    isclickUndo = false
+    isclickRndo = true
+    console.log(postion)
+
+    if(postion == dataForUndoRedo.length -1 ) return
+    canvas.loadFromJSON(dataForUndoRedo[++postion], function () {
+        canvas.renderAll();
+      });
+
   }
 
   document.getElementById("addUndo").addEventListener("click", undo);

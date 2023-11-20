@@ -15,6 +15,7 @@ const confirmFilenameButton = document.getElementById('confirmFilename');
 const cancelRecordingButton = document.getElementById('closeVideo');
 const dialog = document.getElementById('dialog');
 
+
 startRecordingButton.addEventListener('click', async () => {
   startRecordingButton.disabled = true;
   stopRecordingButton.disabled = false;
@@ -61,10 +62,8 @@ pauseResumeRecordingButton.addEventListener('click', () => {
 });
 
 cancelRecordingButton.addEventListener('click', () => {
-  if (mediaRecorder.state === 'recording') {
     isSave = false;
     mediaRecorder.stop();
-  }
 });
 
 const createRecorder = (stream, mimeType) => {
@@ -87,6 +86,8 @@ const createRecorder = (stream, mimeType) => {
     if (isSave) {
       saveFile(recordedChunks);
     }
+    isRecordingPaused = false;
+    pauseResumeRecordingButton.src = 'images/pausevideo.svg';
     stopVideo.style.display = 'none';
     addVideo.style.display = 'block';
     pauseVideo.style.display = 'none';
@@ -94,15 +95,12 @@ const createRecorder = (stream, mimeType) => {
     startRecordingButton.disabled = false;
     stopRecordingButton.disabled = true;
     recordedChunks = [];
-    // stream.getTracks()[0].stop();
     stream.getTracks().forEach((track) => track.stop());
   };
-
-  stream.getVideoTracks()[0].addEventListener('ended', () => {
+  stream.getVideoTracks()[0].onended=() => {
     stream.getTracks().forEach((track) => track.stop());
-    console.log('The user has ended sharing the screen');
-  });
-  mediaRecorder.start(200); // For every 200ms the stream data will be stored in a separate chunk.
+  };
+  mediaRecorder.start(200);
   return mediaRecorder;
 };
 
@@ -110,11 +108,7 @@ const saveFile = (recordedChunks) => {
   const blob = new Blob(recordedChunks, {
     type: 'video/mp4',
   });
-  // عرض مربع الحوار لتسمية الفيديو بعد الضغط على زر التحميل
-  // dialog.style.display = 'block';
-  // confirmFilenameButton.addEventListener('click', () => {
   let filename = window.prompt('ادخل اسم الملف') || 'recorded-video',
-    // const filename = filenameInput.value  'recorded-video';
     downloadLink = document.createElement('a');
   downloadLink.href = URL.createObjectURL(blob);
   downloadLink.download =` ${filename}.mp4`;
@@ -122,6 +116,4 @@ const saveFile = (recordedChunks) => {
   downloadLink.click();
   URL.revokeObjectURL(blob); // clear from memory
   document.body.removeChild(downloadLink);
-  // dialog.style.display = 'none';
-  // });
 };
