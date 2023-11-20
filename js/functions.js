@@ -455,6 +455,8 @@ function zoomIn() {
     zoomLevel += 0.1; // Increase zoom level by 10%
     canvas.setZoom(zoomLevel);
     canvas.renderAll(); // Redraw the canvas
+    console.log(zoomLevel)
+
 }
 
 // Function to zoom out
@@ -465,6 +467,7 @@ function zoomOut() {
     }
     canvas.setZoom(zoomLevel);
     canvas.renderAll(); // Redraw the canvas
+    console.log(zoomLevel)
 }
 
 function clearCanvas() {

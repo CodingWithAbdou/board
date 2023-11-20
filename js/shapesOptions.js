@@ -38,25 +38,25 @@ canvas.on('mouse:down', function (options) {
           color = 'transparent';
       }
 
-      startX = options.e.clientX;
-      startY = options.e.clientY;
+      startX = options.e.clientX / zoomLevel ;
+      startY = options.e.clientY / zoomLevel ;
 
       initialPoints = [
-          { x: 160, y: 190 },
-          { x: 100, y: 150 },
-          { x: 40, y: 190 },
-          { x: 60, y: 115 },
-          { x: 0, y: 70 },
-          { x: 75, y: 60 },
-          { x: 100, y: 10 },
-          { x: 125, y: 60 },
-          { x: 200, y: 70 },
-          { x: 140, y: 115 },
+          { x: 160 / zoomLevel, y: 190 / zoomLevel },
+          { x: 100 / zoomLevel, y: 150 / zoomLevel },
+          { x: 40 / zoomLevel, y: 190 / zoomLevel },
+          { x: 60 / zoomLevel, y: 115 / zoomLevel },
+          { x: 0 / zoomLevel , y: 70  / zoomLevel},
+          { x: 75 / zoomLevel, y: 60  / zoomLevel},
+          { x: 100 / zoomLevel, y: 10  / zoomLevel},
+          { x: 125 / zoomLevel, y: 60  / zoomLevel},
+          { x: 200 / zoomLevel, y: 70  / zoomLevel},
+          { x: 140 / zoomLevel, y: 115 / zoomLevel },
       ];
 
       star = new fabric.Polygon(initialPoints, {
-          left: startX - 150,
-          top: startY - 150,
+          left: (startX - 150)   / zoomLevel,
+          top: (startY  - 150)   / zoomLevel,
           fill: color,
           stroke: 'black',
           strokeWidth: 2,
@@ -116,6 +116,7 @@ drawTriangleButton.addEventListener("click", function () {
     canvas.hoverCursor = 'crosshair';
 
     canvas.on('mouse:down', function (options) {
+        console.log(zoomLevel)
         let color;
         document.querySelectorAll('#toolbarshape .color-circle').forEach(element => {
             if (element.classList.contains('border_2')) {
@@ -126,8 +127,8 @@ drawTriangleButton.addEventListener("click", function () {
             color = 'transparent'
         }
         if (isCreatingTriangle) {
-            startX = options.e.clientX;
-            startY = options.e.clientY;
+            startX = options.e.clientX / zoomLevel;
+            startY = options.e.clientY / zoomLevel;
 
             triangles[countTriangles] = new fabric.Triangle({
                 left: startX,
@@ -147,15 +148,15 @@ drawTriangleButton.addEventListener("click", function () {
     canvas.on('mouse:move', function (options) {
         if (isCreatingTriangle) {
             if (triangles[countTriangles]) {
-                var width = options.e.clientX - startX;
-                var height = options.e.clientY - startY;
+                var width = options.e.clientX / zoomLevel - startX;
+                var height = options.e.clientY / zoomLevel - startY;
 
                 // Manually set the position based on the initial click point
                 console.log('width' , width)
                 console.log()
                 triangles[countTriangles].set({
-                    left: width > 0 ? startX : options.e.clientX,
-                    top: height > 0 ? startY : options.e.clientY,
+                    left: width > 0 ? startX : options.e.clientX / zoomLevel,
+                    top: height > 0 ? startY : options.e.clientY / zoomLevel,
                     width: Math.abs(width),
                     height: Math.abs(height),
                 });
@@ -203,8 +204,8 @@ drawCircleButton.addEventListener("click", function () {
             color = 'transparent'
         }
         if (isCreatingCircle) {
-            startX = options.e.clientX;
-            startY = options.e.clientY;
+            startX = options.e.clientX / zoomLevel;
+            startY = options.e.clientY / zoomLevel;
 
             circles[countCircles] = new fabric.Circle({
                 left: startX,
@@ -224,7 +225,7 @@ drawCircleButton.addEventListener("click", function () {
         if (isCreatingCircle) {
             if (circles[countCircles]) {
                 // Calculate the average of horizontal and vertical distances
-                var radius = Math.abs((options.e.clientX - startX) + (options.e.clientY - startY)) / 2;
+                var radius = Math.abs((options.e.clientX  / zoomLevel - startX) + (options.e.clientY / zoomLevel - startY)) / 2;
 
                 circles[countCircles].set({
                     radius: radius,
@@ -273,8 +274,8 @@ drawSquareButton.addEventListener("click", function () {
             color = 'transparent'
         }
         if (isCreatingSquare) {
-            startX = options.e.clientX;
-            startY = options.e.clientY;
+            startX = options.e.clientX / zoomLevel;
+            startY = options.e.clientY / zoomLevel;
 
             squares[countSquares] = new fabric.Rect({
                 left: startX,
@@ -294,16 +295,16 @@ drawSquareButton.addEventListener("click", function () {
     canvas.on('mouse:move', function (options) {
         if (isCreatingSquare) {
             if (squares[countSquares]) {
-                var width = options.e.clientX - startX;
-                var height = options.e.clientY - startY;
+                var width = options.e.clientX / zoomLevel - startX;
+                var height = options.e.clientY / zoomLevel - startY;
                 // var height = options.e.clientY - startY;
 
                 var sideLength = Math.min(Math.abs(width), Math.abs(height));
 
                 // Calculate the correct position based on the mouse movement
                 squares[countSquares].set({
-                    left: width > 0 ? startX : options.e.clientX,
-                    top: height > 0 ? startY : options.e.clientY,
+                    left: width > 0 ? startX : options.e.clientX / zoomLevel,
+                    top: height > 0 ? startY : options.e.clientY / zoomLevel,
                     width: sideLength,
                     height: sideLength,
                 });
