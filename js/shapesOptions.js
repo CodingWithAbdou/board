@@ -157,8 +157,8 @@ drawTriangleButton.addEventListener("click", function () {
                 triangles[countTriangles].set({
                     left: width > 0 ? startX : options.e.clientX / zoomLevel,
                     top: height > 0 ? startY : options.e.clientY / zoomLevel,
-                    width: Math.abs(width),
-                    height: Math.abs(height),
+                    width: Math.abs(width > height ? width : height ),
+                    height: Math.abs(width > height ? width : height),
                 });
 
                 canvas.renderAll();
