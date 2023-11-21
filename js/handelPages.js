@@ -5,7 +5,7 @@ const pagintion = document.querySelector('.pagintion')
 var pagesData = {};
 let numberPage = 1;
 let currentpage = 1
-
+let endSetionGoOut = false
 var canvasElement = document.getElementById(`canvas`);
 // Create a Fabric.js canvas object from the existing canvas element
 let heightCanvas = 0 
@@ -31,6 +31,9 @@ window.addEventListener("beforeunload", function () {
     localStorage.setItem("pagesData",  JSON.stringify(pagesData));
     localStorage.setItem("numberPage",  numberPage);
     localStorage.setItem("currentpage",  currentpage);
+    if(endSetionGoOut) {
+        localStorage.clear()
+    }
 });
 
 // get Data
@@ -51,6 +54,9 @@ if (localStorage.getItem('currentpage')) {
     canvas.loadFromJSON(pagesData['page' +  currentpage], function () {
         canvas.renderAll();
     });
+}else {
+    btnPre.setAttribute('disabled' , '')
+    btnNex.setAttribute('disabled' , '')
 }
 
 // Function to create a new page
@@ -68,7 +74,6 @@ const  createNewPage =  () => {
             btnNex.removeAttribute('disabled')
         }
     }
-    
     numberPage++;
 
     creathead(numberPage)

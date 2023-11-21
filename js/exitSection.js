@@ -8,8 +8,10 @@ confirmExitButton.addEventListener("click", function () {
     pagesData = {};
     customAlert.style.display = "none";
     canvas.clear()
+    endSetionGoOut = true
     window.location.href = "https://huzmh.sa/login?returnUrl=%2Fhome";
 });
+
 
 cancelExitButton.addEventListener("click", function () {
     customAlert.style.display = "none";
