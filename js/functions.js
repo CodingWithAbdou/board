@@ -450,13 +450,14 @@ function stopDrawingDoubleArrowLine() {
         canvas.requestRenderAll();
     }
 }
+let valueAdded = 0
 // Function to zoom in
 function zoomIn() {
     zoomLevel += 0.1; // Increase zoom level by 10%
     canvas.setZoom(zoomLevel);
     canvas.renderAll(); // Redraw the canvas
     console.log(zoomLevel)
-
+    // valueAdded += 15   
 }
 
 // Function to zoom out
@@ -466,8 +467,10 @@ function zoomOut() {
         zoomLevel = 0.1; // Set a minimum zoom level
     }
     canvas.setZoom(zoomLevel);
-    canvas.renderAll(); // Redraw the canvas
     console.log(zoomLevel)
+
+    canvas.renderAll(); // Redraw the canvas
+    // valueAdded -= 15   
 }
 
 function clearCanvas() {

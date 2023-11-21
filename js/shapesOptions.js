@@ -38,25 +38,26 @@ canvas.on('mouse:down', function (options) {
           color = 'transparent';
       }
 
+      canvas.renderAll()
       startX = options.e.clientX / zoomLevel ;
       startY = options.e.clientY / zoomLevel ;
 
       initialPoints = [
-          { x: 160 / zoomLevel, y: 190 / zoomLevel },
-          { x: 100 / zoomLevel, y: 150 / zoomLevel },
-          { x: 40 / zoomLevel, y: 190 / zoomLevel },
-          { x: 60 / zoomLevel, y: 115 / zoomLevel },
-          { x: 0 / zoomLevel , y: 70  / zoomLevel},
-          { x: 75 / zoomLevel, y: 60  / zoomLevel},
-          { x: 100 / zoomLevel, y: 10  / zoomLevel},
-          { x: 125 / zoomLevel, y: 60  / zoomLevel},
-          { x: 200 / zoomLevel, y: 70  / zoomLevel},
-          { x: 140 / zoomLevel, y: 115 / zoomLevel },
+          { x: 160 , y: 190  },
+          { x: 100 , y: 150  },
+          { x: 40 , y: 190  },
+          { x: 60 , y: 115  },
+          { x: 0  , y: 70  },
+          { x: 75 , y: 60  },
+          { x: 100 , y: 10  },
+          { x: 125 , y: 60  },
+          { x: 200 , y: 70  },
+          { x: 140 , y: 115  },
       ];
 
       star = new fabric.Polygon(initialPoints, {
-          left: (startX - 150)   / zoomLevel,
-          top: (startY  - 150)   / zoomLevel,
+          left: startX  - 120  + valueAdded,
+          top: startY - 140 + valueAdded ,
           fill: color,
           stroke: 'black',
           strokeWidth: 2,
