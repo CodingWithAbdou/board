@@ -290,7 +290,7 @@ body {
 .overlayfile{
     position: absolute;
     top: -103px;
-    left: -429px;
+    left: -220px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     display: none;
     transition: opacity 500ms;
@@ -826,6 +826,7 @@ body {
 
 #addexist{
     cursor: pointer;  
+    width: fit-content;
 }
 #addexist:hover { opacity: 0.5; }
 #addUndo{

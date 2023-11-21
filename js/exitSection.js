@@ -5,9 +5,10 @@ exitButton.addEventListener("click", function () {
 });
 
 confirmExitButton.addEventListener("click", function () {
+    pagesData = {};
     customAlert.style.display = "none";
-    clearCanvas();
-    window.location.href = "srar.html";
+    canvas.clear()
+    window.location.href = "https://huzmh.sa/login?returnUrl=%2Fhome";
 });
 
 cancelExitButton.addEventListener("click", function () {

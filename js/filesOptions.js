@@ -146,25 +146,25 @@ addPageButton.addEventListener("click", function () {
 const wordInput = document.getElementById("wordInput");
 
 
-document.getElementById('word').addEventListener('click' , ()=> {
-    document.getElementById("wordInput").click();
-})
+// document.getElementById('word').addEventListener('click' , ()=> {
+//     document.getElementById("wordInput").click();
+// })
 
 // Event listener for PDF input change
-wordInput.addEventListener("change", function (event) {
+// wordInput.addEventListener("change", function (event) {
 
-    const file = event.target.files[0];
-    if (file) {
+//     const file = event.target.files[0];
+//     if (file) {
         
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            loadDataWord( file , e.target.result)
-        };
-        reader.readAsArrayBuffer(file);
-    }else {
-        console.log('error')
-    }
-})
+//         const reader = new FileReader();
+//         reader.onload = function(e) {
+//             loadDataWord( file , e.target.result)
+//         };
+//         reader.readAsArrayBuffer(file);
+//     }else {
+//         console.log('error')
+//     }
+// })
 
 
 function loadDataWord(file , wordData ) {
@@ -416,17 +416,17 @@ addNoteButton.addEventListener("click", function () {
 //     }
 //   });
 
-document.getElementById("excel").addEventListener("click", function () {
-    overlayshape.style.display = "none";
-    overlaycolor.style.display = "none";
-    overlaytext.style.display = "none";
-    overlayfile.style.display = "none";
-    // افتح مربع حوار لاختيار ملف الصورة
-    document.getElementById("excelFileInput").click();
-});
+// document.getElementById("excel").addEventListener("click", function () {
+//     overlayshape.style.display = "none";
+//     overlaycolor.style.display = "none";
+//     overlaytext.style.display = "none";
+//     overlayfile.style.display = "none";
+//     // افتح مربع حوار لاختيار ملف الصورة
+//     document.getElementById("excelFileInput").click();
+// });
 
 // Event listener for file input change
-excelFileInput.addEventListener("change", handleFileSelect);
+// excelFileInput.addEventListener("change", handleFileSelect);
 
 // Event listener for render button click
 // renderButton.addEventListener("click", renderExcelToCanvas);
