@@ -38,10 +38,9 @@ canvas.on('mouse:down', function (options) {
           color = 'transparent';
       }
 
-      canvas.renderAll()
-      startX = options.e.clientX / zoomLevel ;
-      startY = options.e.clientY / zoomLevel ;
-
+      startX = options.absolutePointer.x ;
+      startY = options.absolutePointer.y ;
+      console.log(options)
       initialPoints = [
           { x: 160 , y: 190  },
           { x: 100 , y: 150  },
@@ -56,8 +55,8 @@ canvas.on('mouse:down', function (options) {
       ];
 
       star = new fabric.Polygon(initialPoints, {
-          left: startX  - 120  + valueAdded,
-          top: startY - 140 + valueAdded ,
+          left: startX  - 120 ,
+          top: startY - 120  ,
           fill: color,
           stroke: 'black',
           strokeWidth: 2,
@@ -97,6 +96,7 @@ canvas.on('mouse:up', function () {
       canvas.defaultCursor = 'default';
       canvas.hoverCursor = 'default';
       startDrawing = false;
+      
       canvas.add(star);
       document.getElementById("select").click()
   }

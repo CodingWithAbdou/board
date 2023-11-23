@@ -358,6 +358,37 @@ const excelFileInput = document.getElementById("excelFileInput");
 
 
 
+
+
+///////////////////////////////////
+var imgNote;
+fabric.Object.prototype.transparentCorners = false;
+fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
+
+fabric.Canvas.prototype.getAbsoluteCoords = function(object) {
+  return {
+    left: object.left + this._offset.left,
+    top: object.top + this._offset.top
+  };
+}
+
+var textarea = document.createElement('textarea');
+textarea.style.width = '220px'
+textarea.style.height = '160px'
+function positionBtn(obj , width = '' , height ='') {
+  var absCoords = canvas.getAbsoluteCoords(obj);
+    textarea.style.left = (absCoords.left) + 'px';
+    textarea.style.top = (absCoords.top + 10) + 'px';
+    if(width != '' && height != '') {
+        textarea.style.width = width 
+        textarea.style.height = height  
+
+        textarea.style.left = (absCoords.left + width) + 'px';
+        textarea.style.top = (absCoords.top + height) + 'px';    
+    }
+    textarea.style.transform = 'translate(-50%, -50%)'
+}
+
 addNoteButton.addEventListener("click", function () {
     // Create a background image
     fabric.Image.fromURL("images/background.png", function (img) {
@@ -371,41 +402,66 @@ addNoteButton.addEventListener("click", function () {
         img.set({
             left: 200,
             top: 400,
-            scaleX: scale, // Scale the image based on the desired width and height
+            scaleX: scale,
             scaleY: scale,
             hasControls: true,
         });
 
-        // Create a text object with custom styling
-        var noteText = new fabric.IText('اكتب هنا', {
-            left: 350,
-            top: 440,
-            fontSize: 20,
-            fill: "black",
-            width: 200,
-            fontFamily: 'Arial', // Use an Arabic-supporting font
-            fontSize: 20,
-            // flipX: true, // Flip the text horizontally
-          
-        });
+        document.body.appendChild(textarea)
+        textarea.style.position = 'absolute'
+        // textarea.style.background = 'transparent'
+        textarea.style.resize = 'none'
+        textarea.style.border = 'none'
+        textarea.style.outline = 'none'
+        textarea.style.padding = '10px'
+        textarea.style.direction = 'rtl'
+        textarea.style.background = 'transparent'
+        canvas.add(img);
 
-        var group = new fabric.Group([img, noteText], {
-            left: 50,
-            top: 50,
-            selectable: true
+
+
+        img.on('moving', function() { positionBtn(img) });
+        // img.on('scaling', function() { positionBtn(img) });
+        positionBtn(img);
+        img.on('scaling', function(options) {
+            width =  (img.width * img.scaleX  ) + 'px'
+            height =  (img.height * img.scaleY * 80 /100) + 'px'
+            positionBtn(img , width , height)
         });
-        // saveCanvasState()
-        canvas.add(group)
-        group.on('mousedblclick', function() {
-            noteText.enterEditing();
-            noteText.hiddenTextarea.focus();
-            noteText.set({ text: '' }); // Clear the text when double-clicked
-            canvas.renderAll();
-        });
-        
         canvas.renderAll();
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // canvas.on('object:moving', function(e) {
 //     var obj = e.target;
 //     if (obj.type === 'group') {
