@@ -64,6 +64,18 @@ if (localStorage.getItem('currentpage')) {
     });
     addBtnRemove()
 }else {
+    const hiddenRect = new fabric.Rect({
+        left: 100,
+        top: 100,
+        width: 50,
+        height: 50,
+        fill: 'blue',
+        visible: false, // Initially set to hide
+    });
+    
+    // Add the rectangle to the canvas
+    canvas.add(hiddenRect);
+    addBtnRemove()
     btnPre.setAttribute('disabled' , '')
     btnNex.setAttribute('disabled' , '')
 }
@@ -156,7 +168,7 @@ function addBtnRemove() {
         console.log(obj);
         fabric.Object.prototype.set({
             transparentCorners: false,
-            cornerColor: 'blue',
+            cornerColor: '#36b673',
             cornerStyle: 'circle'
         });
 
@@ -170,7 +182,6 @@ function addBtnRemove() {
             cornerSize: 26
         });
         fabric.Object.prototype.controls.deleteControl = deleteControl;
-
         // Apply control to fabric.Textbox prototype
         fabric.Textbox.prototype.controls = fabric.Textbox.prototype.controls || {};
         fabric.Textbox.prototype.controls.deleteControl = deleteControl;
@@ -195,6 +206,5 @@ function addBtnRemove() {
             ctx.drawImage(img, -size/2, -size/2, size, size);
             ctx.restore();
         }
-
   });
 }
