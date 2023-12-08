@@ -153,16 +153,28 @@ function creathead(index) {
 
 function addBtnRemove() {
     canvas.forEachObject(obj => {
-        fabric.Object.prototype.controls.deleteControl = new fabric.Control({
+        console.log(obj);
+        fabric.Object.prototype.set({
+            transparentCorners: false,
+            cornerColor: 'blue',
+            cornerStyle: 'circle'
+        });
+
+        deleteControl = new fabric.Control({
             x: 0.5,
             y: -0.5,
             offsetY: 16,
             cursorStyle: 'pointer',
             mouseUpHandler: deleteObject,
             render: renderIcon,                
-            cornerSize: 28
+            cornerSize: 26
         });
-        
+        fabric.Object.prototype.controls.deleteControl = deleteControl;
+
+        // Apply control to fabric.Textbox prototype
+        fabric.Textbox.prototype.controls = fabric.Textbox.prototype.controls || {};
+        fabric.Textbox.prototype.controls.deleteControl = deleteControl;
+
         function deleteObject(eventData, transform) {
             var canvas = transform.target.canvas;
             var activeObjects = canvas.getActiveObjects();
@@ -183,5 +195,6 @@ function addBtnRemove() {
             ctx.drawImage(img, -size/2, -size/2, size, size);
             ctx.restore();
         }
+
   });
 }
