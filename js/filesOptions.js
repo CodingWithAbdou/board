@@ -372,23 +372,23 @@ fabric.Canvas.prototype.getAbsoluteCoords = function(object) {
   };
 }
 
-var textarea = document.createElement('textarea');
-textarea.style.width = '220px'
-textarea.style.height = '160px'
-function positionBtn(obj , width = '' , height ='') {
+
+function positionBtn(element , obj , width = '' , height ='') {
   var absCoords = canvas.getAbsoluteCoords(obj);
-    textarea.style.left = (absCoords.left) + 'px';
-    textarea.style.top = (absCoords.top + 10) + 'px';
+    element.style.left = (absCoords.left) + 'px';
+    element.style.top = (absCoords.top + 10) + 'px';
     if(width != '' && height != '') {
-        textarea.style.width = width 
-        textarea.style.height = height  
+        element.style.width = width 
+        element.style.height = height  
 
-        textarea.style.left = (absCoords.left + width) + 'px';
-        textarea.style.top = (absCoords.top + height) + 'px';    
+        element.style.left = (absCoords.left + width) + 'px';
+        element.style.top = (absCoords.top + height) + 'px';    
     }
-    textarea.style.transform = 'translate(-50%, -50%)'
+    element.style.transform = 'translate(-50%, -50%)'
 }
-
+let array_img = []
+let countuniqueimage = 0
+let textarea;
 addNoteButton.addEventListener("click", function () {
     // Create a background image
     fabric.Image.fromURL("images/background.png", function (img) {
@@ -406,33 +406,65 @@ addNoteButton.addEventListener("click", function () {
             scaleY: scale,
             hasControls: true,
         });
+        countuniqueimage++
 
-        document.body.appendChild(textarea)
-        textarea.style.position = 'absolute'
-        // textarea.style.background = 'transparent'
-        textarea.style.resize = 'none'
-        textarea.style.border = 'none'
-        textarea.style.outline = 'none'
-        textarea.style.padding = '10px'
-        textarea.style.direction = 'rtl'
-        textarea.style.background = 'transparent'
+        textarea =  createTextareaElement()
+        
+        img.customId = `unique-image${countuniqueimage}`;
+        array_img.push(img.customId)
         canvas.add(img);
-
-
-
-        img.on('moving', function() { positionBtn(img) });
-        // img.on('scaling', function() { positionBtn(img) });
-        positionBtn(img);
+        console.log(array_img)
+        positionBtn(textarea , img);
+        img.on('moving', function() { positionBtn(textarea , img) });
         img.on('scaling', function(options) {
-            width =  (img.width * img.scaleX  ) + 'px'
-            height =  (img.height * img.scaleY * 80 /100) + 'px'
-            positionBtn(img , width , height)
+            console.log(img.customId)
         });
         canvas.renderAll();
     });
 });
 
+let IsUniqueMouse = false
+canvas.selection = true;
 
+canvas.on('object:moving', function (e) {
+    var obj = e.target;
+    if(!obj) return
+    if(obj.customId) {
+        // positionBtn(textarea , obj);
+        console.log(obj)
+    }
+});
+
+// Event listener for scaling
+canvas.on('object:scaling', function (e) {
+    var obj = e.target;
+    if(!obj) return
+    if(obj.customId) {
+        width =  (obj.width * obj.scaleX  ) + 'px'
+        height =  (obj.height * obj.scaleY * 80 /100) + 'px'
+        // positionBtn(textarea ,obj , width , height)
+    }
+});
+
+
+
+function createTextareaElement() {
+    var textarea = document.createElement('textarea');
+    textarea.id = 'textarea' + countuniqueimage
+    textarea.style.width = '220px'
+    textarea.style.height = '160px'
+    textarea.style.fontSize = '19px'
+    textarea.style.position = 'absolute'
+    textarea.style.resize = 'none'
+    textarea.style.border = 'none'
+    textarea.style.outline = 'none'
+    textarea.style.padding = '10px'
+    textarea.style.direction = 'rtl'
+    textarea.style.background = 'transparent'
+    textarea.placeholder = "أدخل نص هنا";
+    document.body.appendChild(textarea)
+    return textarea
+}
 
 
 

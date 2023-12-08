@@ -14,6 +14,10 @@ let startDrawing = false;
 let star, initialPoints, initialCenter, initialDistances;
 
 
+
+
+
+
 drawStarButton.addEventListener("click", function () {
   isCreatingStar = true;
   isCreatingTriangle = false;
@@ -67,27 +71,6 @@ canvas.on('mouse:down', function (options) {
   }
 });
 
-// canvas.on('mouse:move', function (options) {
-//   if (isCreatingStar && startDrawing) {
-//       let currentX = options.e.clientX;
-//       let currentY = options.e.clientY;
-//       initialPoints = [
-//         { x: 160, y: 290 },
-//         { x: 100, y: 150 },
-//         { x: 40, y: 190 },
-//         { x: 60, y: 115 },
-//         { x: 0, y: 70 },
-//         { x: 75, y: 60 },
-//         { x: 100, y: 10 },
-//         { x: 125, y: 60 },
-//         { x: 200, y: 70 },
-//         { x: 140, y: 115 },
-//     ];
-//     star.set( star.set({ points: initialPoints }) )
-//       canvas.renderAll();
-//   }
-// });
-
 canvas.on('mouse:up', function () {
   if (isCreatingStar && startDrawing) {
       // saveCanvasState();
@@ -131,18 +114,48 @@ drawTriangleButton.addEventListener("click", function () {
             startX = options.e.clientX / zoomLevel;
             startY = options.e.clientY / zoomLevel;
 
-            triangles[countTriangles] = new fabric.Triangle({
-                left: startX,
-                top: startY,
-                width: 0,
-                height: 0,
-                fill: color,
-                stroke: 'black',
-                strokeWidth: 2,
-                selectable: true,
-            });
+            // function Add() {
+                triangles[countTriangles] = new fabric.Triangle({
+                    left: startX,
+                    top: startY,
+                    width: 0,
+                    height: 0,
+                    fill: color,
+                    stroke: 'black',
+                    strokeWidth: 2,
+                    selectable: true,
+                });
+                triangles[countTriangles].customId = 'has_remove_btn'
+                canvas.add(triangles[countTriangles]);
+                canvas.setActiveObject(triangles[countTriangles]);
+            // }
 
-            canvas.add(triangles[countTriangles]);
+            // fabric.Object.prototype.controls.deleteControl = new fabric.Control({
+            //     x: 0.5,
+            //     y: -0.5,
+            //     offsetY: 16,
+            //     cursorStyle: 'pointer',
+            //     mouseUpHandler: deleteObject,
+            //     render: renderIcon,
+            //     cornerSize: 24
+            // });
+            
+            // Add();
+            // function deleteObject(eventData, transform) {
+            //     var target = transform.target;
+            //     var canvas = target.canvas;
+            //         canvas.remove(target);
+            //     canvas.requestRenderAll();
+            // }
+        
+            // function renderIcon(ctx, left, top, styleOverride, fabricObject) {
+            //     var size = this.cornerSize;
+            //     ctx.save();
+            //     ctx.translate(left, top);
+            //     ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
+            //     ctx.drawImage(img, -size/2, -size/2, size, size);
+            //     ctx.restore();
+            // }
         }
     });
 

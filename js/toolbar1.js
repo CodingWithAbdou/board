@@ -419,7 +419,6 @@ function saveCanvasState() {
     dataForUndoRedo[postion++] = canvas.toJSON()
     isclickUndo = false
     isclickRndo = false
-    console.log(dataForUndoRedo)
 }
 
 

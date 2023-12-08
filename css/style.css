@@ -26,6 +26,7 @@ button {
 
 body {
     font-family: 'Alexandria', sans-serif;
+    overflow: hidden;
 }
 
 /****************************************************************************************
@@ -792,8 +793,10 @@ body {
     float: right;
     display: block;
     cursor: pointer;
-    
 }
+/* .recorde_icon {
+    pointer-events: none;
+} */
 #addVideo:hover { opacity: 0.5; }
 
 #stopVideo{
