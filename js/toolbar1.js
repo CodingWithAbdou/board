@@ -1,6 +1,7 @@
-
+let canvasMode = 'select';
 
 document.getElementById("select").addEventListener("click", function () {
+    canvasMode = 'select';
     canvas.isDrawingMode = false;
     isSquareDrawn = true;
     temporaryDrawingEnabled = false;
@@ -18,9 +19,60 @@ document.getElementById("select").addEventListener("click", function () {
     canvas.renderAll(); // Redraw the canvas
 }); 
 
+document.getElementById("hand").addEventListener("click", function () {
+    canvas.isDrawingMode = false;
+    isSquareDrawn = true;
+    temporaryDrawingEnabled = false;
+    isErasing = false;
+    canvas.isDragging = false;
+    canvas.selection = true; // Enable object selection after drag
+    canvas.setCursor('default');
+    eraseEnabled = false;
+    addingSingleArrowLineBtnClicked = false;
+    addingLineBtnClicked = false;
+    canvas.renderAll(); // Redraw the canvas
+    canvasMode = 'hand';
+}); 
 
+canvas.on('mouse:down', function (event) {
+    if (canvasMode === 'hand') {
+        canvas.setCursor('grab');
+        if (event.target) {
+            canvas.isDragging = false;
+        } else {
+            canvas.isDragging = true;
+            canvas.selection = false; 
+        }
+    } else {
+        canvas.isDragging = false;
+        canvas.selection = true;
+        // canvas.setCursor('default');
+    }
+});
+
+canvas.on('mouse:move', function (event) {
+    if (canvasMode === 'hand') {
+        if (canvas.isDragging) {
+            var delta = new fabric.Point(event.e.movementX, event.e.movementY);
+            canvas.relativePan(delta);
+        } else {
+            canvas.setCursor('grab');
+        }
+    } else {
+        // canvas.setCursor('default');
+    }
+});
+
+canvas.on('mouse:up', function () {
+    if (canvasMode === 'hand') {
+        canvas.isDragging = false;
+        canvas.selection = true; 
+        // canvas.setCursor('default');
+    }
+});
 penciltime.addEventListener("click", function () {
     isAddingText = false;
+    canvasMode = 'select';
 
     temporaryDrawingEnabled = true
     if (temporaryDrawingEnabled) {
@@ -55,6 +107,8 @@ penciltime.addEventListener("click", function () {
 });
 
 document.getElementById("pencil").addEventListener("click", function () {
+    canvasMode = 'select';
+
     isAddingText = false;
     temporaryDrawingEnabled = false;
     canvas.isDrawingMode = true;
@@ -79,6 +133,7 @@ let isAddingText = false;
 
 // let isAddingText = false;
 text.addEventListener("click", function () {
+    canvasMode = 'select';
     eraseEnabled = false;
     canvas.isDrawingMode = false;
     isAddingText = true;
@@ -94,6 +149,7 @@ text.addEventListener("click", function () {
 });
 
 document.getElementById('shape').addEventListener('click' , ()=> {
+    canvasMode = 'select';
     canvas.isDrawingMode = false;
     isSquareDrawn = true;
     temporaryDrawingEnabled = false;
@@ -139,6 +195,7 @@ canvas.on('mouse:down', function(options) {
 let addedImage = null;
 
 document.getElementById("imageUploadInput").addEventListener("change", function (event) {
+    canvasMode = 'select';
     canvas.isDrawingMode = false;
     isSquareDrawn = true;
     eraseEnabled = false;
@@ -171,70 +228,13 @@ document.getElementById("imageUploadInput").addEventListener("change", function 
     }
 });
 
-// // Function to add an image
-// document.getElementById('imageInput').addEventListener('change', function (e) {
-//     const file = e.target.files[0];
-//     if (file) {
-//         const reader = new FileReader();
-//         reader.onload = function (event) {
-//             fabric.Image.fromURL(event.target.result, function (img) {
-//                 addedImage = img;
-//                 canvas.add(img);
-//                 canvas.renderAll();
-//             });
-//         };
-//         reader.readAsDataURL(file);
-//     }
-// });
 
 let cropRect = null;
 
-// Function to enable cropping mode
-// document.getElementById('scissors').addEventListener('click', () => {
-//     if (addedImage) {
-//         if (cropRect) {
-//             canvas.remove(cropRect);
-//             cropRect = null;
-//         }
-//         cropRect = new fabric.Rect({
-//             left: 100,
-//             top: 100,
-//             width: 50,
-//             height: 50,
-//             fill: 'rgba(0, 0, 0, 0)',
-//             stroke: 'red',
-//             // selectable: false,
-//             transparentCorners: false, // Allows for easier resizing
-//             hasControls: true, // Show resize handles
-//             lockUniScaling: true, // Maintain aspect ratio during resizing
-//         });
-
-//         canvas.add(cropRect);
-//         canvas.renderAll();
-//     }
-// });
 
 canvas.on('mouse:up', () => {
-    // if (addedImage && cropRect) {
-    //     const cropWidth = document.getElementById('cropWidth').value;
-    //     const cropHeight = document.getElementById('cropHeight').value;
-
-    //     if (cropWidth && cropHeight) {
-    //         cropRect.set({
-    //             width: parseInt(cropWidth),
-    //             height: parseInt(cropHeight),
-    //         });
-    //     }
-
-    //     addedImage.clipPath = cropRect;
-    //     canvas.renderAll();
-    // }
+ 
     if (addedImage && cropRect) {
-        // cropRect.set({
-        //     width: 400,
-        //     height: 400,
-        // });
-
         addedImage.clipPath = cropRect;
         canvas.renderAll();
         canvas.remove(cropRect);
@@ -246,6 +246,7 @@ canvas.on('mouse:up', () => {
 
 
 lock.addEventListener("click", function () {
+    canvasMode = 'select';
     isLocked = !isLocked;
     lockimage.src = isLocked ? "images/lock.png" : "images/unlock.png";
 
@@ -266,7 +267,7 @@ lock.addEventListener("click", function () {
 
 
 document.getElementById("image").addEventListener("click", function () {
-    // افتح مربع حوار لاختيار ملف الصورة
+    canvasMode = 'select';
     document.getElementById("imageUploadInput").click();
 });
 
@@ -289,6 +290,7 @@ canvas.on('mouse:up', function (event) {
 
 // Function to toggle erase mode
 function toggleEraseMode() {
+    canvasMode = 'select';
     eraseEnabled = true;
     canvas.selectable = false;
     canvas.isDrawingMode = false;
@@ -338,6 +340,7 @@ function removeAllShapesAndPaths(obj) {
 let eraseIsImage = false
 let isMakeItErease = false
 eraserButton.addEventListener("click", function () {
+    canvasMode = 'select';
     isErasing = true;
     canvas.selectable = false;
     eraseEnabled = false;
@@ -354,11 +357,6 @@ eraserButton.addEventListener("click", function () {
         canvas.selection = true; // إعادة تمكين اختيار الكائنات عند عدم استخدام الممحاة
     }
 });
-// canvas.on('object:added', saveCanvasState);
-// canvas.on('object:removed', saveCanvasState);
-// canvas.on('object:modified', function(event) {
-//     saveCanvasState()
-// });
 
 canvas.on('mouse:down:before' , saveCanvasState )
 
@@ -424,6 +422,7 @@ function saveCanvasState() {
 
 
   function undo(){
+    canvasMode = 'select';
     if(isclickUndo == false && isclickRndo ==false && dataForUndoRedo.length != 0) {
         dataForUndoRedo[postion] = canvas.toJSON()
     }
@@ -439,6 +438,7 @@ function saveCanvasState() {
 }
 
   function redo(){
+    canvasMode = 'select';
     isclickUndo = false
     isclickRndo = true
     console.log(postion)

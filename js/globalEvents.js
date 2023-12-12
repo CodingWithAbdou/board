@@ -25,6 +25,7 @@ toolbarItems.forEach((item) => {
                 item.nextElementSibling.classList.add('show')
             }
         }
+        // select == false
         box_item = item
         isMakeItErease = false
     })

@@ -3,6 +3,12 @@
 */
   @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700&display=swap');
 
+:root {
+    --radius : 8px;
+    --box-shadow : 0px 0px 0px 1px rgb(0 0 0 / 20%)
+}
+
+
 *{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -26,6 +32,7 @@ button {
 
 body {
     font-family: 'Alexandria', sans-serif;
+    height: 100vh;
     overflow: hidden;
 }
 
@@ -38,17 +45,22 @@ body {
     position: relative;
 }
 .icon {
-    width: 32px;
-    height: 32px;
+    width: 16px;
+    height: 16px;
 }
 .active {
-    border-bottom: 2px solid #2196F3;
+    border-bottom: 2px solid #009688;
 }
 .show {
     display: block !important; 
 }
 .border_2 {
-    border: 2px solid  rgb(52, 16, 16);
+    border: 1px solid #f6f6f6;
+    outline: 1px solid #009688;
+}
+.text {
+    font-size: 12px;
+    color: #009688;
 }
 
 /****************************************************************************************
@@ -58,8 +70,13 @@ body {
 .header {
     display: flex;
     align-items: center;
-    height: 70px;
+    height: 40px;
+    position: absolute;
+    width: 100%;
     padding-inline: 1rem;
+    position: absolute;
+    z-index: 111111111;
+    width: 100%;
 }
 
 .exist , .video , .numberPages { flex-basis: calc(100% / 3);}
@@ -71,20 +88,42 @@ body {
 ****************************************************************************************/
 
 .conetent-canvas {
-    height: calc(100vh - 140px - 1rem);
+    height: calc(100% - 40px - 1.5rem);
     width: calc(100% - 1rem);
-    border: 1px solid #dfdfdf;
-    border-radius: 4px;
-    margin-inline: .5rem;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 0px 1px;
+    border-radius: 6px;
+    margin-inline: 0.5rem;
+    overflow: hidden;
+    margin-top: 0.5rem;
 }
 
-.canvas-container ,
-.lower-canvas ,
-.upper-canvas {
-    /* width: 100% !important; */
-    /* height: 100% !important; */
-        /* object-fit: contain */
+.h2 {
+    padding-bottom: .5rem;
+    font-size: 16px;
+    color: #009688;
+    position: relative;
 }
+h2::before , h2::after {
+    content: "";
+    position: absolute;
+    transform: translateX(-50%);
+    background: linear-gradient(#eee, #36b673);
+}
+h2::before {
+    bottom: 0;
+    left: 50%;
+    width: 6rem;
+    height: 2px;
+}
+h2::after {
+    bottom: -4px;
+    left: calc(50% - 8px);
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg);
+    box-shadow: 7px -7px #36b673;
+}
+
 
 /****************************************************************************************
 *** FOOTER
@@ -94,9 +133,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70px;
+    height: 40px;
     padding-inline: .5rem ;
     margin-block: .5rem ;
+    position: absolute;
+    width: 100%;
 }
 
 .toolbar {
@@ -115,9 +156,27 @@ body {
     gap: .5rem;
     background-color: #F6F6F6;
     padding: .5rem;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 8px;
+    box-shadow: 0px 0px 0px 1px rgb(0 0 0 / 20%);
 } 
+.toolbar_box > div ,
+.toolbar2_box > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.toolbar2_box  {
+    padding: calc(.5rem  + 4px) .5rem;
+}
+ 
+
+.toolbar_box button {
+    cursor: pointer;
+}
+
+.toolbar_box button:hover {
+    opacity: .5;
+}
 
 .toolbar2 {
     flex-basis: 40%;
@@ -138,11 +197,11 @@ body {
 .add_pages_box {
     display: flex;
     align-items: center;
-    height: 100%;
+    padding:calc(.5rem  + 3px) .5rem ;
 }
 
 .add_pages  button {
-    padding-inline: 1rem;
+    padding-inline: .3rem;
     cursor: pointer;
 }
 .pagintion {
@@ -159,44 +218,60 @@ body {
 
 /* ///////////////////inner  toolbar////////////////// */
 .overlaycolor{
-    position: absolute;
-    top: -420px;
-    left: -380px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     display: none;
+    position: absolute;
+    top: -303px;
+    left: -238px;
+    box-shadow: var(--box-shadow);
     transition: opacity 500ms;
-    border-radius: 20px;
+    border-radius: var(--radius);
     background-color: #F6F6F6;
-    padding: 1.5rem;
+    padding: 1rem;
 }
 
+.overlaycolor.without_time {
+    left: -214px;
+}
+
+.brush_div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.brush_image {
+    width: 180px;
+    height: 20px;
+    margin-bottom: 1rem;
+}
+.boxsize {
+    margin-bottom: 1rem;
+}
+.boxsize ,
 .boxcolor{
     display: flex;
     align-items: start;
-    justify-content: center;
-    gap: 2rem;
+    justify-content: end;
+    gap: 1rem;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--radius);
+    padding: 1rem;
 }
 
 .brushSize{
-    width: 290px;
-    margin-right: 40px;
+    width: 100%;
     direction: rtl
   }
 
-  .size {
-    font-size: 18px;
-    font-weight: normal;
-  }
 
 
 .overlaytext{
     position: absolute;
-    top: -535px;
-    left: -423px;
+    top: -341px;
+    left: -190px;
     display: none;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: var(--box-shadow);
     transition: opacity 500ms;
-    border-radius: 20px;
+    border-radius: var(--radius);
     background-color: #F6F6F6;
     padding: 1rem;
 }
@@ -208,20 +283,23 @@ body {
 }
 
 .counter1{
-    height: 60px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    border-radius: 20px;
+    border-radius: var(--radius);
     background-color:white ;
     padding-inline: 1rem;
+    box-shadow: var(--box-shadow);
+
 }
 
 .counter1 select{
     direction: rtl;
     border: none;
-    font-size: 20px;
-    width: 400px;
+    font-size: 14px;
+    width: 100%;
+    color: #009688;
 }
 
 .counter1 select:focus {
@@ -229,56 +307,58 @@ body {
 }
 
 .counter1 select option{
-    font-size: 20px;
-    width: 400px;
+    font-size: 14px;
+    width: 100%;
 }
 
 .counter{
-    height: 60px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    border-radius: 20px;
+    border-radius: var(--radius);
     background-color:white ;
     padding-inline: .8rem;
-}
-
-#sizetext{
-    font-size: 20px;
+    box-shadow: var(--box-shadow);
 }
 
 #counterInput {
     text-align: center;
     border: none;
-    font-size: 20px;
+    font-size: 14px;
 }
 
 .counter2{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    height: 60px;
-    border-radius: 20px;
+    height: 30px;
+    border-radius: var(--radius);
     background-color:white ;
     margin-bottom: 1rem;
+    box-shadow: var(--box-shadow);
+}
+.counter2 >span {
+    cursor: pointer;
+}
+.counter2 >span:hover {
+    opacity: .5;
 }
 
 #boxcolor2{
-    border-radius: 20px;
+    border-radius: var(--radius);
     display: flex;
     justify-content: space-between;
-    border: 1px solid #ccc;
+    gap: 1rem;
+    box-shadow: var(--box-shadow);
     padding: 1rem;
 }
 
-.color_head{
-    font-size: 20px;
-    font-weight: normal;
-}
+
 
 .color-circle {
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     cursor: pointer;
     text-align: center;
@@ -290,15 +370,14 @@ body {
 
 .overlayfile{
     position: absolute;
-    top: -103px;
-    left: -220px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    top: -74px;
+    left: -55px;
     display: none;
     transition: opacity 500ms;
     z-index: 1;
-    border-radius: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--box-shadow);
     background-color: #F6F6F6;
-    
 }
 
 #boxfile{
@@ -308,54 +387,69 @@ body {
     gap: 1rem;
     padding: 1rem;
 }
+#boxfile > div {
+    cursor: pointer;
+}
 
+#boxfile > div:hover {
+    opacity: .5;
+}
 
 
 .overlayshape{
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     display: none;
     position: absolute;
-    top: -445px;
-    left: -423px;
+    top: -271px;
+    left: -142px;
     transition: opacity 500ms;
     z-index: 1;
-    border-radius: 20px;
     background-color: #F6F6F6;
     padding: 1rem;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--radius);
 }
 
 .box_color1 {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     margin-bottom: 1rem;
-    border: 1px solid #ccc;
     padding: 1rem;
-    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--radius);
 }
-
+#boxshape > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+#boxshape > div:hover {
+    opacity: .5;
+}
 #boxshape{
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-around;
-    border: 1px solid #ccc;
     padding: 1rem;
-    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--radius);
 }
 
 .overlaypdf{
+    width: 300px;
+    max-width: 300px;
     position: absolute;
-    top: -350px;
-    left: -1000px;
+    top: -361px;
+    left: -180px;
     direction: rtl;
     z-index: 1;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     display: none;
     transition: opacity 500ms;
-    width: 1200px;
-    max-width: 1200px;
-    border-radius: 20px;
     background-color: #F6F6F6;
     padding: 1rem;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--radius);
+
 }
 
 .pdf_header {
@@ -367,11 +461,14 @@ body {
 
 #addPageButton{
     cursor: pointer;
-    font-size: 20px;
+    font-size: 14px;
     color: #36B673;
+    border-radius: var(--radius);
+    border: 1px solid #36B673;
+    padding: .5rem;
 }
 .overlaypdf h4{
-    font-size: 20px;
+    font-size: 14px;
     font-weight: normal;
 }
 
@@ -395,24 +492,25 @@ body {
     left: 50%;
 }
 .page-scroll {
+    height: 250px;
+    max-height: 250px;
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: auto;
     white-space: nowrap; 
-    padding-bottom: 1rem;
 }
 .page-scroll::-webkit-scrollbar {
-    height: 1.2rem;
-    border-radius: 8px;
+    height: 1rem;
+    border-radius: 6px;
 }
 
 .page-scroll::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
+    border-radius: 6px;
 }
 
 .page-scroll::-webkit-scrollbar-thumb {
     background-color: darkgrey;
-    border-radius: 8px;
+    border-radius: 6px;
 
 }
 
@@ -545,15 +643,16 @@ body {
 /* //////////////////Models//////////////////// */
 
 .modal {
+    width: 40%;
     display: none;
     position: fixed;
     top: 50%;
     left: 50%;
-    border-radius: 20px;
+    border-radius: var(--radius);
     transform: translate(-50%, -50%);
     background-color: #FFFFFF;
     padding: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--box-shadow);
     direction: rtl;
 }
 
@@ -561,16 +660,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-block: 1rem;
+    padding-block: .5rem;
 }
 
-.modal h4{
-    font-size: 25px;
-}
 
-.modal h3{
-    font-size: 25px;
-}
+
+
 .form-control  {
     display: flex;
     align-items: center;
@@ -579,14 +674,14 @@ body {
 }
 .form-control label {
     width: 100px;
+    font-size: 14px;
 }
 .form-control input[type=text] {
-    width: 550px;
-    height: 70px;
-    border-radius: 15px;
-    font-size: 25px;
+    width: 100%;
+    border-radius:var(--radius);
+    box-shadow: var(--box-shadow);
+    font-size: 12px;
     padding: 10px;
-    background-color: #F2F2F2;
     border: none;
     direction: rtl;
     outline: none;
@@ -596,21 +691,21 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
-    font-size: 40px;
+    font-size: 20px;
     background-color: red;
     color: white;
-    border-radius: 50%;
+    border-radius: var(--radius)
 }
 
 .save-btn {
     background:#14C03C ;
     color: white;
-    padding: .6rem 1.2rem;
-    font-size: 20px;
-    border-radius: 10px;
+    padding: .8rem 1.2rem;
+    font-size: 14px;
+    border-radius: var(--radius);
     font-weight: bold;
     cursor: pointer;
 }
@@ -619,71 +714,12 @@ body {
 *** MEDIA QUERY
 ****************************************************************************************/
 
-@media (max-width:870px) {
-    .conetent-canvas {
-        height: calc(100vh - 140px - 1rem - 50px);
-    }    
-    .footer {
-        height: 120px;
-        flex-direction: column-reverse;
-        gap: 1rem;
-    }
-    .toolbar {
-        width: 100%;
-        justify-content: center;
-    }
-    .toolbar2 {
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-    }
-}
-@media (max-width:488px) {
-    .footer {
-        height: 150px;
-    }    
-    .conetent-canvas {
-        height: calc(100vh - 140px - 1rem - 80px);
-
-    }
-}
 @media (max-width:567px) {
-    .icon {
-        width:26px
+    .footer {
+        flex-direction: column-reverse;
+        gap: 20px;
     }
 }
-@media (min-width:991px) {
-    .icon {
-        width: 40px;
-        height: 40px;
-    }
-}
-@media (min-width:1200px) {
-    .icon {
-        width: 50px;
-        height: 50px;
-    }
-}
-
-
-.scissors {
-    cursor: pointer;
-}
-.scissors:hover {
-    opacity: .5;
-}
-
-
-
-
- /* {
-    flex-basis: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-} */
-
 
 
 
@@ -698,105 +734,20 @@ body {
     cursor: pointer;
     
 }
-#eraser:hover { opacity: 0.5; }
 
 
-#square:hover {
-    opacity: 0.5;
-    cursor: pointer;
- }
- #word:hover {
-    opacity: 0.5;
-    cursor: pointer;
- }
-
-#circle:hover { opacity: 0.5;cursor: pointer; }
-
-#excel:hover { opacity: 0.5;cursor: pointer; }
-
-#pdf:hover { opacity: 0.5;cursor: pointer; }
-
-#triangle:hover { opacity: 0.5;cursor: pointer; }
-#textfile:hover { opacity: 0.5; cursor: pointer;}
-
-#star:hover { opacity: 0.5; cursor: pointer;}
-
-#normal:hover { opacity: 0.5; cursor: pointer;}
-#bold:hover { opacity: 0.5; cursor: pointer;}
-#italic:hover { opacity: 0.5; cursor: pointer;}
-#underline:hover { opacity: 0.5; cursor: pointer;}
-
-#lineshape{
-    margin-top: 10px;
-    cursor: pointer;
-    
-}
-#lineshape:hover { opacity: 0.5; }
 
 
-#link:hover {
-  opacity: 0.5; 
-  cursor: pointer;
-}
-#audio:hover {
-   opacity: 0.5; 
-   cursor: pointer;
- }
-
-#linearrow{
-    margin-top: 10px;
-    cursor: pointer;
-    
-}
-#linearrow:hover { opacity: 0.5; }
-
-#powerpoint:hover {
-     opacity: 0.5;
-     cursor: pointer;
-     }
-
-#linetwoarrow{
-    margin-top: 10px;
-    cursor: pointer;
-    
-}
-#linetwoarrow:hover { opacity: 0.5; }
-
-#clearCanvas{
-    margin-left: 30px;
-    cursor: pointer;
-    
-}
-
-#select{
-    cursor: pointer;
-}
-
-#select:hover { opacity: 0.5; }
-
-#text{
-    cursor: pointer;
-    
-}
-
-#text:hover { opacity: 0.5; }
-
-
-#file{
-    cursor: pointer;
-    
-}
-
-#file:hover { opacity: 0.5; }
 
 #addVideo{
     float: right;
     display: block;
     cursor: pointer;
 }
-/* .recorde_icon {
-    pointer-events: none;
-} */
+.recorde_icon {
+    width: 30px;
+    height: 10px;
+}
 #addVideo:hover { opacity: 0.5; }
 
 #stopVideo{
@@ -866,58 +817,10 @@ body {
 }
 #fillCanvas:hover { opacity: 0.5; }
 
-#pencil{
-    cursor: pointer;
-}
-#pencil:hover { opacity: 0.5; }
-
-#penciltime{
-    cursor: pointer;
-    
-}
-#penciltime:hover { opacity: 0.5; }
-
-#shape{
-    cursor: pointer;
-    
-}
-#shape:hover { opacity: 0.5; }
-
-#eraseall{
-    cursor: pointer;
-    
-}
-#eraseall:hover { opacity: 0.5; }
-
-#lock{
-    cursor: pointer;
-    
-}
-#lock:hover { opacity: 0.5; }
-
-#erasepart{
-    cursor: pointer;
-    
-}
-#erasepart:hover { opacity: 0.5; }
-
-#image{
-    cursor: pointer;
-    
-}
-#image:hover { opacity: 0.5; }
 
 
-#saveCanvas{
-    float: right;
-    margin-left: 30px;
-    cursor: pointer;
-    
-}
-#saveCanvas:hover { opacity: 0.5; }
 
 
-  /* تصميم مربع الحوار */
   #dialog {
     display: none;
     position: fixed;
@@ -958,26 +861,6 @@ body {
 
 
 
-  
-
-
-  
-
- 
-
-  
-
-.box_color1 h5 {
-    font-size: 20px;
-}
-
-
-
-  .boxsize{
-  display: flex;
-  padding-block: 2rem;
-  }
-
 
  
  
@@ -990,21 +873,6 @@ body {
    column-gap: .7rem;
 }
 
-#boxcolor1{
-    display: grid;
-    grid-template-columns: repeat(6, max-content);
-    justify-content: center;
-    gap: 1rem;
-  }
-
-
-  .toolbarpdf{
-    padding: 20px;
-    border-radius: 5px;
-    position: relative;
-    right: 50px;
-    transition: all 5s ease-in-out;
-  }
 
 
   .custom-alert {
@@ -1084,10 +952,8 @@ body {
 
 /* Style the minus and plus buttons */
 .minus, .plus {
-    background-color: #F6F6F6;
-    border-radius: 25px;
+    border-radius: var(--radius);
     color: black;
-    padding: 10px 10px;
     cursor: pointer;
 }
 
@@ -1095,11 +961,10 @@ body {
 position: relative;
 left: 40px;
 }
-
 .plus{
     position: relative;
     right: 40px;
-    }
+}
 
 /* Style the input number */
 

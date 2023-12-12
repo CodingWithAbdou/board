@@ -22,7 +22,7 @@
         <header class="header">
             <div id="exist" class="exist">
                 <div id="addexist">
-                <img class="icon" src="images/exist.png" width="50" height="50" />
+                <img class="icon" src="images/exist.png" width="25" height="25" />
                 </div>
             </div>
             <div class="numberPages">
@@ -54,18 +54,18 @@
             <div  class="toolbar2">
                 <div id="toolbar2" class="toolbar2_box">
                     <div id="zoomIn">
-                        <img class="icon" id="zoom-in" src="images/zoomin.png" width="50" height="50" />
+                        <img class="icon" id="zoom-in" src="images/zoomin.png" width="25" height="25" />
                     </div>
                     <div id="zoomOut">
-                        <img  class="icon" id="zoom-out" src="images/zoomout.png" width="50" height="50" />
+                        <img  class="icon" id="zoom-out" src="images/zoomout.png" width="25" height="25" />
                     </div>
                 </div>
                 <div class="add_pages">
                     <div class="add_pages_box">
                         <div class="pagintion">
-                            <button class="prev_canvas btn_controll"><img src="images/left.svg" alt="" width="32" height="32"></button>
-                            <button id="btn-Pages" class="btn-Pages"><img src="images/add.svg" alt="" width="32" height="32"></button>
-                            <button class="next_canvas btn_controll"><img src="images/right.svg" alt="" width="32" height="32"></button>
+                            <button class="prev_canvas btn_controll "><img src="images/left.svg" alt=""  width="14" height="14"></button>
+                            <button id="btn-Pages" class="btn-Pages "><img src="images/add.svg" alt=""  width="14" height="14"></button>
+                            <button class="next_canvas btn_controll "><img src="images/right.svg" alt=""  width="14" height="14"></button>
                         </div>
                     </div>
                 </div>
@@ -75,21 +75,26 @@
                 <div id="toolbar"  class="toolbar_box">
                     <div  class="">
                         <button id="select" class="toolbar_items">
-                            <img class="icon" src="images/select.png" width="50" height="50" />
+                            <img class="icon" src="images/select.png" width="25" height="25" />
+                        </button>
+                    </div>
+                    <div  class="">
+                        <button id="hand" class="toolbar_items">
+                            <img class="icon" src="images/hand.svg" width="25" height="25" />
                         </button>
                     </div>
 
                     <div  class="pencile_contnent  relative">
                         <button id="penciltime" class="toolbar_items">
-                            <img class="icon" src="images/penciltime.png" width="50" height="50" />
+                            <img class="icon" src="images/penciltime.png" width="25" height="25" />
                         </button>
-                        <div  id="toolbarcolortime" class="overlay overlaycolor" >
-                            <div>
-                                <img id="brush" src="images/brush.PNG" width="290" height="40">
+                        <div  id="toolbarcolortime" class="overlay overlaycolor " >
+                            <div class="brush_div">
+                                <img id="brush" class="brush_image" src="images/brush.PNG" width="120" height="20">
                             </div>
                             <div id="boxsizetime" class="boxsize">
                                 <input type="range" id="brushSizetime" class="brushSize" min="1" max="20" value="2">
-                                <h5 id="sizetime" class="size">الحجم</h5>
+                                <h5 id="sizetime" class="size text">الحجم</h5>
                             </div>
                             <div id="boxcolortime" class="boxcolor">
                                 <div class="boxs_color">
@@ -102,7 +107,7 @@
                                     <div class="color-circle" style="background-color: #FFE600;"></div>
                                     <div class="color-circle" style="background-color: #FFCE00;"></div>
                                     <div class="color-circle" style="background-color: #FFAA00;"></div>
-                                    <div class="color-circle" style="background-color: #FF5500;"></div>
+                                    <div class="color-circle" style="background-color: #FF5250;"></div>
                                     <div class="color-circle" style="background-color: #E61B1B;"></div>
                                     <div class="color-circle" style="background-color: #B31564;"></div>
                                     <div class="color-circle" style="background-color: #3D00B8;"></div>
@@ -125,7 +130,7 @@
                                     <div class="color-circle" style="background-color: #FF80FF;"></div>    
                                 </div>
                                 <div>
-                                    <h5 id="color"  class="color_head">اللون</h5>
+                                    <h5 id="color"  class="color_head text">اللون</h5>
                                 </div>
                             </div>
                         </div>
@@ -134,15 +139,15 @@
 
                     <div class="pencile_contnent  relative" >
                         <button  id="pencil" class="toolbar_items">
-                            <img class="icon" src="images/pencil.png" width="50" height="50" />
+                            <img class="icon" src="images/pencil.png" width="25" height="25" />
                         </button>
-                        <div  id="toolbarcolor" class="overlay overlaycolor" >
-                            <div>
-                                <img id="brush" src="images/brush.PNG" width="290" height="40">
+                        <div  id="toolbarcolor" class="overlay overlaycolor without_time" >
+                            <div class="brush_div">
+                                <img id="brush" class="brush_image" src="images/brush.PNG" width="120" height="20">
                             </div>
                             <div id="boxsize" class="boxsize">
                                 <input type="range" id="brushSize" class="brushSize"  min="1" max="20" value="2">
-                                <h5 id="size" class="size">الحجم</h5>
+                                <h5 id="size" class="size text">الحجم</h5>
                             </div>
                             <div id="boxcolor" class="boxcolor">
                                 <div class="boxs_color">
@@ -155,7 +160,7 @@
                                     <div class="color-circle" style="background-color: #FFE600;"></div>
                                     <div class="color-circle" style="background-color: #FFCE00;"></div>
                                     <div class="color-circle" style="background-color: #FFAA00;"></div>
-                                    <div class="color-circle" style="background-color: #FF5500;"></div>
+                                    <div class="color-circle" style="background-color: #FF5250;"></div>
                                     <div class="color-circle" style="background-color: #E61B1B;"></div>
                                     <div class="color-circle" style="background-color: #B31564;"></div>
                                     <div class="color-circle" style="background-color: #3D00B8;"></div>
@@ -178,7 +183,7 @@
                                     <div class="color-circle" style="background-color: #FF80FF;"></div>    
                                 </div>
                                 <div>
-                                    <h5 class="color_head">اللون</h5>
+                                    <h5 class="color_head text">اللون</h5>
                                 </div>
                             </div>
                         </div>
@@ -186,7 +191,7 @@
 
                     <div class="pencile_contnent  relative">
                         <button id="text" class="toolbar_items">
-                            <img class="icon" src="images/text.png" width="50" height="50" />
+                            <img class="icon" src="images/text.png" width="25" height="25" />
                         </button>
                         <div id="toolbartext" class="overlay overlaytext">
                             <div id="boxtext" class="boxtext">
@@ -206,17 +211,16 @@
                                     </select> 
                                 </div>
                                 <div class="counter">
-                                    <span class="minus"><img src="images/minus.png" width="15" height="15"></span>
+                                    <span class="minus"><img src="images/minus.png" width="7" height="7"></span>
                                     <input id="counterInput"  type="text" value="20" />
-                                    <span class="plus"><img src="images/plus.png" width="15" height="15"></span>
-                                    <span id="sizetext">الحجم</span>
+                                    <span class="plus"><img src="images/plus.png" width="7" height="7"></span>
+                                    <span id="sizetext" class="text">الحجم</span>
                                 </div>
                                 <div class="counter2">
-                                    <span id="normal"><img src="images/normal.png" width="30" height="30"></span>
-                                    <span id="bold"><img src="images/bold.png" width="30" height="30"></span>
-                                    <span id="italic"><img src="images/italic.png" width="30" height="30"></span>
-                                    <!-- <span id="align"><img src="images/align.svg" width="30" height="30"></span> -->
-                                    <span id="underline"><img src="images/underline.png" width="30" height="30"></span>
+                                    <span id="normal"><img class="icon_model" src="images/normal.png" width="15" height="15"></span>
+                                    <span id="bold"><img  class="icon_model" src="images/bold.png" width="15" height="15"></span>
+                                    <span id="italic"><img  class="icon_model" src="images/italic.png" width="15" height="15"></span>
+                                    <span id="underline"><img  class="icon_model" src="images/underline.png" width="15" height="15"></span>
                                 </div>
                             </div>
                                 
@@ -231,7 +235,7 @@
                                 <div class="color-circle" style="background-color: #FFE600;"></div>
                                 <div class="color-circle" style="background-color: #FFCE00;"></div>
                                 <div class="color-circle" style="background-color: #FFAA00;"></div>
-                                <div class="color-circle" style="background-color: #FF5500;"></div>
+                                <div class="color-circle" style="background-color: #FF5250;"></div>
                                 <div class="color-circle" style="background-color: #E61B1B;"></div>
                                 <div class="color-circle" style="background-color: #B31564;"></div>
                                 <div class="color-circle" style="background-color: #3D00B8;"></div>
@@ -254,7 +258,7 @@
                                 <div class="color-circle" style="background-color: #FF80FF;"></div>    
                             </div>
                             <div>
-                                <h5 class="color_head">اللون</h5>
+                                <h5 class="color_head text">اللون</h5>
                             </div>
                         </div>
                         
@@ -263,34 +267,34 @@
                 
                     <div  class="pencile_contnent  relative">
                         <button id="file"  class="toolbar_items">
-                            <img class="icon" src="images/file.png" width="50" height="50" />
+                            <img class="icon" src="images/file.png" width="25" height="25" />
                         </button>
                         <div id="toolbarfile" class="overlay overlayfile">
                             <div id="boxfile">
                                 <!-- <div id="word">
-                                    <img  src="images/word.png" width="40" height="50" />
+                                    <img  src="images/word.png" width="20" height="25" />
                                     <input type="file" id="wordInput"  style="display: none;">
                                 </div> -->
                                 <div id="pdf">
-                                    <img   src="images/pdf.png" width="40" height="50" />
+                                    <img   src="images/pdf.png" width="20" height="25" />
                                     <input type="file" id="pdfInput" accept=".pdf" style="display: none;">
                                 </div>
                                 <div id="textfile">
-                                    <img   src="images/textfile.png" width="50" height="50" />
+                                    <img   src="images/textfile.png" width="25" height="25" />
                                 </div>
                                 <!-- <div id="excel">
-                                    <img  src="images/excel.png" width="50" height="50" />
+                                    <img  src="images/excel.png" width="25" height="25" />
                                     <input type="file" id="excelFileInput" accept=".xlsx" style="display: none;">
                                 </div>
                                 <div id="powerpoint">
-                                    <img src="images/powerpoint.png" width="50" height="50" />
+                                    <img src="images/powerpoint.png" width="25" height="25" />
                                 </div> -->
                                 <div id="link"  onclick="showModal()">
-                                    <img  src="images/link.png" width="50" height="50" />
+                                    <img  src="images/link.png" width="25" height="25" />
                                 </div>
                                 <div id="audio">
                                     <input type="file" id="audioFileInput" accept=".mp3, .mp2, .wav, .mpc, .ape, .flac, .aiff, .ogg" style="display: none;">
-                                    <img  src="images/audio.png" width="50" height="50" />
+                                    <img  src="images/audio.png" width="25" height="25" />
                                 </div>
                             </div>
                         
@@ -304,22 +308,16 @@
                                 
                             </div>
                         </div>
-                        <!-- <div id="toolbarexcel" class="overlay overlayexcel">
-                            <h4>اختر الصفحات التي تريد عرضها</h4>
-                            <a id="renderButton">إضافة</a>
-                            <div id="excelSheetsContainer"></div>
-                            <h5>الصفحات</h5>
-                        </div> -->
                         
                     </div>
                     
                     <div  class="pencile_contnent  relative">
                         <button id="shape" class="toolbar_items">
-                            <img class="icon"  src="images/shape.png" width="50" height="50" />
+                            <img class="icon"  src="images/shape.png" width="25" height="25" />
                         </button>
                         <div id="toolbarshape" class="overlay overlayshape">
                             <div  class="box_color1">
-                                <div id="boxcolor1"> 
+                                <div id="boxcolor1" class="boxs_color"> 
                                     <div class="color-circle" style="background-color: #58595B;"></div>
                                     <div class="color-circle" style="background-color: #808285;"></div>
                                     <div class="color-circle" style="background-color: #A7A9AC;"></div>
@@ -329,7 +327,7 @@
                                     <div class="color-circle" style="background-color: #FFE600;"></div>
                                     <div class="color-circle" style="background-color: #FFCE00;"></div>
                                     <div class="color-circle" style="background-color: #FFAA00;"></div>
-                                    <div class="color-circle" style="background-color: #FF5500;"></div>
+                                    <div class="color-circle" style="background-color: #FF5250;"></div>
                                     <div class="color-circle" style="background-color: #E61B1B;"></div>
                                     <div class="color-circle" style="background-color: #B31564;"></div>
                                     <div class="color-circle" style="background-color: #3D00B8;"></div>
@@ -352,29 +350,29 @@
                                     <div class="color-circle" style="background-color: #FF80FF;"></div>
         
                                 </div>
-                                <h5 id="color1">اللون</h5>
+                                <h5 id="color1" class="text">اللون</h5>
                             </div>
                             <div id="boxshape">
                                 <div id="square">
-                                    <img src="images/square.png" width="40" height="40" />
+                                    <img src="images/square.png" width="20" height="20" />
                                 </div>
                                 <div id="triangle">
-                                    <img src="images/triangle.png" width="40" height="40" />
+                                    <img src="images/triangle.png" width="20" height="20" />
                                 </div>
                                 <div id="star">
-                                    <img  src="images/star.png" width="40" height="40" />
+                                    <img  src="images/star.png" width="20" height="20" />
                                 </div>
                                 <div id="circle">
-                                    <img src="images/circle.png" width="40" height="40" />
+                                    <img src="images/circle.png" width="20" height="20" />
                                 </div>
                                 <div id="linearrow">
-                                    <img src="images/linearrow.png" width="40" height="20" />
+                                    <img src="images/linearrow.png" width="20" height="10" />
                                 </div>
                                 <div id="lineshape">
-                                    <img src="images/line.png" width="40" height="2" />
+                                    <img src="images/line.png" width="20" height="1" />
                                 </div>
                                 <div id="linetwoarrow">
-                                    <img src="images/linetwoarrow.png" width="40" height="20" />
+                                    <img src="images/linetwoarrow.png" width="20" height="10" />
                                 </div> 
                             </div>
                         </div>
@@ -382,47 +380,40 @@
 
                     <div id="image"  class="">
                         <button class="toolbar_items">
-                            <img class="icon"  src="images/image.png" width="50" height="50" />
+                            <img class="icon"  src="images/image.png" width="25" height="25" />
                         </button>
                         <input type="file" id="imageUploadInput" accept="image/*" style="display: none;">
                     </div>
 
-                    <!-- <div id="scissors"  class=" scissors"  >
-                        <button class="toolbar_items">
-                            <img class="icon" src="images/scissors.svg" width="50" height="50" />
-                        </button>
-                    </div> -->
 
                     <div id="eraseall"  class="">
                         <button class="toolbar_items">
-                            <img class="icon" src="images/eraseall.png" width="50" height="50" />
+                            <img class="icon" src="images/eraseall.png" width="25" height="25" />
                         </button>
                     </div>
 
                     <div id="erasepart"  class="">
                         <button class="toolbar_items">
-                            <img class="icon" src="images/erasepart.png" width="50" height="50" />
+                            <img class="icon" src="images/erasepart.png" width="25" height="25" />
                         </button>
                     </div>
 
                     <div id="lock"  class="">
                         <button class="toolbar_items">
-                            <img class="icon" id="lockimage" src="images/unlock.png" width="50" height="50" />
+                            <img class="icon" id="lockimage" src="images/unlock.png" width="25" height="25" />
                         </button>
                     </div>
                     
                     <div id="addRedo"  class="">
                         <button class="toolbar_items">
-                            <img class="icon" id="redo" src="images/redo.png" width="50" height="50" />
+                            <img class="icon" id="redo" src="images/redo.png" width="25" height="25" />
                         </button>
                     </div>   
                     <div id="addUndo"  class="">
                         <button class="toolbar_items">
-                            <img class="icon" id="undo" src="images/undo.png" width="50" height="50" />
+                            <img class="icon" id="undo" src="images/undo.png" width="25" height="25" />
                         </button>
                     </div>
-                    
-                    
                 </div>
             </div>
         </footer>
@@ -436,10 +427,10 @@
             <div id="driver" class="driver"></div>
             <button class="btn-close_audio" id="btn-close_audio"><img src="images/close.svg" alt=""></button>
             <div id="audio-controls">
-                <img src="images/audio_img.png" width="80px" height="40px">
+                <img src="images/audio_img.png" width="80px" height="20px">
                 <a id="playButton"><img src="images/play_audio.png" width="68px" height="68px"></a>
                 <a id="pauseButton"><img src="images/pause_audio.png" width="68px" height="68px"></a>
-                <img src="images/audio_img.png" width="80px" height="40px">
+                <img src="images/audio_img.png" width="80px" height="20px">
                 <button id="seekStartButton" style="display: none;">Seek Start</button>
                 <button id="seekEndButton" style="display: none;">Seek End</button>  
             </div>
@@ -449,15 +440,12 @@
                 <div class="custom-slider">
                     <input type="range" id="range" class="range" step="1" value="0" max="100" data-range="">
                     <div class="slider-bg"></div>
-                    <!-- <div id="sliderknob" class="slider-knob"></div> -->
                 </div>
                 &numsp;&numsp;
                 <div id="endTime">0:00</div>
             </div>
         </div> 
 
-        <!-- <div id="recentColorsContainer" style="z-index: 1000;"> 
-        </div> -->
         <!--------------------------------------------------------------------- Models --------------------------------------------------------------------->
 
         <div id="dialog">
@@ -479,20 +467,19 @@
         <div class="modal" id="linkModal">
             <div class="modal_header">
                 <span class="close-btn" onclick="closeModal()">&times;</span>
-                <a type="button" class="save-btn" onclick="addLink()">اضف </a>
+                <a type="button" class="save-btn" onclick="addLink()">أضف </a>
             </div>
             <div class="form-control" id="formtitle">
                 <label for="">عنوان الرابط</label>
-                <input type="text" class="form-control" id="linkTitle" placeholder="العنوان">
+                <input type="text" class="form-control" id="linkTitle" placeholder="">
             </div>
             <h3></h3>
             <div class="form-control" id="formlink">
                 <label for=""> الرابط</label>
-                <input type="text" class="form-control" id="linkURL" placeholder="URL">
+                <input type="text" class="form-control" id="linkURL" placeholder="">
             </div>
         </div>
 
-   
         <script src="js/variables.js"></script>
         <script src="js/handelPages.js"></script>
         <script src="js/canvasEvents.js"></script>

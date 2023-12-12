@@ -14,10 +14,6 @@ let startDrawing = false;
 let star, initialPoints, initialCenter, initialDistances;
 
 
-
-
-
-
 drawStarButton.addEventListener("click", function () {
   isCreatingStar = true;
   isCreatingTriangle = false;
