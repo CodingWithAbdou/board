@@ -1,4 +1,6 @@
 let canvasMode = 'select';
+var panStart = null; // Store the starting point of the pan
+canvas.allowTouchScrolling = true;
 
 document.getElementById("select").addEventListener("click", function () {
     canvasMode = 'select';
@@ -20,56 +22,116 @@ document.getElementById("select").addEventListener("click", function () {
 }); 
 
 document.getElementById("hand").addEventListener("click", function () {
+    canvasMode = 'hand';
+    // canvas.allowTouchScrolling = true;
+
     canvas.isDrawingMode = false;
     isSquareDrawn = true;
     temporaryDrawingEnabled = false;
     isErasing = false;
     canvas.isDragging = false;
     canvas.selection = true; // Enable object selection after drag
-    canvas.setCursor('default');
     eraseEnabled = false;
     addingSingleArrowLineBtnClicked = false;
     addingLineBtnClicked = false;
     canvas.renderAll(); // Redraw the canvas
-    canvasMode = 'hand';
 }); 
 
 canvas.on('mouse:down', function (event) {
     if (canvasMode === 'hand') {
         canvas.setCursor('grab');
         if (event.target) {
-            canvas.isDragging = false;
         } else {
-            canvas.isDragging = true;
             canvas.selection = false; 
+            panStart = {
+                x: event.e.clientX || event.e.touches[0].clientX,
+                y: event.e.clientY || event.e.touches[0].clientY
+            };
         }
     } else {
-        canvas.isDragging = false;
         canvas.selection = true;
-        // canvas.setCursor('default');
     }
 });
 
 canvas.on('mouse:move', function (event) {
-    if (canvasMode === 'hand') {
-        if (canvas.isDragging) {
-            var delta = new fabric.Point(event.e.movementX, event.e.movementY);
-            canvas.relativePan(delta);
-        } else {
-            canvas.setCursor('grab');
-        }
-    } else {
-        // canvas.setCursor('default');
+    if (canvasMode === 'hand' && panStart) {
+        var panDelta = {
+            x: (event.e.clientX || event.e.touches[0].clientX) - panStart.x,
+            y: (event.e.clientY || event.e.touches[0].clientY) - panStart.y
+        };
+
+        // Iterate over all objects on the canvas and pan them individually
+        canvas.getObjects().forEach(function (obj) {
+            obj.left += panDelta.x;
+            obj.top += panDelta.y;
+            obj.setCoords(); // Update coordinates for correct rendering
+        });
+
+        canvas.renderAll();
+        panStart = {
+            x: event.e.clientX || event.e.touches[0].clientX,
+            y: event.e.clientY || event.e.touches[0].clientY
+        };
     }
 });
 
 canvas.on('mouse:up', function () {
     if (canvasMode === 'hand') {
-        canvas.isDragging = false;
         canvas.selection = true; 
-        // canvas.setCursor('default');
+        panStart = null;
     }
 });
+
+// canvas.on('touch:gesture', function (event) {
+//     console.log('touch:gesture')
+//     if (canvasMode === 'hand') {
+//         // If in 'hand' mode, enable canvas dragging
+//         if (event.e.touches && event.e.touches.length === 1) {
+//             // Touch down on the canvas, enable canvas dragging
+//             canvas.isDragging = true;
+//             canvas.selection = false; // Disable object selection during drag
+//             canvas.setCursor('grab');
+//         }
+//     } else {
+//         // If in 'select' mode, enable object selection
+//         canvas.isDragging = false;
+//         canvas.selection = true;
+//         canvas.setCursor('default');
+//     }
+// });
+
+// // Add event listener for touch move to update cursor and drag canvas
+// canvas.on('touch:drag', function (event) {
+//     console.log('touch:drag')
+
+//     if (canvasMode === 'hand') {
+//         // If in 'hand' mode, update cursor and drag canvas
+//         if (canvas.isDragging) {
+//             // var delta = new fabric.Point(event.e.touches[0].movementX, event.e.touches[0].movementY);
+//             // canvas.relativePan(delta);
+//         } else {
+//             canvas.setCursor('grab');
+//         }
+//     } else {
+//         // If in 'select' mode, set cursor to default
+//         canvas.setCursor('default');
+//     }
+// });
+
+// // Add event listener for touch end to stop dragging
+// canvas.on('touch:gesture-end', function () {
+//     console.log('touch:gesture-end')
+
+//     if (canvasMode === 'hand') {
+//         // If in 'hand' mode, stop dragging
+//         canvas.isDragging = false;
+//         canvas.selection = true; // Enable object selection after drag
+//         canvas.setCursor('default');
+//     } else {
+//         // If in 'select' mode, do nothing on touch end
+//     }
+// });
+
 penciltime.addEventListener("click", function () {
     isAddingText = false;
     canvasMode = 'select';
