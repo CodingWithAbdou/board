@@ -78,7 +78,6 @@ var italicButton = document.getElementById("italic");
 var underlineButton = document.getElementById("underline");
 var counterInput = document.getElementById("counterInput");
 
-var zoomLevel = 1.0; // 100%
 var zoomInButton = document.getElementById("zoomIn");
 var zoomOutButton = document.getElementById("zoomOut");
 

@@ -35,6 +35,9 @@ document.addEventListener('keydown', function (e) {
         }
     }
 })
+document.addEventListener('mousemove', function(event) {
+    lastMouseCoords = {x:event.clientX , y:event.clientY}
+});
 
 document.addEventListener('keyup', function (e) {
     if (e.key === ' ' || e.code === 'Space') {
@@ -45,19 +48,13 @@ document.addEventListener('keyup', function (e) {
     } 
 })
 
-var zoomFactor = 1.2; // Adjust this value to control the zoom sensitivity
-var ctrlPressed = false;
 
 document.addEventListener('keydown', function (event) {
-    if (event.key === 'Control') {
-        ctrlPressed = true;
+    if (!event.altKey)return     
+    if (event.key === '+' || event.key === '=') {
+        zoomIn();        
     }
-
-    if (ctrlPressed) {
-        if (event.key === '+' || event.key === '-') {
-            zoom(event.key === '+' ? 1 : -1, event.clientX, event.clientY);
-            event.preventDefault();
-            event.stopPropagation();
-        }
+    if (event.key === '-') {
+        zoomOut();
     }
 });
