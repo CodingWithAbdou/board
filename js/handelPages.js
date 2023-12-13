@@ -136,7 +136,6 @@ if (localStorage.getItem('currentpage')) {
 
 // Function to create a new page
 const  createNewPage =  () => {
-    // pagintion.style.display = 'flex'
     btnPre.removeAttribute('disabled')
     btnNex.removeAttribute('disabled')
 
@@ -189,10 +188,7 @@ function checkIfDataAudio() {
     }else {
         closeAudio()
     }
-
 }
-
-
 
 function setData() {
     pagesData['page' + currentpage] =  JSON.stringify(canvas.toJSON(['customId']))
@@ -206,7 +202,6 @@ function getData() {
     });
 }
 
-
 function creathead(index) {
     const head = document.createElement('h2');
     head.className = 'h2';
@@ -215,7 +210,6 @@ function creathead(index) {
     document.querySelector('.numberPages').appendChild(head);
     head.style.display = 'none'
 }   
-
 
 function addBtnRemove() {
     canvas.forEachObject(obj => {
