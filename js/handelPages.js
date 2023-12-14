@@ -8,10 +8,6 @@ var img = document.createElement('img');
 img.src = deleteIcon;
 
 
-var sliceIcon = "data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' id='Ebene_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='595.275px' height='595.275px' viewBox='200 215 230 470' xml:space='preserve'%3E%3Ccircle style='fill:%23333;' cx='299.76' cy='439.067' r='218.516'/%3E%3Cg%3E%3Crect x='267.162' y='307.978' transform='matrix(0.7071 -0.7071 0.7071 0.7071 -222.6202 340.6915)' style='fill:white;' width='65.545' height='262.18'/%3E%3Crect x='266.988' y='308.153' transform='matrix(0.7071 0.7071 -0.7071 0.7071 398.3889 -83.3116)' style='fill:white;' width='65.544' height='262.179'/%3E%3C/g%3E%3C/svg%3E";
-
-var sliceImg = document.createElement('img');
-sliceImg.src = sliceIcon;
 
 
 var pagesData = {};
@@ -32,49 +28,6 @@ var canvas = new fabric.Canvas(canvasElement, {
     height: heightCanvas, 
 });
 
-var zoomFactor = 1.2; // Adjust this value to control the zoom sensitivity
-var isZooming = false;
-var lastZoomX, lastZoomY;
-var ctrlPressed = false;
-
-canvas.on('mouse:wheel', function (event) {
-    if (event.e.ctrlKey) {
-        var delta = event.e.deltaY;
-        var zoom = canvas.getZoom();
-        var zoomPoint = new fabric.Point(event.e.clientX, event.e.clientY);
-        if (delta > 0) {
-            zoom /= zoomFactor;
-        } else {
-            zoom *= zoomFactor;
-        }
-        zoom = Math.min(Math.max(zoom, 0.5), 3); // Adjust the min and max zoom levels as needed
-        canvas.zoomToPoint(zoomPoint, zoom);
-        canvas.requestRenderAll();
-        event.e.preventDefault();
-        event.e.stopPropagation();
-    }
-});
-
-canvas.on('mouse:move', function (event) {
-    if (isZooming) {
-        var zoomPoint = new fabric.Point(lastZoomX, lastZoomY);
-        canvas.zoomToPoint(zoomPoint, canvas.getZoom());
-        canvas.requestRenderAll();
-    }
-});
-
-// Add event listeners for mouse down and up to track zooming state
-canvas.on('mouse:down', function (event) {
-    if (event.e.ctrlKey) {
-        isZooming = true;
-        lastZoomX = event.e.clientX;
-        lastZoomY = event.e.clientY;
-    }
-});
-
-canvas.on('mouse:up', function () {
-    isZooming = false;
-});
 
 
 function setCanvasSize() {
@@ -121,7 +74,6 @@ if (localStorage.getItem('currentpage')) {
     canvas.loadFromJSON(pagesData['page' +  currentpage], function () {
         canvas.renderAll();
     });
-    // addBtnRemove()
 }else {
     btnPre.setAttribute('disabled' , '')
     btnNex.setAttribute('disabled' , '')
@@ -217,17 +169,16 @@ function addBtnRemove() {
         deleteControl = new fabric.Control({
             x: 0.5,
             y: -0.5,
-            offsetY: 16,
+            offsetY: -20,
             cursorStyle: 'pointer',
             mouseUpHandler: deleteObject,
             render: renderIcon,                
             cornerSize: 26
         });
-        fabric.Object.prototype.controls.deleteControl = deleteControl;
-        // Apply control to fabric.Textbox prototype
+        obj.controls.deleteControl = deleteControl;
         fabric.Textbox.prototype.controls = fabric.Textbox.prototype.controls || {};
         fabric.Textbox.prototype.controls.deleteControl = deleteControl;
-
+   
         function deleteObject(eventData, transform) {
             var canvas = transform.target.canvas;
             var activeObjects = canvas.getActiveObjects();
@@ -241,12 +192,195 @@ function addBtnRemove() {
         }
     
         function renderIcon(ctx, left, top, styleOverride, fabricObject) {
+            if(fabricObject.customId != 'sliceStrock') {
+                var size = this.cornerSize;
+                ctx.save();
+                ctx.translate(left, top);
+                ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
+                ctx.drawImage(img, -size/2, -size/2, size, size);
+                ctx.restore();
+            }
+        }
+        if(obj instanceof fabric.Image && obj.customId != 'sliceStrock') {
+            addSliceIconToObjects(obj)
+        }
+  });
+}
+
+function addSliceIconToObjects(obj) {
+    const sliceControl = new fabric.Control({
+        x: -0.5,
+        y: -0.5,
+        offsetY: -20,
+        cursorStyle: 'pointer',
+        mouseUpHandler: sliceObject,
+        render: renderSliceIcon,
+        cornerSize: 24
+    });
+
+    if (obj instanceof fabric.Image) {
+        obj.controls = obj.controls || {};
+        obj.controls.sliceControl = sliceControl;
+        canvas.renderAll();
+    }
+
+    function sliceObject(eventData, transform) {
+        sliceImage(eventData, transform)
+    }
+
+    function renderSliceIcon(ctx, left, top, styleOverride, fabricObject) {
+        if (fabricObject instanceof fabric.Image) {
             var size = this.cornerSize;
             ctx.save();
             ctx.translate(left, top);
             ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
-            ctx.drawImage(img, -size/2, -size/2, size, size);
+
+            var sliceIcon = new Image();
+            sliceIcon.src = '../images/scissors.svg';
+            ctx.drawImage(sliceIcon, -size / 2, -size / 2, size, size);
+
             ctx.restore();
         }
-  });
+    }
 }
+function sliceImage(eventData, transform) {
+    let activeImg = canvas.getActiveObjects();
+    let left = activeImg[0].left;
+    let top = activeImg[0].top;
+    let height = activeImg[0].height * activeImg[0].scaleY ;
+    let width = activeImg[0].width  * activeImg[0].scaleX;
+    activeImg[0].set({
+        selectable: false,
+        hasControls: false,
+        hasBorders: false,
+        evented: false 
+    })
+    cropImage(activeImg[0] ,width , height , left , top)
+}
+
+function cropImage(img ,width , height , left , top) {
+    var rect = new fabric.Rect({
+        left: left,
+        top: top,
+        width: width ,
+        height: height,
+        fill: 'transparent',  // Fill color
+        strokeWidth: 1, // Border width
+        stroke: '#36b673' , // Border color
+        customId:'sliceStrock',
+        hasRotatingPoint: false,
+        transparentCorners: true,
+        cornerColor: '#36b673',
+        cornerStyle: 'inverted-rect',  // Change corner style to circular
+        cornerSize :8
+        
+    });
+    canvas.add(rect);
+    addTrueAndFalse(rect , img)
+    canvas.renderAll();
+}
+
+function addTrueAndFalse(rect , img) {
+    console.log(rect)
+    if(rect.customId != 'sliceStrock') return
+    const trueControl = new fabric.Control({
+        x: -0.5,
+        y: -0.5,
+        offsetY: -40,
+        cursorStyle: 'pointer',
+        mouseUpHandler: trueObject,
+        render: renderTrue,
+        cornerSize: 16
+    });
+    const falseControl = new fabric.Control({
+        x: 0.5,
+        y: -0.5,
+        offsetY: -40,
+        cursorStyle: 'pointer',
+        mouseUpHandler: falseObject,
+        render: renderFalse,
+        cornerSize: 16
+    });
+
+    if (rect.customId == 'sliceStrock') {
+        rect.controls = rect.controls || {};
+        rect.controls.trueControl = trueControl;
+        rect.controls.falseControl = falseControl;
+        canvas.renderAll();
+    }
+
+    function falseObject(eventData, transform) {
+        console.log('left' ,eventData)
+        canvas.remove(rect);
+        img.set({
+            selectable: true,
+            hasControls: true,
+            hasBorders: true,
+            evented: true 
+        })
+    }
+
+    function trueObject(eventData, transform) {
+        console.log('right' ,eventData)
+
+        let left = rect.left;
+        let top = rect.top;
+        let height = rect.height * rect.scaleY ;
+        let width = rect.width  * rect.scaleX;
+        let capturedDataURL = canvas.toDataURL({
+            format: 'jpeg', 
+            left: left - (parseInt(width) / 2),
+            top: top - (parseInt(height) / 2) , 
+            width: parseInt(width),
+            height: parseInt(height),
+            absolutePositioned: true
+        });
+        fabric.Image.fromURL(capturedDataURL, function(img) {
+            img.set({
+                left: parseInt(left),
+                top: parseInt(top) ,
+                width: parseInt(width),
+                height: parseInt(height),
+                selectable: true,  
+            });
+            canvas.add(img);
+            canvas.renderAll();
+        });
+        canvas.remove(rect);
+        canvas.remove(img);
+        canvas.renderAll();
+        
+        
+    }
+
+    function renderTrue(ctx, left, top, styleOverride, fabricObject) {
+        if (fabricObject.customId == 'sliceStrock') {
+            var size = this.cornerSize;
+            ctx.save();
+            ctx.translate(left, top);
+            ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
+
+            var sliceIcon = new Image();
+            sliceIcon.src = '../images/true.svg';
+            ctx.drawImage(sliceIcon, -size / 2, -size / 2, size, size);
+
+            ctx.restore();
+        }
+    }
+    function renderFalse(ctx, left, top, styleOverride, fabricObject) {
+        if (fabricObject.customId == 'sliceStrock') {
+            var size = this.cornerSize;
+            ctx.save();
+            ctx.translate(left, top);
+            ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
+
+            var sliceIcon = new Image();
+            sliceIcon.src = '../images/false.svg';
+            ctx.drawImage(sliceIcon, -size / 2, -size / 2, size, size);
+
+            ctx.restore();
+        }
+    }
+
+}
+

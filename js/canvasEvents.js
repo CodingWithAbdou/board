@@ -21,3 +21,48 @@ canvas.on("object:added", function () {
     }
     isRedoing = false;
 });
+
+
+var zoomFactor = 1.2; // Adjust this value to control the zoom sensitivity
+var isZooming = false;
+var lastZoomX, lastZoomY;
+var ctrlPressed = false;
+
+canvas.on('mouse:wheel', function (event) {
+    if (event.e.ctrlKey) {
+        var delta = event.e.deltaY;
+        var zoom = canvas.getZoom();
+        var zoomPoint = new fabric.Point(event.e.clientX, event.e.clientY);
+        if (delta > 0) {
+            zoom /= zoomFactor;
+        } else {
+            zoom *= zoomFactor;
+        }
+        zoom = Math.min(Math.max(zoom, 0.5), 3); // Adjust the min and max zoom levels as needed
+        canvas.zoomToPoint(zoomPoint, zoom);
+        canvas.requestRenderAll();
+        event.e.preventDefault();
+        event.e.stopPropagation();
+    }
+});
+
+canvas.on('mouse:move', function (event) {
+    if (isZooming) {
+        var zoomPoint = new fabric.Point(lastZoomX, lastZoomY);
+        canvas.zoomToPoint(zoomPoint, canvas.getZoom());
+        canvas.requestRenderAll();
+    }
+});
+
+// Add event listeners for mouse down and up to track zooming state
+canvas.on('mouse:down', function (event) {
+    if (event.e.ctrlKey) {
+        isZooming = true;
+        lastZoomX = event.e.clientX;
+        lastZoomY = event.e.clientY;
+    }
+});
+
+canvas.on('mouse:up', function () {
+    isZooming = false;
+});
