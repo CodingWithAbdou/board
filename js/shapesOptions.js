@@ -74,7 +74,6 @@ canvas.on('mouse:up', function () {
       canvas.defaultCursor = 'default';
       canvas.hoverCursor = 'default';
       startDrawing = false;
-      
       canvas.add(star);
       document.getElementById("select").click()
   }
@@ -138,6 +137,7 @@ drawTriangleButton.addEventListener("click", function () {
             });
 
             triangles[countTriangles].customId = 'has_remove_btn';
+
             canvas.add(triangles[countTriangles]);
             canvas.setActiveObject(triangles[countTriangles]);
         }

@@ -5,7 +5,8 @@
 
 :root {
     --radius : 8px;
-    --box-shadow : 0px 0px 0px 1px rgb(0 0 0 / 20%)
+    --box-shadow : 0px 0px 0px 1px rgb(0 0 0 / 20%);
+    --green : #37B673
 }
 
 
@@ -48,19 +49,24 @@ body {
     width: 30px;
     height: 30px;
 }
+.recorde_icon {
+    width: 50px;
+    height: 16px;
+}
 .active {
-    border-bottom: 2px solid #009688;
+    box-shadow: 0px 2px 0px 0px var(--green);
+    border-radius: 2px;
 }
 .show {
     display: block !important; 
 }
 .border_2 {
     border: 1px solid #f6f6f6;
-    outline: 1px solid #009688;
+    outline: 1px solid var(--green);
 }
 .text {
     font-size: 12px;
-    color: #009688;
+    color: var(--green);
 }
 
 /****************************************************************************************
@@ -75,16 +81,19 @@ body {
     width: 100%;
     padding-inline: 1rem;
     position: absolute;
-    z-index: 111111111;
+    z-index: 999999;
     width: 100%;
 }
 
 .exist , .video , .numberPages { flex-basis: calc(100% / 3);}
 
 .numberPages {
-    text-align: center;
-    position: relative;
- }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
+    gap: .8rem;
+}
 
 /****************************************************************************************
 *** BODY
@@ -102,15 +111,10 @@ body {
 
 .h2 {
     font-size: 16px;
-    color: #37B673;
+    color: var(--green);
     position: relative;
 }
-.image_head {
-    position: absolute;         
-    right: 45px;
-    top: 50%;
-    transform: translateY(-50%);
-}
+
 
 
 /****************************************************************************************
@@ -126,6 +130,7 @@ body {
     margin-block: .5rem ;
     position: absolute;
     width: 100%;
+    z-index: 999999;
 }
 
 .toolbar {
@@ -286,8 +291,9 @@ body {
     direction: rtl;
     border: none;
     font-size: 14px;
+    font-weight: bold;
     width: 100%;
-    color: #009688;
+    color: var(--green);
 }
 
 .counter1 select:focus {
@@ -315,16 +321,19 @@ body {
     border: none;
     font-size: 14px;
 }
+#sizetext {
+    font-weight: bold;
+}
 
 .counter2{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     height: 30px;
-    border-radius: var(--radius);
     background-color:white ;
     margin-bottom: 1rem;
     box-shadow: var(--box-shadow);
+    border-radius: var(--radius);
 }
 .counter2 >span {
     cursor: pointer;
@@ -450,9 +459,9 @@ body {
 #addPageButton{
     cursor: pointer;
     font-size: 14px;
-    color: #36B673;
+    color: var(--green);
     border-radius: var(--radius);
-    border: 1px solid #36B673;
+    border: 1px solid var(--green);
     padding: .5rem;
 }
 .overlaypdf h4{
@@ -470,7 +479,7 @@ body {
 }
 
 .selected {
-    border: 4px solid #36B673;
+    border: 4px solid var(--green);
     border-radius: 10px;
 }
 
@@ -504,11 +513,11 @@ body {
 
 .overlayaudio{
     display: none;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: var(--box-shadow);
+    border-radius: var(--radius);
     position: absolute;
     transition: opacity 500ms;
     z-index: 1;
-    border-radius: 20px;
     background-color: #F6F6F6;
     padding: 1rem;
     top: 100px;
@@ -532,8 +541,8 @@ body {
     left: 50%;
     top: -30px;
     transform: translateX(-50%);
-    border-radius: 10px;
-    background-color: #B3B3B3;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--radius);
     cursor: all-scroll;
     user-select: none;
 }
@@ -561,13 +570,13 @@ body {
 }
 
 #startTime{
-    color: #36B673;
+    color: var(--green);
     font-size: 15px;
     font-weight: bold;
 }
 
 #endTime{
-    color: #36B673;
+    color: var(--green);
     font-size: 15px;
     font-weight: bold;
 }
@@ -583,7 +592,7 @@ body {
 .slider-knob {
     width: 20px;
     height: 20px;
-    background-color: #36B673;
+    background-color: var(--green);
     border-radius: 50%;
     position: absolute;
     border: 1px solid white;
@@ -612,7 +621,7 @@ body {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: #36B673;
+    background: var(--green);
 }
 
 .slider-bg {
@@ -622,7 +631,7 @@ body {
     left: 0;
     width: 0%;
     height: 100%;
-    background: linear-gradient(to right, #36B673 0%, #36B673 0%);
+    background: linear-gradient(to right, var(--green) 0%, var(--green) 0%);
     border-radius: 5px;
     pointer-events: none;
 }
@@ -689,7 +698,7 @@ body {
 }
 
 .save-btn {
-    background:#14C03C ;
+    background:var(--green) ;
     color: white;
     padding: .8rem 1.2rem;
     font-size: 14px;
@@ -710,6 +719,10 @@ body {
     .icon {
         width: 16px;
         height: 16px;
+    }
+    .recorde_icon {
+        width: 36px;
+        height: 12px;
     }
 }
 
@@ -736,10 +749,7 @@ body {
     display: block;
     cursor: pointer;
 }
-.recorde_icon {
-    width: 30px;
-    height: 10px;
-}
+
 #addVideo:hover { opacity: 0.5; }
 
 #stopVideo{
@@ -924,8 +934,8 @@ body {
 }
 #cancelExit {
     margin-top: 35px;
-    color: #36B673;
-    border: 1px solid #36B673 ;
+    color: var(--green);
+    border: 1px solid var(--green) ;
     border-radius: 10px;
     padding: 9px 53px;
     font-size: 30px;
@@ -1037,7 +1047,7 @@ left: 40px;
         }
 
         .sheet.selected {
-            border: 4px solid #36B673;
+            border: 4px solid var(--green);
             border-radius: 10px;
         }
 
@@ -1075,7 +1085,7 @@ left: 40px;
             border: none;
             cursor: pointer;
             font-size: 20px;
-            color: #36B673;
+            color: var(--green);
             position: relative;
             bottom: 60px;
             right:1140px;

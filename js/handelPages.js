@@ -31,6 +31,7 @@ var canvas = new fabric.Canvas(canvasElement, {
     width: widthCanvas ,
     height: heightCanvas, 
 });
+
 var zoomFactor = 1.2; // Adjust this value to control the zoom sensitivity
 var isZooming = false;
 var lastZoomX, lastZoomY;
@@ -87,6 +88,10 @@ function setCanvasSize() {
 }
 window.addEventListener('resize', setCanvasSize);
 
+
+document.addEventListener('DOMContentLoaded',addBtnRemove);
+canvas.on('mouse:up', addBtnRemove)
+
 // // sava data to local
 window.addEventListener("beforeunload", function () {
     setData()
@@ -116,20 +121,8 @@ if (localStorage.getItem('currentpage')) {
     canvas.loadFromJSON(pagesData['page' +  currentpage], function () {
         canvas.renderAll();
     });
-    addBtnRemove()
+    // addBtnRemove()
 }else {
-    const hiddenRect = new fabric.Rect({  
-        left: 100,
-        top: 100,
-        width: 50,
-        height: 50,
-        fill: 'blue',
-        visible: false, // Initially set to hide
-    });
-    
-    // Add the rectangle to the canvas
-    canvas.add(hiddenRect);
-    addBtnRemove()
     btnPre.setAttribute('disabled' , '')
     btnNex.setAttribute('disabled' , '')
 }
@@ -159,6 +152,7 @@ document.querySelectorAll('.btn_controll').forEach(btn => {
     btn.addEventListener('click' , ()=> {
         dataForUndoRedo = []
         setData()
+        console.log('blabvla')
         if(btn.classList.contains('next_canvas')) currentpage++
         if(btn.classList.contains('prev_canvas')) currentpage--
 
@@ -173,6 +167,7 @@ document.querySelectorAll('.btn_controll').forEach(btn => {
         })
         
         getData()
+        addBtnRemove()
         document.getElementById(`head-${currentpage}`).style.display = 'block'
         checkIfDataAudio()
     })
@@ -213,7 +208,6 @@ function creathead(index) {
 
 function addBtnRemove() {
     canvas.forEachObject(obj => {
-        console.log(obj);
         fabric.Object.prototype.set({
             transparentCorners: false,
             cornerColor: '#36b673',

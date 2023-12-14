@@ -114,6 +114,7 @@ penciltime.addEventListener("click", function () {
         // The event object contains the drawn path
         const path = event.path;
         if (temporaryDrawingEnabled) {
+    
             clearTimeout(timeoutId);
             timeoutId = setTimeout(clearCanvas(path), 2000);
         }
@@ -141,7 +142,6 @@ document.getElementById("pencil").addEventListener("click", function () {
     })
     updateBrushSize();
     updateBrushColor(color);
-    
     canvas.renderAll(); // Redraw the canvas
 });
 let isAddingText = false;
@@ -160,7 +160,42 @@ text.addEventListener("click", function () {
     eraseEnabled = false;
     countIndex++;
     canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
+});
 
+canvas.on('mouse:down', function(options) {
+    var activeObject = canvas.getActiveObject();
+          // التحقق من أن النص المحدد هو نص
+    if (activeObject && activeObject.type === 'textbox' && isAddingText == true) {
+        isAddingText = false
+        document.getElementById('select').click()
+    }
+let color;
+let fontSizeText = document.getElementById('counterInput').value
+document.querySelectorAll('#toolbartext .color-circle').forEach(element => {
+    if(element.classList.contains('border_2')) {
+        color = element.style.backgroundColor
+    }
+})
+if(!color){
+    color = 'black'
+}
+if (isAddingText) {
+    
+    // saveCanvasState()
+    const pointer = canvas.getPointer(options.e);
+    const text = new fabric.Textbox('اكتب هنا', {
+        left: pointer.x,
+        top: pointer.y,
+        fontFamily: 'Arial',
+        fontSize: fontSizeText,
+        fontFamily: fontFamily,
+        fill: color,
+    });
+    canvas.add(text);
+    canvas.setActiveObject(text);
+    document.getElementById('select').click()
+    isAddingText = false;
+}
 });
 
 document.getElementById('shape').addEventListener('click' , ()=> {
@@ -171,44 +206,13 @@ document.getElementById('shape').addEventListener('click' , ()=> {
     isErasing = false;
 })
 
-canvas.on('mouse:down', function(options) {
-        var activeObject = canvas.getActiveObject();
 
-              // التحقق من أن النص المحدد هو نص
-        if (activeObject && activeObject.type === 'textbox' && isAddingText == true) {
-            isAddingText = false
-            document.getElementById('select').click()
-        }
-    let color;
-    let fontSizeText = document.getElementById('counterInput').value
-    document.querySelectorAll('#toolbartext .color-circle').forEach(element => {
-        if(element.classList.contains('border_2')) {
-            color = element.style.backgroundColor
-        }
-    })
-    if(!color){
-        color = 'black'
-    }
-    if (isAddingText) {
-        
-        // saveCanvasState()
-        const pointer = canvas.getPointer(options.e);
-        const text = new fabric.Textbox('اكتب هنا', {
-            left: pointer.x,
-            top: pointer.y,
-            fontFamily: 'Arial',
-            fontSize: fontSizeText,
-            fontFamily: fontFamily,
-            fill: color,
-        });
-        canvas.add(text);
-        canvas.setActiveObject(text);
-        document.getElementById('select').click()
-        isAddingText = false;
-    }
-});
 let addedImage = null;
 
+document.getElementById("image").addEventListener("click", function () {
+    canvasMode = 'select';
+    document.getElementById("imageUploadInput").click();
+});
 document.getElementById("imageUploadInput").addEventListener("change", function (event) {
     canvasMode = 'select';
     canvas.isDrawingMode = false;
@@ -227,8 +231,8 @@ document.getElementById("imageUploadInput").addEventListener("change", function 
                 img.set({
                     left: 100, // تعيين موقع الصورة على الكانفاس
                     top: 100,
-                    scaleX: 0.5, // تعيين مقياس الصورة
-                    scaleY: 0.5,
+                    scaleX: 0.2, // تعيين مقياس الصورة
+                    scaleY: 0.2,
                     protected: true
                     
                 });
@@ -240,6 +244,7 @@ document.getElementById("imageUploadInput").addEventListener("change", function 
             });
         };
         reader.readAsDataURL(file);
+        document.getElementById('select').click()
     }
 });
 
@@ -251,11 +256,11 @@ canvas.on('mouse:up', () => {
  
     if (addedImage && cropRect) {
         addedImage.clipPath = cropRect;
+
         canvas.renderAll();
         canvas.remove(cropRect);
         cropRect = null;
     }
-
 });
 
 
@@ -281,10 +286,7 @@ lock.addEventListener("click", function () {
 });
 
 
-document.getElementById("image").addEventListener("click", function () {
-    canvasMode = 'select';
-    document.getElementById("imageUploadInput").click();
-});
+
 
 
 
@@ -296,62 +298,58 @@ eraseButton.addEventListener("click", toggleEraseMode);
 
 let isMouseDown;
 canvas.on('mouse:down', function (event) {
-    isMouseDown = true;
-});
-canvas.on('mouse:up', function (event) {
-    isMouseDown = false;
 });
 
 
-// Function to toggle erase mode
 function toggleEraseMode() {
+    // Set up erase mode
     canvasMode = 'select';
     eraseEnabled = true;
     canvas.selectable = false;
     canvas.isDrawingMode = false;
     isSquareDrawn = true;
+
     canvas.defaultCursor = 'crosshair';
     canvas.hoverCursor = 'crosshair';
 
+    // Disable selection for all objects in the canvas
     if (eraseEnabled) {
         isErasing = false;
-        canvas.selection = false; // Disable object selection
+        canvas.selection = false;
         canvas.forEachObject(function (obj) {
-            obj.selection = false; // Disable selection for all objects
+            obj.selection = false;
         });
-    } 
-    // Attach a click event listener to the canvas
-canvas.on('mouse:down', function (event) {
-    if(isMouseDown){
-        if (eraseEnabled && event.target) {
-            removeAllShapesAndPaths(event.target);
-        }
-        if(isErasing){
-            eraseEnabled = false;
-            const { offsetX, offsetY } = event.e;
-            lastMouseX = offsetX;
-            lastMouseY = offsetY;
-        }
     }
-});
 
-canvas.on('mouse:move', function (event) {
-    if(isMouseDown && eraseEnabled && event.target) {
-        removeAllShapesAndPaths(event.target)
+    // Attach mouse event listeners
+    canvas.on('mouse:down', handleMouseDown);
+    canvas.on('mouse:up', handleMouseUp);
+    canvas.on('mouse:move', handleMouseMove);
+}
+
+function handleMouseDown(event) {
+    isMouseDown = true;
+    if (isMouseDown && eraseEnabled && event.target) {
+        removeAllShapesAndPaths(event.target);
     }
-});
-canvas.on('mouse:up', function (event) {
-    isMouseDown = false
-});
+}
 
+function handleMouseUp() {
+    isMouseDown = false;
+}
+
+function handleMouseMove(event) {
+    if (isMouseDown && eraseEnabled && event.target) {
+        removeAllShapesAndPaths(event.target);
+    }
 }
 
 function removeAllShapesAndPaths(obj) {
-        if (obj.type != 'image') {
-            canvas.remove(obj);
-        }
+    // Check if the object is not an image before removing
+    if (obj.type !== 'image') {
+        canvas.remove(obj);
+    }
 }
-
 let eraseIsImage = false
 let isMakeItErease = false
 eraserButton.addEventListener("click", function () {
