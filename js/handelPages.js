@@ -28,7 +28,11 @@ var canvas = new fabric.Canvas(canvasElement, {
     height: heightCanvas, 
 });
 
-
+fabric.Object.prototype.set({
+    transparentCorners: false,
+    cornerColor: '#36b673',
+    cornerStyle: 'circle'
+});
 
 function setCanvasSize() {
     var widthCanvas = window.innerWidth;
@@ -42,9 +46,24 @@ function setCanvasSize() {
 window.addEventListener('resize', setCanvasSize);
 
 
-document.addEventListener('DOMContentLoaded',addBtnRemove);
-canvas.on('mouse:up', addBtnRemove)
-canvas.on('mouse:down:before' , addBtnRemove )
+function setController() {
+    canvas.forEachObject(obj => {
+        addBtnRemove(obj)
+        if(obj.customId != 'sliceStrock')  {
+            obj.setControlVisible('trueControl' , false)
+            obj.setControlVisible('falseControl' , false)
+        }
+        if(obj.type == 'image') {
+            addSliceIconToObjects(obj)
+        }else {
+            obj.setControlVisible('sliceControl' , false)
+        }
+    })
+}
+document.addEventListener('DOMContentLoaded', setController);
+canvas.on('mouse:up', setController)
+canvas.on('mouse:down:before' , setController )
+
 
 // // sava data to local
 window.addEventListener("beforeunload", function () {
@@ -118,7 +137,6 @@ document.querySelectorAll('.btn_controll').forEach(btn => {
         document.querySelectorAll('.h2').forEach(head => {
             head.style.display = 'none'
         })
-        
         getData()
         addBtnRemove()
         document.getElementById(`head-${currentpage}`).style.display = 'block'
@@ -159,16 +177,7 @@ function creathead(index) {
     head.style.display = 'none'
 }   
 
-function addBtnRemove() {
-    canvas.forEachObject(obj => {
-        // if(obj.customId === 'sliceStrock') return
-        console.log(obj.type , obj.controls)
-        fabric.Object.prototype.set({
-            transparentCorners: false,
-            cornerColor: '#36b673',
-            cornerStyle: 'circle'
-        });
-
+function addBtnRemove(obj) {
         deleteControl = new fabric.Control({
             x: 0.5,
             y: -0.5,
@@ -195,25 +204,21 @@ function addBtnRemove() {
         }
     
         function renderIcon(ctx, left, top, styleOverride, fabricObject) {
-            if(fabricObject.customId != 'sliceStrock') {
                 var size = this.cornerSize;
                 ctx.save();
                 ctx.translate(left, top);
                 ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
                 ctx.drawImage(img, -size/2, -size/2, size, size);
                 ctx.restore();
-            }
         }
-        if(obj instanceof fabric.Image) {
-            addSliceIconToObjects(obj)
-        }
-  });
 }
+
+
 
 function addSliceIconToObjects(obj) {
     const sliceControl = new fabric.Control({
         x: -0.5,
-        y: -0.5,
+        y: -0.5,        
         offsetY: -20,
         cursorStyle: 'pointer',
         mouseUpHandler: sliceObject,
@@ -243,7 +248,7 @@ function addSliceIconToObjects(obj) {
     }
 
     function renderSliceIcon(ctx, left, top, styleOverride, fabricObject) {
-        if (fabricObject instanceof fabric.Image) {
+        // if (fabricObject instanceof fabric.Image) {
             var size = this.cornerSize;
             ctx.save();
             ctx.translate(left, top);
@@ -254,7 +259,7 @@ function addSliceIconToObjects(obj) {
             ctx.drawImage(sliceIcon, -size / 2, -size / 2, size, size);
 
             ctx.restore();
-        }
+        // }
     }
 }
 
@@ -277,6 +282,9 @@ function cropImage(img ,width , height , left , top) {
         
     });
     canvas.add(rect);
+    rect.setControlVisible('sliceControl' , false)
+    rect.setControlVisible('deleteControl' , false)
+
     canvas.setActiveObject(rect); // Set the newly added object as active
     addTrueAndFalse(rect , img)
     
@@ -288,7 +296,7 @@ function addTrueAndFalse(rect , img) {
     const trueControl = new fabric.Control({
         x: -0.5,
         y: -0.5,
-        offsetY: -40,
+        offsetY: -20,
         cursorStyle: 'pointer',
         mouseUpHandler: trueObject,
         render: renderTrue,
@@ -297,7 +305,7 @@ function addTrueAndFalse(rect , img) {
     const falseControl = new fabric.Control({
         x: 0.5,
         y: -0.5,
-        offsetY: -40,
+        offsetY: -20,
         cursorStyle: 'pointer',
         mouseUpHandler: falseObject,
         render: renderFalse,
@@ -311,6 +319,7 @@ function addTrueAndFalse(rect , img) {
         canvas.renderAll();
     }
 
+
     function falseObject(eventData, transform) {
         console.log('left' ,eventData)
         canvas.remove(rect);
@@ -320,6 +329,7 @@ function addTrueAndFalse(rect , img) {
             hasBorders: true,
             evented: true 
         })
+        setController()
     }
 
     function trueObject(eventData, transform) {
@@ -347,6 +357,8 @@ function addTrueAndFalse(rect , img) {
                 selectable: true,  
             });
             canvas.add(img);
+            img.setControlVisible('trueControl' , false)
+            img.setControlVisible('falseControl' , false)
             canvas.renderAll();
         });
         canvas.remove(rect);

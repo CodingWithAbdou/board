@@ -8,6 +8,12 @@ document.getElementById("select").addEventListener("click", function () {
     isSquareDrawn = true;
     temporaryDrawingEnabled = false;
     isErasing = false;
+    isErasing = false;
+    canvas.isDragging = false;
+    canvas.forEachObject(function (obj) {
+        obj.set({ evented: true });
+      });
+
     if (isLocked) {
         canvas.selection = false;
         objectSelectabilty(false);
@@ -238,6 +244,7 @@ document.getElementById("imageUploadInput").addEventListener("change", function 
                 img.set('stackingIndex', 9999);
                 canvas.add(img);
                 addSliceIconToObjects(img)
+
             });
         };
         reader.readAsDataURL(file);
