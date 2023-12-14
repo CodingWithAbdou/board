@@ -207,9 +207,6 @@ document.getElementById('shape').addEventListener('click' , ()=> {
 })
 
 
-
-
-
 let addedImage = null;
 
 document.getElementById("image").addEventListener("click", function () {
@@ -239,12 +236,12 @@ document.getElementById("imageUploadInput").addEventListener("change", function 
                     
                 });
                 img.set('stackingIndex', 9999);
-                // saveCanvasState()
                 canvas.add(img);
                 addSliceIconToObjects(img)
             });
         };
         reader.readAsDataURL(file);
+        document.getElementById("imageUploadInput").value =''
         document.getElementById('select').click()
     }
 });

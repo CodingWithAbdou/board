@@ -43,7 +43,7 @@ window.addEventListener('resize', setCanvasSize);
 
 
 document.addEventListener('DOMContentLoaded',addBtnRemove);
-// canvas.on('mouse:up', addBtnRemove)
+canvas.on('mouse:up', addBtnRemove)
 canvas.on('mouse:down:before' , addBtnRemove )
 
 // // sava data to local
@@ -240,7 +240,6 @@ function addSliceIconToObjects(obj) {
             evented: false 
         })
         cropImage(activeImg[0] ,width , height , left , top)
-    
     }
 
     function renderSliceIcon(ctx, left, top, styleOverride, fabricObject) {
@@ -251,7 +250,7 @@ function addSliceIconToObjects(obj) {
             ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
 
             var sliceIcon = new Image();
-            sliceIcon.src = '../images/scissors.svg';
+            sliceIcon.src = 'images/scissors.svg';
             ctx.drawImage(sliceIcon, -size / 2, -size / 2, size, size);
 
             ctx.restore();
@@ -278,6 +277,7 @@ function cropImage(img ,width , height , left , top) {
         
     });
     canvas.add(rect);
+    canvas.setActiveObject(rect); // Set the newly added object as active
     addTrueAndFalse(rect , img)
     
     canvas.renderAll();
@@ -324,17 +324,18 @@ function addTrueAndFalse(rect , img) {
 
     function trueObject(eventData, transform) {
         console.log('right' ,eventData)
-
+        const dpr = window.devicePixelRatio || 1;
         let left = rect.left;
         let top = rect.top;
         let height = rect.height * rect.scaleY ;
         let width = rect.width  * rect.scaleX;
         let capturedDataURL = canvas.toDataURL({
-            format: 'jpeg', 
+            format: 'webp', 
             left: left - (parseInt(width) / 2),
             top: top - (parseInt(height) / 2) , 
             width: parseInt(width),
             height: parseInt(height),
+            quality: 1.0, // Adjust this value for higher quality
             absolutePositioned: true
         });
         fabric.Image.fromURL(capturedDataURL, function(img) {
@@ -352,7 +353,6 @@ function addTrueAndFalse(rect , img) {
         canvas.remove(img);
         canvas.renderAll();
 
-        // console.log('fresg')
     }
 
     function renderTrue(ctx, left, top, styleOverride, fabricObject) {
