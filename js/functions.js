@@ -457,13 +457,13 @@ function clearCanvas() {
 }
 
 function showModal() {
-    linkModal.style.display = "block";
+    linkModal.classList.add('show_model')
     grayBackground.style.display = "block";
     grayBackground.style.zIndex = 0;
 }
 
 function closeModal() {
-    linkModal.style.display = "none";
+    linkModal.classList.remove('show_model')
     grayBackground.style.display = "none";
 }
 

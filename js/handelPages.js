@@ -345,7 +345,7 @@ function addTrueAndFalse(rect , img) {
             top: top - (parseInt(height) / 2) , 
             width: parseInt(width),
             height: parseInt(height),
-            quality: 1.0, // Adjust this value for higher quality
+            quality: 1.0, 
             absolutePositioned: true
         });
         fabric.Image.fromURL(capturedDataURL, function(img) {

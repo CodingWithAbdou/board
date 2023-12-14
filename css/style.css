@@ -641,17 +641,28 @@ body {
 
 .modal {
     width: 40%;
-    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     border-radius: var(--radius);
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)translateY(-10px);
     background-color: #FFFFFF;
     padding: 1rem;
     box-shadow: var(--box-shadow);
     direction: rtl;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity 0.5s ease-in-out;
+    visibility: hidden;
 }
+
+.modal.show_model {
+    transform: translate(-50%, -50%) translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+
+
 
 .modal_header {
     display: flex;
@@ -881,22 +892,30 @@ body {
 
 
   .custom-alert {
-    display: none;
+    /* display: none; */
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 762px;
-    height: 299px;
-    border-radius: 20px;
-    transform: translate(-50%, -50%);
+    border-radius: var(--radius);
+    transform: translate(-50%, -50%)translateY(-10px);
     background-color: white;
     border: 1px solid #ccc;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    box-shadow: var(--box-shadow);
     text-align: center;
     z-index: 4; 
-}
+    opacity: 0;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity 0.5s ease-in-out;
+    visibility: hidden;
 
+}
+.custom-alert.show_model {
+    transform: translate(-50%, -50%) translateY(0);
+    opacity: 1;
+    visibility: visible;
+
+}
 #grayBackground {
     display: none;
     position: fixed;
@@ -904,45 +923,45 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #707070; /* لون رمادي شفاف */
+    background-color: #707070; 
     opacity: 20%;
-    z-index: 2; /* يجعل الخلفية أعلى من الكانفاس */
+    z-index: 2; 
 }
 
 .custom-alert p {
     margin-bottom: 10px;
-    font-size: 35px;
+    font-size: 22px;
+    font-weight: bold;
+    color: rgb(86, 86, 86);
     font-weight: bold;
 }
 
 .custom-alert #text {
-    margin-right: 10px;
-    margin-top: 26px;
-    font-size: 20px;
+    margin-block-start: 1rem;
+    font-size: 14px;
     font-weight: bold;
     color: #D90000;
 }
-
+.exit_btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 2rem;
+    font-size: 24px;
+}
 #confirmExit {
-    margin-top: 35px;
     color: #D90000;
-    border: 2px solid #D90000 ;
-    border-radius: 10px;
-    padding: 9px 53px;
-    font-size: 30px;
-    font-weight: bold;
+    border: 1px solid #D90000 ;
+    padding: 1rem 2rem;
     background-color: #FFBCBC;
     cursor: pointer;
-    margin-left: 217px;
+    border-radius: var(--radius);
 }
 #cancelExit {
-    margin-top: 35px;
     color: var(--green);
     border: 1px solid var(--green) ;
-    border-radius: 10px;
-    padding: 9px 53px;
-    font-size: 30px;
-    font-weight: bold;
+    border-radius: var(--radius);
+    padding: 1rem 2rem;
     background-color: #C7FFE2;
     cursor: pointer;
 }
@@ -950,12 +969,6 @@ body {
 .custom-alert button:hover {
     background-color: #0056b3;
 }
-
-/* .number {
-    display: flex;
-} */
-
-/* Style the minus and plus buttons */
 .minus, .plus {
     border-radius: var(--radius);
     color: black;
@@ -971,59 +984,11 @@ left: 40px;
     right: 40px;
 }
 
-/* Style the input number */
-
-
-
- /* Styles for modal overlay */
-
-        /* Styles for the modal content */
-
-
-        /* Style for the close button */
-    
-        /* Style for form fields and button */
         .form-group {
             margin-bottom: 10px;
         }
 
-        /* Style for the Save button */
-    
-        /* Style for input fields */
-     
 
-     
-        /* Style for the selected page preview */
-    
-
- 
-
-   
-
-          .page-number {
-            font-weight: bold;
-        }
-
-
-        /* Style for the custom slider track */
-   
-
-
-
-        /* Add more styling as needed */
-
-      /* Style for the custom slider container */
-
-  
-    /* Style for the custom slider track */
-
-
-    /* Style for the custom slider knob (circle) */
-
-
-    /* Add more styling as needed */
-
-    /* Style for slider background */
 
 
   

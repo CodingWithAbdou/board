@@ -1,12 +1,12 @@
 
 exitButton.addEventListener("click", function () {
-    customAlert.style.display = "block";
+    customAlert.classList.add('show_model');
     grayBackground.style.display = "block"; // عرض الخلفية الرمادية
 });
 
 confirmExitButton.addEventListener("click", function () {
     pagesData = {};
-    customAlert.style.display = "none";
+    customAlert.classList.remove('show_model');
     canvas.clear()
     endSetionGoOut = true
     window.location.href = "https://huzmh.sa/login?returnUrl=%2Fhome";
@@ -14,6 +14,6 @@ confirmExitButton.addEventListener("click", function () {
 
 
 cancelExitButton.addEventListener("click", function () {
-    customAlert.style.display = "none";
+    customAlert.classList.remove('show_model');
     grayBackground.style.display = "none"; // اخفاء الخلفية الرمادية
 });
