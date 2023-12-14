@@ -724,6 +724,9 @@ body {
         width: 36px;
         height: 12px;
     }
+    .h2 {
+        font-size: 12px;
+    }
 }
 
 
