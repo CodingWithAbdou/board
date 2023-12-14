@@ -351,7 +351,7 @@ function addTrueAndFalse(rect , img) {
         canvas.remove(img);
         canvas.renderAll();
 
-        
+        // console.log('fresg')
     }
 
     function renderTrue(ctx, left, top, styleOverride, fabricObject) {
