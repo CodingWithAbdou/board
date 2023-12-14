@@ -250,7 +250,7 @@ function addSliceIconToObjects(obj) {
             ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
 
             var sliceIcon = new Image();
-            sliceIcon.src = '../images/scissors.svg';
+            sliceIcon.src = 'images/scissors.svg';
             ctx.drawImage(sliceIcon, -size / 2, -size / 2, size, size);
 
             ctx.restore();
@@ -362,7 +362,7 @@ function addTrueAndFalse(rect , img) {
             ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
 
             var sliceIcon = new Image();
-            sliceIcon.src = '../images/true.svg';
+            sliceIcon.src = 'images/true.svg';
             ctx.drawImage(sliceIcon, -size / 2, -size / 2, size, size);
 
             ctx.restore();
@@ -376,7 +376,7 @@ function addTrueAndFalse(rect , img) {
             ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
 
             var sliceIcon = new Image();
-            sliceIcon.src = '../images/false.svg';
+            sliceIcon.src = 'images/false.svg';
             ctx.drawImage(sliceIcon, -size / 2, -size / 2, size, size);
 
             ctx.restore();
