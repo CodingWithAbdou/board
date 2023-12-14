@@ -43,7 +43,8 @@ window.addEventListener('resize', setCanvasSize);
 
 
 document.addEventListener('DOMContentLoaded',addBtnRemove);
-canvas.on('mouse:up', addBtnRemove)
+// canvas.on('mouse:up', addBtnRemove)
+canvas.on('mouse:down:before' , addBtnRemove )
 
 // // sava data to local
 window.addEventListener("beforeunload", function () {
@@ -250,7 +251,7 @@ function addSliceIconToObjects(obj) {
             ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
 
             var sliceIcon = new Image();
-            sliceIcon.src = 'images/scissors.svg';
+            sliceIcon.src = '../images/scissors.svg';
             ctx.drawImage(sliceIcon, -size / 2, -size / 2, size, size);
 
             ctx.restore();
