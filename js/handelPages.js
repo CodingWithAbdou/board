@@ -160,6 +160,8 @@ function creathead(index) {
 
 function addBtnRemove() {
     canvas.forEachObject(obj => {
+        // if(obj.customId === 'sliceStrock') return
+        console.log(obj.type , obj.controls)
         fabric.Object.prototype.set({
             transparentCorners: false,
             cornerColor: '#36b673',
@@ -201,7 +203,7 @@ function addBtnRemove() {
                 ctx.restore();
             }
         }
-        if(obj instanceof fabric.Image && obj.customId != 'sliceStrock') {
+        if(obj instanceof fabric.Image) {
             addSliceIconToObjects(obj)
         }
   });
@@ -225,7 +227,19 @@ function addSliceIconToObjects(obj) {
     }
 
     function sliceObject(eventData, transform) {
-        sliceImage(eventData, transform)
+        let activeImg = canvas.getActiveObjects();
+        let left = activeImg[0].left;
+        let top = activeImg[0].top;
+        let height = activeImg[0].height * activeImg[0].scaleY ;
+        let width = activeImg[0].width  * activeImg[0].scaleX;
+        activeImg[0].set({
+            selectable: false,
+            hasControls: false,
+            hasBorders: false,
+            evented: false 
+        })
+        cropImage(activeImg[0] ,width , height , left , top)
+    
     }
 
     function renderSliceIcon(ctx, left, top, styleOverride, fabricObject) {
@@ -243,20 +257,7 @@ function addSliceIconToObjects(obj) {
         }
     }
 }
-function sliceImage(eventData, transform) {
-    let activeImg = canvas.getActiveObjects();
-    let left = activeImg[0].left;
-    let top = activeImg[0].top;
-    let height = activeImg[0].height * activeImg[0].scaleY ;
-    let width = activeImg[0].width  * activeImg[0].scaleX;
-    activeImg[0].set({
-        selectable: false,
-        hasControls: false,
-        hasBorders: false,
-        evented: false 
-    })
-    cropImage(activeImg[0] ,width , height , left , top)
-}
+
 
 function cropImage(img ,width , height , left , top) {
     var rect = new fabric.Rect({
@@ -277,11 +278,11 @@ function cropImage(img ,width , height , left , top) {
     });
     canvas.add(rect);
     addTrueAndFalse(rect , img)
+    
     canvas.renderAll();
 }
 
 function addTrueAndFalse(rect , img) {
-    console.log(rect)
     if(rect.customId != 'sliceStrock') return
     const trueControl = new fabric.Control({
         x: -0.5,
@@ -349,7 +350,7 @@ function addTrueAndFalse(rect , img) {
         canvas.remove(rect);
         canvas.remove(img);
         canvas.renderAll();
-        
+
         
     }
 
