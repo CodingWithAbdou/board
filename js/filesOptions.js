@@ -362,116 +362,127 @@ const excelFileInput = document.getElementById("excelFileInput");
 
 ///////////////////////////////////
 var imgNote;
-fabric.Object.prototype.transparentCorners = false;
-fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
 
-fabric.Canvas.prototype.getAbsoluteCoords = function(object) {
-  return {
-    left: object.left + this._offset.left,
-    top: object.top + this._offset.top
-  };
-}
-
-
-function positionBtn(element , obj , width = '' , height ='') {
-  var absCoords = canvas.getAbsoluteCoords(obj);
-    element.style.left = (absCoords.left) + 'px';
-    element.style.top = (absCoords.top + 10) + 'px';
-    if(width != '' && height != '') {
-        element.style.width = width 
-        element.style.height = height  
-
-        element.style.left = (absCoords.left + width) + 'px';
-        element.style.top = (absCoords.top + height) + 'px';    
-    }
-    element.style.transform = 'translate(-50%, -50%)'
-}
 let array_img = []
 let countuniqueimage = 0
 let textarea;
+let count_note = 0
+
+let text_box
+let img_cover
+
 addNoteButton.addEventListener("click", function () {
-    // Create a background image
-    fabric.Image.fromURL("images/background.png", function (img) {
+    if(localStorage.getItem('noteNumber')) {
+        count_note = localStorage.getItem('noteNumber')
+    }
+    count_note++
+    localStorage.setItem('noteNumber' , count_note)
+    fabric.Image.fromURL('images/background.png', function(bgImg) {
         var desiredWidth = 300; // Set your desired width
         var desiredHeight = 200; // Set your desired height
         var scale = Math.min(
-            desiredWidth / img.width,
-            desiredHeight / img.height
+            desiredWidth / bgImg.width,
+            desiredHeight / bgImg.height
         );
 
-        img.set({
-            left: 200,
-            top: 400,
+         bgImg.set({
+            left: 100,
+            top: 100,
             scaleX: scale,
             scaleY: scale,
             hasControls: true,
+            customId: `img_note-${count_note}`,
         });
-        countuniqueimage++
-
-        textarea =  createTextareaElement()
-        
-        img.customId = `unique-image${countuniqueimage}`;
-        array_img.push(img.customId)
-        canvas.add(img);
-        console.log(array_img)
-        positionBtn(textarea , img);
-        img.on('moving', function() { positionBtn(textarea , img) });
-        img.on('scaling', function(options) {
-            console.log(img.customId)
+        canvas.add(bgImg);
+        console.log(bgImg.controls)
+        var text = new fabric.Textbox('ادخل النص', {
+            left : bgImg.left  - 5,
+            top:bgImg.top + ((bgImg.height * bgImg.scaleY) / 8),
+            width: ((bgImg.width ) * bgImg.scaleX) - 10 ,
+            height: bgImg.height * bgImg.scaleY,
+            fontSize: 20,
+            fill: 'black', // Text color
+            textAlign: 'right',
+            fontFamily: 'Arial',
+            overflow: 'wrap', //
+            lockMovementX: true, // Prevent movement along the X axis
+            lockMovementY: true ,// Prevent movement along the Y axis
+            hasControls: false,
+            hasBorders: false,
+            customId: `text_note-${count_note}`
         });
+        canvas.add(text);
         canvas.renderAll();
-    });
+      });
 });
 
 let IsUniqueMouse = false
 canvas.selection = true;
-
-canvas.on('object:moving', function (e) {
-    var obj = e.target;
-    if(!obj) return
-    if(obj.customId) {
-        // positionBtn(textarea , obj);
-        console.log(obj)
-    }
-});
-
-// Event listener for scaling
-canvas.on('object:scaling', function (e) {
-    var obj = e.target;
-    if(!obj) return
-    if(obj.customId) {
-        width =  (obj.width * obj.scaleX  ) + 'px'
-        height =  (obj.height * obj.scaleY * 80 /100) + 'px'
-        // positionBtn(textarea ,obj , width , height)
-    }
-});
-
-
-
-function createTextareaElement() {
-    var textarea = document.createElement('textarea');
-    textarea.id = 'textarea' + countuniqueimage
-    textarea.style.width = '220px'
-    textarea.style.height = '160px'
-    textarea.style.fontSize = '19px'
-    textarea.style.position = 'absolute'
-    textarea.style.resize = 'none'
-    textarea.style.border = 'none'
-    textarea.style.outline = 'none'
-    textarea.style.padding = '10px'
-    textarea.style.direction = 'rtl'
-    textarea.style.background = 'transparent'
-    textarea.placeholder = "أدخل نص هنا";
-    document.body.appendChild(textarea)
-    return textarea
+function getTextBox(id) {
+    canvas.forEachObject(function (obj) {
+        if (obj instanceof fabric.Textbox && obj.customId === `text_note-${id}`) {
+            text_box = obj
+        }
+    })
+}
+function getimgobj(id) {
+    canvas.forEachObject(function (obj) {
+        if ( obj.customId === `img_note-${id}`) {
+            img_cover = obj
+        }
+    })
 }
 
+function handfronttext(e) {
+    var obj = e.target || e.selected[0];
+    if(!obj) return
+    if(!obj.customId) return
+    if(obj.customId.split('-')[0] == 'img_note') {
+        canvas.preserveObjectStacking = true;
+        getTextBox(obj.customId.split('-')[1])
+        getimgobj(obj.customId.split('-')[1])
+        canvas.bringToFront(img_cover);
+        canvas.bringToFront(text_box);
+        canvas.forEachObject(function (obj) {
+            if (obj.customId != img_cover.customId || obj.customId != text_box.customId ) {
+                canvas.bringToFront(obj);        
+            }
+        })
+    }
+    
+ 
+}
+canvas.on('object:moving', handfronttext);
+canvas.on('selection:created', handfronttext);
+canvas.on('selection:updated', handfronttext);
+canvas.on('object:scaling', handfronttext);
 
+function changeDistance(e) {
+    var obj = e.target;
+    if(!obj) return
+    if(!obj.customId) return
+    if(obj.customId.split('-')[0] == 'img_note') {
 
+        text_box.set({
+            left : img_cover.left  - 5,
+            top:img_cover.top + ((img_cover.height * img_cover.scaleY) / 8),
+            width: ((img_cover.width ) * img_cover.scaleX) - 10 ,
+            height: img_cover.height * img_cover.scaleY,
+        })
+    }
+}
 
+canvas.on('object:moving', changeDistance);
+canvas.on('object:scaling', changeDistance);
 
-
-
+canvas.on('object:removed', function(e) {
+    var obj = e.target;
+    if(!obj) return
+    if(!obj.customId) return
+    getTextBox(obj.customId.split('-')[1])
+    getimgobj(obj.customId.split('-')[1])
+    canvas.remove(text_box)
+})
 
 
 ///////////////////////////////////

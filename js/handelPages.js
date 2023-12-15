@@ -47,20 +47,41 @@ window.addEventListener('resize', setCanvasSize);
 
 
 function setController() {
-    canvas.forEachObject(obj => {
-        addBtnRemove(obj)
-        if(obj.customId != 'sliceStrock')  {
-            obj.setControlVisible('trueControl' , false)
-            obj.setControlVisible('falseControl' , false)
-        }
-        if(obj.type == 'image') {
-            addSliceIconToObjects(obj)
+    canvas.forEachObject(obj => {   
+        if(obj.customId) {
+            if(obj.customId.split('-')[0] == 'img_note') {
+                addBtnRemove(obj)
+                obj.setControlVisible('sliceControl' , false)
+                obj.setControlVisible('mtr' , false)
+            }
+            if(obj.customId.split('-')[0] == 'img_note' || obj.customId.split('-')[0] == 'text_note') {
+                canvas.forEachObject(function (obj) {
+                    if (obj instanceof fabric.Textbox && obj.customId === `text_note-${obj.customId.split('-')[1]}`) {
+                    obj.set({
+                            lockMovementX: true, 
+                            lockMovementY: true ,
+                            hasControls: false,
+                            hasBorders: false,
+                        })
+                    }
+                })
+            }
         }else {
-            obj.setControlVisible('sliceControl' , false)
+            
+            addBtnRemove(obj)
+            if(obj.customId != 'sliceStrock')  {
+                obj.setControlVisible('trueControl' , false)
+                obj.setControlVisible('falseControl' , false)
+            }
+            if(obj.type == 'image') {
+                addSliceIconToObjects(obj)
+            }else {
+                obj.setControlVisible('sliceControl' , false)
+            }
         }
     })
 }
-document.addEventListener('DOMContentLoaded', setController);
+
 canvas.on('mouse:up', setController)
 canvas.on('mouse:down:before' , setController )
 
@@ -71,6 +92,8 @@ window.addEventListener("beforeunload", function () {
     localStorage.setItem("pagesData",  JSON.stringify(pagesData));
     localStorage.setItem("numberPage",  numberPage);
     localStorage.setItem("currentpage",  currentpage);
+    // localStorage.setItem("noteNumber",  count_note);
+
     if(endSetionGoOut) {
         localStorage.clear()
     }
@@ -78,7 +101,6 @@ window.addEventListener("beforeunload", function () {
 
 // get Data
 if (localStorage.getItem('currentpage')) {
-
     numberPage = localStorage.getItem("numberPage")
     currentpage = localStorage.getItem('currentpage')
     for(let i = 2 ; i <= +numberPage ; i ++) {
@@ -284,6 +306,7 @@ function cropImage(img ,width , height , left , top) {
     canvas.add(rect);
     rect.setControlVisible('sliceControl' , false)
     rect.setControlVisible('deleteControl' , false)
+    rect.setControlVisible('mtr' , false)
 
     canvas.setActiveObject(rect); // Set the newly added object as active
     addTrueAndFalse(rect , img)

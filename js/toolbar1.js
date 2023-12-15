@@ -165,16 +165,16 @@ text.addEventListener("click", function () {
     isSquareDrawn = false;
     eraseEnabled = false;
     countIndex++;
-    canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
+    canvas.renderAll(); 
 });
 
 canvas.on('mouse:down', function(options) {
     var activeObject = canvas.getActiveObject();
-          // التحقق من أن النص المحدد هو نص
     if (activeObject && activeObject.type === 'textbox' && isAddingText == true) {
         isAddingText = false
         document.getElementById('select').click()
     }
+    
 let color;
 let fontSizeText = document.getElementById('counterInput').value
 document.querySelectorAll('#toolbartext .color-circle').forEach(element => {
@@ -244,7 +244,6 @@ document.getElementById("imageUploadInput").addEventListener("change", function 
                 img.set('stackingIndex', 9999);
                 canvas.add(img);
                 addSliceIconToObjects(img)
-
             });
         };
         reader.readAsDataURL(file);
