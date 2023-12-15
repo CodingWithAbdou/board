@@ -159,3 +159,32 @@ document.getElementById("fontFamilySelect").addEventListener("input", function (
     }
     return fontFamily;
 });
+
+let dir = 'right'
+document.getElementById('righttext').addEventListener('click' , function() {
+    var activeObject = canvas.getActiveObject();
+    dir = 'right'
+    if (activeObject && activeObject.type === "textbox") {
+        activeObject.set({ textAlign: dir });
+        canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
+    }
+    return dir
+})
+document.getElementById('centertext').addEventListener('click' , function() {
+    var activeObject = canvas.getActiveObject();
+    dir = 'center'
+    if (activeObject && activeObject.type === "textbox") {
+        activeObject.set({ textAlign: dir });
+        canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
+    }
+    return dir
+})
+document.getElementById('lefttext').addEventListener('click' , function() {
+    var activeObject = canvas.getActiveObject();
+    dir = 'left'
+    if (activeObject && activeObject.type === "textbox") {
+        activeObject.set({ textAlign: dir });
+        canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
+    }
+    return dir
+})

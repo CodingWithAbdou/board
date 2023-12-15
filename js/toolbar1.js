@@ -174,7 +174,7 @@ canvas.on('mouse:down', function(options) {
         isAddingText = false
         document.getElementById('select').click()
     }
-    
+
 let color;
 let fontSizeText = document.getElementById('counterInput').value
 document.querySelectorAll('#toolbartext .color-circle').forEach(element => {
@@ -196,6 +196,7 @@ if (isAddingText) {
         fontSize: fontSizeText,
         fontFamily: fontFamily,
         fill: color,
+        textAlign:dir
     });
     canvas.add(text);
     canvas.setActiveObject(text);

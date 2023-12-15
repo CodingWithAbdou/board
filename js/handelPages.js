@@ -56,6 +56,7 @@ function setController() {
             }
             if(obj.customId.split('-')[0] == 'img_note' || obj.customId.split('-')[0] == 'text_note') {
                 canvas.forEachObject(function (obj) {
+                    if(!obj.customId) return
                     if (obj instanceof fabric.Textbox && obj.customId === `text_note-${obj.customId.split('-')[1]}`) {
                     obj.set({
                             lockMovementX: true, 
@@ -92,11 +93,11 @@ window.addEventListener("beforeunload", function () {
     localStorage.setItem("pagesData",  JSON.stringify(pagesData));
     localStorage.setItem("numberPage",  numberPage);
     localStorage.setItem("currentpage",  currentpage);
-    // localStorage.setItem("noteNumber",  count_note);
 
     if(endSetionGoOut) {
         localStorage.clear()
     }
+
 });
 
 // get Data
@@ -116,7 +117,7 @@ if (localStorage.getItem('currentpage')) {
     canvas.loadFromJSON(pagesData['page' +  currentpage], function () {
         canvas.renderAll();
     });
-}else {
+    }else {
     btnPre.setAttribute('disabled' , '')
     btnNex.setAttribute('disabled' , '')
 }
@@ -160,7 +161,7 @@ document.querySelectorAll('.btn_controll').forEach(btn => {
             head.style.display = 'none'
         })
         getData()
-        addBtnRemove()
+        // addBtnRemove()
         document.getElementById(`head-${currentpage}`).style.display = 'block'
         checkIfDataAudio()
     })
@@ -277,7 +278,7 @@ function addSliceIconToObjects(obj) {
             ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
 
             var sliceIcon = new Image();
-            sliceIcon.src = 'images/scissors.svg';
+            sliceIcon.src = 'images/corp.svg';
             ctx.drawImage(sliceIcon, -size / 2, -size / 2, size, size);
 
             ctx.restore();
