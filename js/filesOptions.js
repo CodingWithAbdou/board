@@ -146,40 +146,8 @@ addPageButton.addEventListener("click", function () {
 const wordInput = document.getElementById("wordInput");
 
 
-// document.getElementById('word').addEventListener('click' , ()=> {
-//     document.getElementById("wordInput").click();
-// })
-
-// Event listener for PDF input change
-// wordInput.addEventListener("change", function (event) {
-
-//     const file = event.target.files[0];
-//     if (file) {
-        
-//         const reader = new FileReader();
-//         reader.onload = function(e) {
-//             loadDataWord( file , e.target.result)
-//         };
-//         reader.readAsArrayBuffer(file);
-//     }else {
-//         console.log('error')
-//     }
-// })
-
-
 function loadDataWord(file , wordData ) {
     let pageCount = 0
-    // JSZip.loadAsync(wordData).then(function(zip) {
-    //     zip.file("docProps/app.xml").async("string").then(function(content) {
-    //         console.log(content)
-    //         const match = content.match(/<Pages>(\d+)<\/Pages>/);
-    //         if (match) {
-    //             pageCount = parseInt(match[1]);
-    //         }
-    //     });
-    //     // fetchAndDisplayPage(currentPage);
-    // })
-
 
     if (file.name.endsWith('.docx')) {
         // console.log(wordData)
@@ -189,7 +157,6 @@ function loadDataWord(file , wordData ) {
             .then(function(result) {
                 // console.log(result)
                 const htmlContent = result.value
-                console.log(htmlContent)
                 // Create a PDF using jspdf
 
                 const pdf = new jsPDF();
@@ -201,8 +168,6 @@ function loadDataWord(file , wordData ) {
 
                 // Optional: Display the PDF in an iframe
                 const pdfDataUri = pdf.output('datauristring');
-                console.log(pdfDataUri)
-                // pdfPreview.innerHTML = `<iframe width="100%" height="500" src="${pdfDataUri}"></iframe>`;
             })
             .catch(function(error) {
                 console.error('Error converting .docx document:', error);
@@ -384,17 +349,16 @@ addNoteButton.addEventListener("click", function () {
             desiredWidth / bgImg.width,
             desiredHeight / bgImg.height
         );
-
+        let zoom = canvas.getZoom();
          bgImg.set({
-            left: 100,
-            top: 100,
+            left: 100 ,
+            top: 100 ,
             scaleX: scale,
             scaleY: scale,
             hasControls: true,
             customId: `img_note-${count_note}`,
         });
         canvas.add(bgImg);
-        console.log(bgImg.controls)
         var text = new fabric.Textbox('ادخل النص', {
             left : bgImg.left  - 5,
             top:bgImg.top + ((bgImg.height * bgImg.scaleY) / 8),
@@ -412,6 +376,8 @@ addNoteButton.addEventListener("click", function () {
             customId: `text_note-${count_note}`
         });
         canvas.add(text);
+        console.log(zoom)
+
         canvas.renderAll();
       });
 });
@@ -449,8 +415,6 @@ function handfronttext(e) {
             }
         })
     }
-    
- 
 }
 canvas.on('object:moving', handfronttext);
 canvas.on('selection:created', handfronttext);

@@ -61,7 +61,7 @@ function activateAddingLine() {
         });
         canvas.selection = false;
         canvas.hoverCursor = 'auto';
-        objectSelectabilty(false);
+        // objectSelectabilty(false);
     }
 }
 
@@ -117,8 +117,7 @@ function stopDrawingLine() {
         addingLineBtnClicked = false;
         canvas.selection = true;
         canvas.hoverCursor = "auto";
-        objectSelectabilty(true);              
-
+        // objectSelectabilty(true);              
         canvas.requestRenderAll();
     }
 }
@@ -147,10 +146,10 @@ function activateAddingSingleArrowLine() {
         });
         canvas.selection = false;
         canvas.hoverCursor = 'auto';
-        objectSelectabilty(false);
+        // objectSelectabilty(false);
     }
 }
-
+let linebla , arrowHead1bla ,arrowHead2bla
 function startAddingSingleArrowLine(o) {
     let color;
     document.querySelectorAll('#toolbarshape .color-circle').forEach(element => {
@@ -189,6 +188,8 @@ function startAddingSingleArrowLine(o) {
             originY: "center",
         }
     );
+    linebla = line
+    arrowHead1bla = arrowHead1
     canvas.add(line, arrowHead1);
     canvas.requestRenderAll();
 }
@@ -255,9 +256,7 @@ function stopDrawingSingleArrowLine() {
         mouseDown = false;
         // saveCanvasState()
         canvas.selection = true;
-
         document.getElementById("select").click()
-
         canvas.off({
             "mouse:down": startAddingSingleArrowLine,
             "mouse:move": startDrawingSingleArrowLine,
@@ -267,7 +266,11 @@ function stopDrawingSingleArrowLine() {
         addingSingleArrowLineBtnClicked = false;
         canvas.selection = true;
         canvas.hoverCursor = "auto";
-        objectSelectabilty(false);
+        objectSelectabilty(true);
+        group = new fabric.Group([line, arrowHead1])
+        canvas.remove(line)
+        canvas.remove(arrowHead1)
+        canvas.add(group)
         canvas.requestRenderAll();
     }
 }
@@ -287,10 +290,9 @@ function activateAddingDoubleArrowLine() {
           });
         canvas.selection = false;
         canvas.hoverCursor = "auto";
-        objectSelectabilty(false);
+        // objectSelectabilty(false);
     }
 }
-
 function startAddingDoubleArrowLine(o) {
     let color;
     document.querySelectorAll('#toolbarshape .color-circle').forEach(element => {
@@ -349,7 +351,11 @@ function startAddingDoubleArrowLine(o) {
         }
     );
 
+    linebla = line
+    arrowHead1bla = arrowHead1
+    arrowHead2bla = arrowHead2
     canvas.add(line, arrowHead1, arrowHead2);
+
     canvas.requestRenderAll();
 }
 
@@ -446,7 +452,10 @@ function stopDrawingDoubleArrowLine() {
         addingDoubleArrowLineBtnClicked = false;
         canvas.selection = true;
         canvas.hoverCursor = "auto";
-        objectSelectabilty(false);
+        objectSelectabilty(true);
+        group = new fabric.Group([linebla, arrowHead1bla , arrowHead2bla])
+        canvas.remove(linebla , arrowHead1bla , arrowHead2bla )
+        canvas.add(group)
         canvas.requestRenderAll();
     }
 }
@@ -489,9 +498,9 @@ function addLink() {
 
     // linkText.on("mousedown", 
     // });
-    document.getElementById('select').click()
-
+    
     canvas.add(linkText);
+    document.getElementById('select').click()
     closeModal();
 }
 

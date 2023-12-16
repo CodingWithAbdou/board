@@ -29,13 +29,28 @@ function zoom(factor, croods) {
 }
 
 zoomInButton.addEventListener("click", function (event) {
-    lastMouseCoords = fabric.util.getPointer(event);
+
+    var activeObject = canvas.getActiveObject();
+    if (activeObject) {
+        var left = activeObject.left + activeObject.width / 2;
+        var top = activeObject.top + activeObject.height / 2;
+        lastMouseCoords = {x:left , y:top}       
+    }else {
+        lastMouseCoords = fabric.util.getPointer(event);
+    }
     zoomIn();
 
 });
 
 zoomOutButton.addEventListener("click", function (event) {
-    lastMouseCoords = fabric.util.getPointer(event);
+    var activeObject = canvas.getActiveObject();
+    if (activeObject) {
+        var left = activeObject.left;
+        var top = activeObject.top;
+        lastMouseCoords = {x:left , y:top}       
+    }else {
+        lastMouseCoords = fabric.util.getPointer(event);
+    }
     zoomOut();
 });
 

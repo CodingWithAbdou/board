@@ -8,6 +8,9 @@ var img = document.createElement('img');
 img.src = deleteIcon;
 
 
+var sliceImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='30.92' height='31.551' viewBox='0 0 30.92 31.551'%3E%3Cg id='Group_156' data-name='Group 156' transform='translate(-6243 -940)'%3E%3Cg id='Group_154' data-name='Group 154' transform='translate(6249.92 940)'%3E%3Cpath id='Path_275' data-name='Path 275' d='M83.6,137.183H60.719a.537.537,0,0,1-.494-.329.518.518,0,0,1-.041-.2v-23.7a.518.518,0,0,1,.041-.2.537.537,0,0,1,.289-.288.534.534,0,0,1,.583.116.525.525,0,0,1,.116.172.518.518,0,0,1,.041.2v23.167H83.6a.525.525,0,0,1,.2.04.541.541,0,0,1,.174.116.533.533,0,0,1,.156.377.529.529,0,0,1-.156.377.541.541,0,0,1-.174.116A.526.526,0,0,1,83.6,137.183Zm0,0' transform='translate(-60.145 -112.432)'/%3E%3C/g%3E%3Cg id='Group_155' data-name='Group 155' transform='translate(6243 946.626)'%3E%3Cpath id='Path_277' data-name='Path 277' d='M50.862,169.369a.531.531,0,0,1-.2-.04.537.537,0,0,1-.173-.116.536.536,0,0,1-.157-.377V145.665H27.965a.536.536,0,0,1-.379-.157.528.528,0,0,1-.156-.377.531.531,0,0,1,.156-.377.531.531,0,0,1,.379-.156h22.9a.534.534,0,0,1,.495.329.525.525,0,0,1,.041.2v23.7a.536.536,0,0,1-.157.377.531.531,0,0,1-.379.156Zm0,0' transform='translate(-27.361 -144.472)'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E";
+var slice_image = document.createElement('img');
+slice_image.src = sliceImage;
 
 
 var pagesData = {};
@@ -15,11 +18,9 @@ let numberPage = 1;
 let currentpage = 1
 let endSetionGoOut = false
 var canvasElement = document.getElementById(`canvas`);
-// Create a Fabric.js canvas object from the existing canvas element
+
 let widthCanvas = window.innerWidth 
 let heightCanvas = window.innerHeight 
-
-
 var canvas = new fabric.Canvas(canvasElement, {
     isDrawingMode: false, 
     brushColor: "#FF0000", 
@@ -46,48 +47,53 @@ function setCanvasSize() {
 window.addEventListener('resize', setCanvasSize);
 
 
-function setController() {
-    canvas.forEachObject(obj => {   
+
+
+function setController(event) {
+    obj = event.target
+    if(!obj) return
+    if (canvas.getActiveObjects().length > 1) {
+        obj.setControlVisible('sliceControl' , false)
+        obj.setControlVisible('trueControl' , false)
+        obj.setControlVisible('falseControl' , false)    
+        addBtnRemove(obj)
+    }else {
         if(obj.customId) {
             if(obj.customId.split('-')[0] == 'img_note') {
                 addBtnRemove(obj)
                 obj.setControlVisible('sliceControl' , false)
                 obj.setControlVisible('mtr' , false)
+                obj.setControlVisible('trueControl' , false)
+                obj.setControlVisible('falseControl' , false)    
             }
-            if(obj.customId.split('-')[0] == 'img_note' || obj.customId.split('-')[0] == 'text_note') {
-                canvas.forEachObject(function (obj) {
-                    if(!obj.customId) return
-                    if (obj instanceof fabric.Textbox && obj.customId === `text_note-${obj.customId.split('-')[1]}`) {
-                    obj.set({
-                            lockMovementX: true, 
-                            lockMovementY: true ,
-                            hasControls: false,
-                            hasBorders: false,
-                        })
-                    }
-                })
+            if(obj.customId.split('-')[0] == 'text_note') {
+                obj.set({
+                        lockMovementX: true, 
+                        lockMovementY: true ,
+                        hasControls: false,
+                        hasBorders: false,
+                    })
             }
         }else {
-            
             addBtnRemove(obj)
-            if(obj.customId != 'sliceStrock')  {
-                obj.setControlVisible('trueControl' , false)
-                obj.setControlVisible('falseControl' , false)
-            }
-            if(obj.type == 'image') {
+            obj.setControlVisible('trueControl' , false)
+            obj.setControlVisible('falseControl' , false)    
+            if(obj.type === 'image') {
+                obj.setControlVisible('sliceControl' , true)
                 addSliceIconToObjects(obj)
             }else {
                 obj.setControlVisible('sliceControl' , false)
             }
         }
-    })
+    }    
+
 }
 
-canvas.on('mouse:up', setController)
+
 canvas.on('mouse:down:before' , setController )
 
 
-// // sava data to local
+
 window.addEventListener("beforeunload", function () {
     setData()
     localStorage.setItem("pagesData",  JSON.stringify(pagesData));
@@ -147,7 +153,6 @@ document.querySelectorAll('.btn_controll').forEach(btn => {
     btn.addEventListener('click' , ()=> {
         dataForUndoRedo = []
         setData()
-        console.log('blabvla')
         if(btn.classList.contains('next_canvas')) currentpage++
         if(btn.classList.contains('prev_canvas')) currentpage--
 
@@ -234,6 +239,7 @@ function addBtnRemove(obj) {
                 ctx.drawImage(img, -size/2, -size/2, size, size);
                 ctx.restore();
         }
+        
 }
 
 
@@ -271,18 +277,14 @@ function addSliceIconToObjects(obj) {
     }
 
     function renderSliceIcon(ctx, left, top, styleOverride, fabricObject) {
-        // if (fabricObject instanceof fabric.Image) {
+        if (fabricObject instanceof fabric.Image) {
             var size = this.cornerSize;
             ctx.save();
             ctx.translate(left, top);
             ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
-
-            var sliceIcon = new Image();
-            sliceIcon.src = 'images/corp.svg';
-            ctx.drawImage(sliceIcon, -size / 2, -size / 2, size, size);
-
+            ctx.drawImage(slice_image, -size/2, -size/2, size, size);
             ctx.restore();
-        // }
+        }
     }
 }
 
@@ -315,7 +317,7 @@ function cropImage(img ,width , height , left , top) {
     canvas.renderAll();
 }
 
-function addTrueAndFalse(rect , img) {
+function addTrueAndFalse(rect , image) {
     if(rect.customId != 'sliceStrock') return
     const trueControl = new fabric.Control({
         x: -0.5,
@@ -345,28 +347,28 @@ function addTrueAndFalse(rect , img) {
 
 
     function falseObject(eventData, transform) {
-        console.log('left' ,eventData)
         canvas.remove(rect);
-        img.set({
+        image.set({
             selectable: true,
             hasControls: true,
             hasBorders: true,
             evented: true 
         })
-        setController()
+        // setController()
     }
 
     function trueObject(eventData, transform) {
-        console.log('right' ,eventData)
-        const dpr = window.devicePixelRatio || 1;
-        let left = rect.left;
-        let top = rect.top;
-        let height = rect.height * rect.scaleY ;
-        let width = rect.width  * rect.scaleX;
+        let zoom = canvas.getZoom();
+
+        
+        let left = rect.left ;
+        let top = rect.top ;
+        let height = rect.height * rect.scaleY  * zoom;
+        let width = rect.width  * rect.scaleX * zoom;
         let capturedDataURL = canvas.toDataURL({
             format: 'webp', 
-            left: left - (parseInt(width) / 2),
-            top: top - (parseInt(height) / 2) , 
+            left: left,
+            top: top, 
             width: parseInt(width),
             height: parseInt(height),
             quality: 1.0, 
@@ -386,7 +388,7 @@ function addTrueAndFalse(rect , img) {
             canvas.renderAll();
         });
         canvas.remove(rect);
-        canvas.remove(img);
+        canvas.remove(image);
         canvas.renderAll();
 
     }
@@ -417,6 +419,8 @@ function addTrueAndFalse(rect , img) {
             ctx.drawImage(sliceIcon, -size / 2, -size / 2, size, size);
 
             ctx.restore();
+
+
         }
     }
 

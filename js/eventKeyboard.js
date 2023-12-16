@@ -35,9 +35,7 @@ document.addEventListener('keydown', function (e) {
         }
     }
 })
-document.addEventListener('mousemove', function(event) {
-    lastMouseCoords = {x:event.clientX , y:event.clientY}
-});
+
 
 document.addEventListener('keyup', function (e) {
     if (e.key === ' ' || e.code === 'Space') {
@@ -48,13 +46,16 @@ document.addEventListener('keyup', function (e) {
     } 
 })
 
-
+document.addEventListener('mousemove', function(event) {
+    lastMouseCoords = {x:event.clientX , y:event.clientY}
+});
 document.addEventListener('keydown', function (event) {
     if (!event.altKey)return     
     if (event.key === '+' || event.key === '=') {
-        zoomIn();        
+        zoom(0.1, lastMouseCoords);
     }
     if (event.key === '-') {
-        zoomOut();
+        zoom(-0.1, lastMouseCoords);
+
     }
 });

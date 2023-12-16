@@ -136,8 +136,6 @@ drawTriangleButton.addEventListener("click", function () {
                 selectable: true,
             });
 
-            triangles[countTriangles].customId = 'has_remove_btn';
-
             canvas.add(triangles[countTriangles]);
             canvas.setActiveObject(triangles[countTriangles]);
         }

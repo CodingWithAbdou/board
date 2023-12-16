@@ -2,6 +2,7 @@ canvas.on("mouse:down", function (event) {
 });
 
 canvas.on("mouse:down", function (event) {
+    if(!overlays) return
     overlays.forEach((overlay) => { overlay.classList.remove("show")  });
 });
 

@@ -195,7 +195,7 @@ if (isAddingText) {
         fontFamily: 'Arial',
         fontSize: fontSizeText,
         fontFamily: fontFamily,
-        fill: color,
+        fill: color, 
         textAlign:dir
     });
     canvas.add(text);
