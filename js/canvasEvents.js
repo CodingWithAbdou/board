@@ -16,7 +16,9 @@ canvas.on("mouse:move", function (event) {
         document.querySelector('.header').classList.add('hide_header')
     } 
     if(event.absolutePointer.y < 50) {
-        document.querySelector('.header').classList.remove('hide_header')
+        setTimeout(() => {
+            document.querySelector('.header').classList.remove('hide_header')
+        }, 500);
 
     }
     isMouseMoving = true;
