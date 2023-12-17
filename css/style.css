@@ -69,6 +69,11 @@ body {
     color: var(--green);
 }
 
+.header.hide_header {
+    visibility: hidden;
+    opacity: 0;
+}
+
 /****************************************************************************************
 *** HEADER
 ****************************************************************************************/
@@ -83,6 +88,10 @@ body {
     position: absolute;
     z-index: 999999;
     width: 100%;
+    opacity: 1;
+    transition:opacity 0.5s ease-in-out;
+    visibility: visible;
+
 }
 
 .exist , .video , .numberPages { flex-basis: calc(100% / 3);}
@@ -905,9 +914,9 @@ body {
     text-align: center;
     z-index: 4; 
     opacity: 0;
+    visibility: hidden;
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     opacity 0.5s ease-in-out;
-    visibility: hidden;
 
 }
 .custom-alert.show_model {

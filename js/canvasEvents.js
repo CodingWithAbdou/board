@@ -7,6 +7,30 @@ canvas.on("mouse:down", function (event) {
 });
 
 
+let isMouseMoving = false;
+let mouseMoveTimer;
+
+
+canvas.on("mouse:move", function (event) {
+    if(document.querySelector('.header')) {
+        document.querySelector('.header').classList.add('hide_header')
+    } 
+    if(event.absolutePointer.y < 50) {
+        document.querySelector('.header').classList.remove('hide_header')
+
+    }
+    isMouseMoving = true;
+    clearTimeout(mouseMoveTimer);
+    mouseMoveTimer = setTimeout(function () {
+        if (isMouseMoving) {
+            document.querySelector('.header').classList.remove('hide_header')
+            isMouseMoving = false;
+        }
+    }, 500); // Adjust the timeout duration as needed
+
+});
+
+
 canvas.on("mouse:up", function () {
     isDrawing = false;
     if (listShape[countIndex]) {
