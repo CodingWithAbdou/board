@@ -162,29 +162,66 @@ document.getElementById("fontFamilySelect").addEventListener("input", function (
 
 let dir = 'right'
 document.getElementById('righttext').addEventListener('click' , function() {
-    var activeObject = canvas.getActiveObject();
+    var activeObjects = canvas.getActiveObjects();
     dir = 'right'
-    if (activeObject && activeObject.type === "textbox") {
-        activeObject.set({ textAlign: dir });
-        canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
+    // console.log(getItemsSelect())
+    console.log(activeObjects.type)
+    if (activeObjects && activeObjects.length == '1' && activeObjects[0].type === "textbox") {
+        activeObjects[0].set({ textAlign: dir });
+    }else if(activeObjects && activeObjects.length > 1) {
+        activeObjects.forEach(function (obj) {
+            if(obj.type == "textbox") {
+                obj.set({textAlign: dir})
+            }
+        });
     }
+    
+    canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
     return dir
+
 })
 document.getElementById('centertext').addEventListener('click' , function() {
-    var activeObject = canvas.getActiveObject();
+    var activeObjects = canvas.getActiveObjects();
     dir = 'center'
-    if (activeObject && activeObject.type === "textbox") {
-        activeObject.set({ textAlign: dir });
-        canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
+    // console.log(getItemsSelect())
+    console.log(activeObjects.type)
+    if (activeObjects && activeObjects.length == '1' && activeObjects[0].type === "textbox") {
+        activeObjects[0].set({ textAlign: dir });
+    }else if(activeObjects && activeObjects.length > 1) {
+        activeObjects.forEach(function (obj) {
+            if(obj.type == "textbox") {
+                obj.set({textAlign: dir})
+            }
+        });
     }
+    
+    canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
     return dir
+
 })
 document.getElementById('lefttext').addEventListener('click' , function() {
-    var activeObject = canvas.getActiveObject();
+    var activeObjects = canvas.getActiveObjects();
     dir = 'left'
-    if (activeObject && activeObject.type === "textbox") {
-        activeObject.set({ textAlign: dir });
-        canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
+    // console.log(getItemsSelect())
+    console.log(activeObjects.type)
+    if (activeObjects && activeObjects.length == '1' && activeObjects[0].type === "textbox") {
+        activeObjects[0].set({ textAlign: dir });
+    }else if(activeObjects && activeObjects.length > 1) {
+        activeObjects.forEach(function (obj) {
+            if(obj.type == "textbox") {
+                obj.set({textAlign: dir})
+            }
+        });
     }
+    
+    canvas.renderAll(); // إعادة رسم الكانفاس لتحديث التغيير
     return dir
 })
+
+// function getItemsSelect() {
+//     const selectedObjects = canvas.getObjects().filter(function (obj) {
+//         return obj.selected;
+//     });
+//     return selectedObjects.length;
+
+// }

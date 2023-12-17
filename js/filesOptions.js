@@ -376,8 +376,6 @@ addNoteButton.addEventListener("click", function () {
             customId: `text_note-${count_note}`
         });
         canvas.add(text);
-        console.log(zoom)
-
         canvas.renderAll();
       });
 });

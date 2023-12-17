@@ -694,7 +694,6 @@ function drawSquare() {
                     } else {
                         listShape[countIndex].set({ width: 200, height: 200 });
                         canvas.renderAll();
-                        console.log(countIndex + "test 2");
                     }
                     break;
                 case 2:
@@ -709,7 +708,6 @@ function drawSquare() {
                     } else {
                         listShape[countIndex].set({ radius: height / 2 });
                         canvas.renderAll();
-                        console.log(countIndex + "test 2");
                     }
                     break;
                 case 3:
@@ -751,7 +749,6 @@ function drawSquare() {
                     } else {
                         listShape[countIndex].set({ fill: color });
                         canvas.renderAll();
-                        console.log(countIndex + "test 2");
                     }
                     break;
                 // case 5:

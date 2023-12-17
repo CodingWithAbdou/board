@@ -1,3 +1,5 @@
+
+
 const  btnPre =  document.querySelector('.prev_canvas')
 const btnNex =  document.querySelector('.next_canvas')
 const pagintion = document.querySelector('.pagintion')
@@ -96,6 +98,7 @@ canvas.on('mouse:down:before' , setController )
 
 window.addEventListener("beforeunload", function () {
     setData()
+    
     localStorage.setItem("pagesData",  JSON.stringify(pagesData));
     localStorage.setItem("numberPage",  numberPage);
     localStorage.setItem("currentpage",  currentpage);
@@ -121,6 +124,12 @@ if (localStorage.getItem('currentpage')) {
     pagesData = JSON.parse(localStorage.getItem('pagesData'))
 
     canvas.loadFromJSON(pagesData['page' +  currentpage], function () {
+           let objects = canvas.getObjects();
+        objects.forEach(function (obj) {
+            if(obj.customId == 'sliceStrock')  {
+                canvas.remove(obj)
+            } 
+        });
         canvas.renderAll();
     });
     }else {
@@ -191,7 +200,12 @@ function setData() {
 
 function getData() {
     canvas.loadFromJSON(pagesData['page' + currentpage], function () {
-
+        let objects = canvas.getObjects();
+        objects.forEach(function (obj) {
+            if(obj.customId == 'sliceStrock')  {
+                canvas.remove(obj)
+            } 
+        });
         canvas.renderAll();
     });
 }
@@ -357,27 +371,25 @@ function addTrueAndFalse(rect , image) {
         // setController()
     }
 
-    function trueObject(eventData, transform) {
+    async function trueObject(eventData, transform) {
+
         let zoom = canvas.getZoom();
 
         
-        let left = rect.left ;
-        let top = rect.top ;
-        let height = rect.height * rect.scaleY  * zoom;
-        let width = rect.width  * rect.scaleX * zoom;
-        let capturedDataURL = canvas.toDataURL({
-            format: 'webp', 
-            left: left,
-            top: top, 
-            width: parseInt(width),
-            height: parseInt(height),
+        let left = rect.left - image.left ;
+        let top = rect.top - image.top;
+        let height = rect.height * rect.scaleY  ;
+        let width = rect.width  * rect.scaleX;
+        let capturedDataURL = image.toDataURL({
+            format: 'png', 
             quality: 1.0, 
-            absolutePositioned: true
         });
-        fabric.Image.fromURL(capturedDataURL, function(img) {
+        const resizedDataUrl = await  cropAndResizeImage(capturedDataURL, left, top, width, height)
+
+        fabric.Image.fromURL(resizedDataUrl, function(img) {
             img.set({
-                left: parseInt(left),
-                top: parseInt(top) ,
+                left: (left) + image.left,
+                top: (top) + image.top,
                 width: parseInt(width),
                 height: parseInt(height),
                 selectable: true,  
@@ -391,6 +403,33 @@ function addTrueAndFalse(rect , image) {
         canvas.remove(image);
         canvas.renderAll();
 
+    }
+
+    async function cropAndResizeImage(dataUrl, cropLeft, cropTop, cropWidth, cropHeight) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = dataUrl;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = cropWidth;
+                canvas.height = cropHeight;
+                const context = canvas.getContext('2d');
+    
+                // Draw the cropped region onto the temporary canvas
+                context.drawImage(img, cropLeft, cropTop, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+    
+                const picaInstance = window.pica();
+                picaInstance
+                    .resize(canvas, canvas, { quality: 3, unsharpAmount: 80, unsharpRadius: 0.6 })
+                    .then(result => picaInstance.toBlob(result, 'image/png', 1.0))
+                    .then(blob => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result);
+                        reader.readAsDataURL(blob);
+                    })
+                    .catch(err => reject(err));
+            };
+        });
     }
 
     function renderTrue(ctx, left, top, styleOverride, fabricObject) {

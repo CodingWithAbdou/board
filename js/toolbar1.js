@@ -244,7 +244,7 @@ document.getElementById("imageUploadInput").addEventListener("change", function 
                 });
                 img.set('stackingIndex', 9999);
                 canvas.add(img);
-                addSliceIconToObjects(img)
+                // addSliceIconToObjects(img)
             });
         };
         reader.readAsDataURL(file);
@@ -423,7 +423,7 @@ let firstRndo = true
 
 let isclickUndo = false
 let isclickRndo = false
-
+let cropBox = false
 
 function saveCanvasState() {
   if(temporaryDrawingEnabled ) return
@@ -432,9 +432,18 @@ function saveCanvasState() {
     if(postion != 0 || postion != dataForUndoRedo.length - 1) {
         dataForUndoRedo.length = postion + 1
     }
-    dataForUndoRedo[postion++] = canvas.toJSON()
+    canvas.forEachObject(function (obj) {
+        if(!obj.customId) return 
+        if(obj.customId == 'sliceStrock')  {
+            cropBox = true
+        } 
+    });
+    if(!cropBox) {
+        dataForUndoRedo[postion++] = canvas.toJSON()
+    }
     isclickUndo = false
     isclickRndo = false
+    cropBox = false
 }
 
 
