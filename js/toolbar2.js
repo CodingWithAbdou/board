@@ -29,25 +29,49 @@ function zoom(factor, croods) {
 }
 
 zoomInButton.addEventListener("click", function (event) {
+    var element = canvas.getActiveObject();
+    var transform = canvas.viewportTransform;
 
-    var activeObject = canvas.getActiveObject();
-    if (activeObject) {
-        var left = activeObject.left + activeObject.width / 2;
-        var top = activeObject.top + activeObject.height / 2;
+    // Get the element's coordinates in untransformed space
+    var untransformedX = element.left;
+    var untransformedY = element.top;
+
+    // Apply the canvas transformation to get the transformed coordinates
+    var transformedX = untransformedX * transform[0] + untransformedY * transform[2] + transform[4];
+    var transformedY = untransformedX * transform[1] + untransformedY * transform[3] + transform[5];
+
+    console.log(transform)
+    if (element) {
+        var left = transformedX + element.width /2;
+        var top = transformedY + element.height /2;
         lastMouseCoords = {x:left , y:top}       
+        console.log(lastMouseCoords)
     }else {
         lastMouseCoords = fabric.util.getPointer(event);
     }
+
     zoomIn();
 
 });
 
 zoomOutButton.addEventListener("click", function (event) {
-    var activeObject = canvas.getActiveObject();
-    if (activeObject) {
-        var left = activeObject.left;
-        var top = activeObject.top;
+    var element = canvas.getActiveObject();
+    var transform = canvas.viewportTransform;
+
+    // Get the element's coordinates in untransformed space
+    var untransformedX = element.left;
+    var untransformedY = element.top;
+
+    // Apply the canvas transformation to get the transformed coordinates
+    var transformedX = untransformedX * transform[0] + untransformedY * transform[2] + transform[4];
+    var transformedY = untransformedX * transform[1] + untransformedY * transform[3] + transform[5];
+
+    console.log(transform)
+    if (element) {
+        var left = transformedX + element.width /2;
+        var top = transformedY + element.height /2;
         lastMouseCoords = {x:left , y:top}       
+        console.log(lastMouseCoords)
     }else {
         lastMouseCoords = fabric.util.getPointer(event);
     }
