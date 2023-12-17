@@ -18,17 +18,17 @@ canvas.on("mouse:move", function (event) {
     if(event.absolutePointer.y < 50) {
         setTimeout(() => {
             document.querySelector('.header').classList.remove('hide_header')
-        }, 500);
+        }, 300);
 
     }
-    isMouseMoving = true;
-    clearTimeout(mouseMoveTimer);
-    mouseMoveTimer = setTimeout(function () {
-        if (isMouseMoving) {
-            document.querySelector('.header').classList.remove('hide_header')
-            isMouseMoving = false;
-        }
-    }, 500); // Adjust the timeout duration as needed
+    // isMouseMoving = true;
+    // clearTimeout(mouseMoveTimer);
+    // mouseMoveTimer = setTimeout(function () {
+    //     if (isMouseMoving) {
+    //         document.querySelector('.header').classList.remove('hide_header')
+    //         isMouseMoving = false;
+    //     }
+    // }, 500); // Adjust the timeout duration as needed
 
 });
 
