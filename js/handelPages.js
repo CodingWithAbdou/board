@@ -94,18 +94,18 @@ canvas.on('mouse:down:before' , setController )
 
 
 
-window.addEventListener("beforeunload", function () {
-    setData()
+// window.addEventListener("beforeunload", function () {
+//     setData()
     
-    localStorage.setItem("pagesData",  JSON.stringify(pagesData));
-    localStorage.setItem("numberPage",  numberPage);
-    localStorage.setItem("currentpage",  currentpage);
+//     localStorage.setItem("pagesData",  JSON.stringify(pagesData));
+//     localStorage.setItem("numberPage",  numberPage);
+//     localStorage.setItem("currentpage",  currentpage);
 
-    if(endSetionGoOut) {
-        localStorage.clear()
-    }
+//     if(endSetionGoOut) {
+//         localStorage.clear()
+//     }
 
-});
+// });
 
 // get Data
 if (localStorage.getItem('currentpage')) {
@@ -131,6 +131,7 @@ if (localStorage.getItem('currentpage')) {
         canvas.renderAll();
     });
     }else {
+    document.getElementById(`head-1`).style.display = 'block'
     btnPre.setAttribute('disabled' , '')
     btnNex.setAttribute('disabled' , '')
 }
