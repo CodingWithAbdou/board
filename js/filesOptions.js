@@ -116,7 +116,6 @@ addPageButton.addEventListener("click", function () {
                 var context = canvasPdf.getContext("2d");
                 canvasPdf.height = viewport.height;
                 canvasPdf.width = viewport.width;
-
                 // Render the PDF page on the canvas
                 var renderContext = {
                     canvasContext: context,
@@ -124,15 +123,26 @@ addPageButton.addEventListener("click", function () {
                 };
 
                 page.render(renderContext).promise.then(function () {
-                    // Create a Fabric.js image object from the canvas
-                    var pdfImage = new fabric.Image(canvasPdf, {
-                        left: 50,
-                        top: 50,
-                    });
+                    var dataUrl = canvasPdf.toDataURL("image/png"); // You can change the format if needed
 
-                    // Add the PDF image to the Fabric.js canvas
-                    // saveCanvasState()
-                    canvas.add(pdfImage);
+                    // // Create a Fabric.js image object from the canvas
+                    // var pdfImage = new fabric.Image(canvasPdf, {
+                    //     left: 50,
+                    //     top: 50,
+                    // });
+                    fabric.Image.fromURL(dataUrl, function(pdfImage) {
+                        // Set the position of the Fabric.js image
+                        pdfImage.set({
+                            left: 50,
+                            top: 50,
+                            // scaleX: 1 / scale, // Scale it down to the original size
+                            // scaleY: 1 / scale,
+                        });
+            
+                        // Add the Fabric.js image to the canvas
+                        canvas.add(pdfImage);
+                    });
+            
                 });
             });
         }
