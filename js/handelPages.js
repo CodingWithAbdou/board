@@ -1,5 +1,3 @@
-
-
 const  btnPre =  document.querySelector('.prev_canvas')
 const btnNex =  document.querySelector('.next_canvas')
 const pagintion = document.querySelector('.pagintion')
@@ -380,18 +378,21 @@ function addTrueAndFalse(rect , image) {
         let top = rect.top - image.top;
         let height = rect.height * rect.scaleY  ;
         let width = rect.width  * rect.scaleX;
-        let capturedDataURL = image.toDataURL({
-            format: 'png', 
-            quality: 1.0, 
-        });
-        const resizedDataUrl = await  cropAndResizeImage(capturedDataURL, left, top, width, height)
+        // let capturedDataURL = image.toDataURL({
+        //     format: 'png', 
+        //     quality: 1.0, 
+        // });
+
+        const resizedDataUrl = await  cropAndResizeImage(image, left, top, width, height )
 
         fabric.Image.fromURL(resizedDataUrl, function(img) {
             img.set({
                 left: (left) + image.left,
                 top: (top) + image.top,
-                width: parseInt(width),
-                height: parseInt(height),
+                scaleX : image.scaleX,
+                scaleY : image.scaleY,
+                width: parseInt(width / image.scaleX),
+                height: parseInt(height / image.scaleY),
                 selectable: true,  
             });
             canvas.add(img);
@@ -405,18 +406,37 @@ function addTrueAndFalse(rect , image) {
 
     }
 
-    async function cropAndResizeImage(dataUrl, cropLeft, cropTop, cropWidth, cropHeight) {
+    async function cropAndResizeImage(image, cropLeft, cropTop, cropWidth, cropHeight) {
         return new Promise((resolve, reject) => {
             const img = new Image();
-            img.src = dataUrl;
+            img.src = image.getElement().src;
+            // const  = image.getScaleX();
+            // const  = image.getScaleY();
+    
+            console.log('width' , image.width)
+            console.log('height' , image.height)
+            console.log('height' , image.scaleX)
+            console.log('height' , image.scaleY)
+            img.width = image.width* image.scaleX
+            img.height = image.height  * image.scaleY
+            console.log('widthxx' , img.width)
+            console.log(image.getElement())
+            // document.body.appendChild(img)
             img.onload = () => {
                 const canvas = document.createElement('canvas');
-                canvas.width = cropWidth;
-                canvas.height = cropHeight;
-                const context = canvas.getContext('2d');
+                canvas.width = img.width / image.scaleX
+                canvas.height = img.height / image.scaleY;
+                console.log('ccwidth' , canvas.width )
+                console.log('ccheight' , canvas.height)
+                console.log('cropLeft' ,cropLeft /  image.scaleX)
+                console.log('cropTop' , cropTop / image.scaleY)
     
+                const context = canvas.getContext('2d');
+                context.drawImage(img, cropLeft /  image.scaleX, cropTop / image.scaleY ,  cropWidth /image.scaleX , cropHeight /image.scaleY, 0 , 0 , cropWidth /image.scaleX, cropHeight /image.scaleY );
+
                 // Draw the cropped region onto the temporary canvas
-                context.drawImage(img, cropLeft, cropTop, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+                
+                // context.drawImage(img, cropLeft, cropTop , img.width , img.height , 0 , 0 , img.width , img.height );
     
                 const picaInstance = window.pica();
                 picaInstance
@@ -464,4 +484,3 @@ function addTrueAndFalse(rect , image) {
     }
 
 }
-
