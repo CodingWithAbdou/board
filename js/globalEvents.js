@@ -121,6 +121,7 @@ document.querySelectorAll("#toolbarshape .color-circle").forEach(function (circl
 
 
 
+// Set white background for the canvas
 canvas.backgroundColor = 'white';
 
 // Create a Hammer.js instance
@@ -132,8 +133,13 @@ mc.get('pinch').set({ enable: true });
 // Variables for smooth zooming
 let zooming = false;
 let targetZoom = canvas.getZoom();
+let pinchCenter = { x: 0, y: 0 };
 
 // Handler for pinch (zoom) gesture
+mc.on('pinchstart', function (e) {
+    pinchCenter = { x: e.center.x, y: e.center.y };
+});
+
 mc.on('pinch', function (e) {
     const zoom = canvas.getZoom();
     const newZoom = zoom * e.scale;
@@ -155,7 +161,7 @@ function zoomSmoothly() {
     const delta = (targetZoom - currentZoom) * 0.1; // Adjust the factor for speed
 
     // Gradually update zoom level
-    canvas.zoomToPoint({ x: canvas.width / 2, y: canvas.height / 2 }, currentZoom + delta);
+    canvas.zoomToPoint(pinchCenter, currentZoom + delta);
 
     // Continue smooth zooming until the targetZoom is reached
     if (Math.abs(targetZoom - (currentZoom + delta)) > 0.001) {
