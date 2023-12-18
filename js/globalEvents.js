@@ -137,6 +137,11 @@ let pinchCenter = { x: 0, y: 0 };
 
 // Handler for pinch (zoom) gesture
 mc.on('pinchstart', function (e) {
+    canvas.isDrawingMode = false;
+    temporaryDrawingEnabled = false;
+    isErasing = false;
+    canvas.isDragging = false;
+
     pinchCenter = { x: e.center.x, y: e.center.y };
 });
 

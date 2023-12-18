@@ -42,14 +42,14 @@ document.getElementById("hand").addEventListener("click", function () {
     addingLineBtnClicked = false;
     canvas.forEachObject(function (obj) {
         obj.set({ evented: false });
-      });
+    });
     canvas.renderAll(); // Redraw the canvas
 }); 
 
 canvas.on('mouse:down', function (event) {
     if (canvasMode === 'hand') {
         canvas.setCursor('grab');
-        if (event.target) {
+        if (event.target) {                          
         } else {
             canvas.selection = false; 
             panStart = {

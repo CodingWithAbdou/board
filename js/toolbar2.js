@@ -32,6 +32,9 @@ zoomInButton.addEventListener("click", function (event) {
     var element = canvas.getActiveObject();
     var transform = canvas.viewportTransform;
 
+    console.log(transform)
+    if (element) {
+        
     // Get the element's coordinates in untransformed space
     var untransformedX = element.left;
     var untransformedY = element.top;
@@ -40,8 +43,6 @@ zoomInButton.addEventListener("click", function (event) {
     var transformedX = untransformedX * transform[0] + untransformedY * transform[2] + transform[4];
     var transformedY = untransformedX * transform[1] + untransformedY * transform[3] + transform[5];
 
-    console.log(transform)
-    if (element) {
         var left = transformedX + element.width /2;
         var top = transformedY + element.height /2;
         lastMouseCoords = {x:left , y:top}       
@@ -59,15 +60,18 @@ zoomOutButton.addEventListener("click", function (event) {
     var transform = canvas.viewportTransform;
 
     // Get the element's coordinates in untransformed space
-    var untransformedX = element.left;
-    var untransformedY = element.top;
 
-    // Apply the canvas transformation to get the transformed coordinates
-    var transformedX = untransformedX * transform[0] + untransformedY * transform[2] + transform[4];
-    var transformedY = untransformedX * transform[1] + untransformedY * transform[3] + transform[5];
 
     console.log(transform)
+    
     if (element) {
+        var untransformedX = element.left;
+        var untransformedY = element.top;
+    
+        // Apply the canvas transformation to get the transformed coordinates
+        var transformedX = untransformedX * transform[0] + untransformedY * transform[2] + transform[4];
+        var transformedY = untransformedX * transform[1] + untransformedY * transform[3] + transform[5];
+    
         var left = transformedX + element.width /2;
         var top = transformedY + element.height /2;
         lastMouseCoords = {x:left , y:top}       

@@ -360,9 +360,10 @@ addNoteButton.addEventListener("click", function () {
             desiredHeight / bgImg.height
         );
         let zoom = canvas.getZoom();
+        console.log(lastMouseCoords)
          bgImg.set({
-            left: 100 ,
-            top: 100 ,
+            left: (canvas.width / 2 - bgImg.width * scale) * zoom,
+            top: (canvas.height / 2 - bgImg.height * scale) * zoom,
             scaleX: scale,
             scaleY: scale,
             hasControls: true,

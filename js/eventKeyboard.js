@@ -49,6 +49,7 @@ document.addEventListener('keyup', function (e) {
 document.addEventListener('mousemove', function(event) {
     lastMouseCoords = {x:event.clientX , y:event.clientY}
 });
+
 document.addEventListener('keydown', function (event) {
     if (!event.altKey)return     
     if (event.key === '+' || event.key === '=') {
@@ -56,6 +57,18 @@ document.addEventListener('keydown', function (event) {
     }
     if (event.key === '-') {
         zoom(-0.1, lastMouseCoords);
+    }
+});
 
+document.addEventListener('keydown', function (event) {
+    if (!event.ctrlKey)return     
+    if (event.key === 'Enter') {
+        document.getElementById('btn-Pages').click()
+    }
+    if (event.key === 'ArrowLeft') {
+        document.querySelector('.prev_canvas.btn_controll').click()
+    }
+    if (event.key === 'ArrowRight') {
+        document.querySelector('.next_canvas.btn_controll ').click()
     }
 });

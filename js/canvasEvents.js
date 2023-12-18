@@ -21,14 +21,14 @@ canvas.on("mouse:move", function (event) {
         }, 300);
 
     }
-    // isMouseMoving = true;
-    // clearTimeout(mouseMoveTimer);
-    // mouseMoveTimer = setTimeout(function () {
-    //     if (isMouseMoving) {
-    //         document.querySelector('.header').classList.remove('hide_header')
-    //         isMouseMoving = false;
-    //     }
-    // }, 500); // Adjust the timeout duration as needed
+    isMouseMoving = true;
+    clearTimeout(mouseMoveTimer);
+    mouseMoveTimer = setTimeout(function () {
+        if (isMouseMoving) {
+            document.querySelector('.header').classList.remove('hide_header')
+            isMouseMoving = false;
+        }
+    }, 1000);
 
 });
 
