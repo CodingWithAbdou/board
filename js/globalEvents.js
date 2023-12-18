@@ -121,22 +121,46 @@ document.querySelectorAll("#toolbarshape .color-circle").forEach(function (circl
 
 
 
-// تعيين خلفية بيضاء للكانفا
 canvas.backgroundColor = 'white';
 
-// إنشاء معالج Hammer.js
+// Create a Hammer.js instance
 const mc = new Hammer(canvas.upperCanvasEl);
 
-// تمكين التقريب والتبعيد
+// Enable pinch gesture for zooming
 mc.get('pinch').set({ enable: true });
 
-// معالج للتقريب والتبعيد
+// Variables for smooth zooming
+let zooming = false;
+let targetZoom = canvas.getZoom();
+
+// Handler for pinch (zoom) gesture
 mc.on('pinch', function (e) {
     const zoom = canvas.getZoom();
     const newZoom = zoom * e.scale;
 
-    // تحديد حدود الزووم المسموح بها
-    if (newZoom > 0.5 && newZoom < 5) {
-        canvas.zoomToPoint({ x: e.center.x, y: e.center.y }, newZoom);
+    // Set targetZoom based on pinch scale
+    targetZoom = Math.min(Math.max(newZoom, 0.5), 5);
+
+    // Initiate smooth zooming if not already zooming
+    if (!zooming) {
+        zoomSmoothly();
     }
 });
+
+// Function for smooth zooming
+function zoomSmoothly() {
+    zooming = true;
+
+    const currentZoom = canvas.getZoom();
+    const delta = (targetZoom - currentZoom) * 0.1; // Adjust the factor for speed
+
+    // Gradually update zoom level
+    canvas.zoomToPoint({ x: canvas.width / 2, y: canvas.height / 2 }, currentZoom + delta);
+
+    // Continue smooth zooming until the targetZoom is reached
+    if (Math.abs(targetZoom - (currentZoom + delta)) > 0.001) {
+        requestAnimationFrame(zoomSmoothly);
+    } else {
+        zooming = false;
+    }
+}
