@@ -175,3 +175,14 @@ function zoomSmoothly() {
         zooming = false;
     }
 }
+
+
+document.getElementById('help').addEventListener('click' , function() {
+    document.getElementById('help_model').classList.add('show_model_help')
+    grayBackground.style.display = "block"; 
+})
+grayBackground.addEventListener('click', function() {
+    document.getElementById('help_model').classList.remove('show_model_help')
+    grayBackground.style.display = "none"; 
+
+})

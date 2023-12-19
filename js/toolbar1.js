@@ -319,8 +319,8 @@ function toggleEraseMode() {
 
     // Disable selection for all objects in the canvas
     if (eraseEnabled) {
-        isErasing = false;
         canvas.selection = false;
+        isErasing = false;
         canvas.forEachObject(function (obj) {
             obj.selection = false;
         });
@@ -334,8 +334,12 @@ function toggleEraseMode() {
 
 function handleMouseDown(event) {
     isMouseDown = true;
-    if (isMouseDown && eraseEnabled && event.target) {
-        removeAllShapesAndPaths(event.target);
+    if (isMouseDown && eraseEnabled) {
+        
+        canvas.selection = false;
+        if(event.target) {
+            removeAllShapesAndPaths(event.target);
+        }
     }
 }
 
@@ -345,6 +349,7 @@ function handleMouseUp() {
 
 function handleMouseMove(event) {
     if (isMouseDown && eraseEnabled && event.target) {
+        canvas.selection = false;
         removeAllShapesAndPaths(event.target);
     }
 }
@@ -421,9 +426,10 @@ let firstUndo = true
 let firstRndo = true
 // let isPostion =false
 
+
 let isclickUndo = false
 let isclickRndo = false
-
+let cropBox = false
 
 function saveCanvasState() {
   if(temporaryDrawingEnabled ) return
@@ -432,12 +438,19 @@ function saveCanvasState() {
     if(postion != 0 || postion != dataForUndoRedo.length - 1) {
         dataForUndoRedo.length = postion + 1
     }
-    dataForUndoRedo[postion++] = canvas.toJSON()
+    canvas.forEachObject(function (obj) {
+        if(!obj.customId) return 
+        if(obj.customId == 'sliceStrock')  {
+            cropBox = true
+        } 
+    });
+    if(!cropBox) {
+        dataForUndoRedo[postion++] = canvas.toJSON()
+    }
     isclickUndo = false
     isclickRndo = false
+    cropBox = false
 }
-
-
 
   function undo(){
     canvasMode = 'select';
