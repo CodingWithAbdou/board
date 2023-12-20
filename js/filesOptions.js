@@ -359,6 +359,7 @@ addNoteButton.addEventListener("click", function () {
             desiredWidth / bgImg.width,
             desiredHeight / bgImg.height
         );
+        console.log(bgImg.width)
         let zoom = canvas.getZoom();
         console.log(lastMouseCoords)
          bgImg.set({
@@ -435,7 +436,6 @@ canvas.on('object:scaling', handfronttext);
 function changeDistance(e) {
     var obj = e.target;
     if(!obj) return
-    console.log(obj)
     if(!obj.customId) return
     if(obj.customId.split('-')[0] == 'img_note') {
         text_box.set({
@@ -482,14 +482,22 @@ function changeDistanceWithTextBox(e) {
             let textWidth = text_box.width
             let textHeight = text_box.height
             if(textHeight / 8 * 10 >  img_cover.height * img_cover.scaleY) {
-                var desiredWidth = 300; // Set your desired width
                 var desiredHeight = textHeight / 8 * 10; // Set your desired height
+                var scaleX = textWidth / 1448
                 var scaleY = desiredHeight / 1280
                 img_cover.set({
                     scaleY : scaleY 
                 })
                 text_box.set({
                     top: img_cover.top + ((img_cover.height * img_cover.scaleY) / 8),
+                })
+            }
+            if(textWidth > img_cover.width * img_cover.scaleX ) {
+                img_cover.set({
+                    scaleX : textWidth / 1448 
+                })
+                text_box.set({
+                    left:  img_cover.left  - 5,
                 })
             }
             canvas.renderAll();
