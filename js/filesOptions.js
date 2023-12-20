@@ -430,12 +430,14 @@ canvas.on('selection:created', handfronttext);
 canvas.on('selection:updated', handfronttext);
 canvas.on('object:scaling', handfronttext);
 
+
+
 function changeDistance(e) {
     var obj = e.target;
     if(!obj) return
+    console.log(obj)
     if(!obj.customId) return
     if(obj.customId.split('-')[0] == 'img_note') {
-
         text_box.set({
             left : img_cover.left  - 5,
             top:img_cover.top + ((img_cover.height * img_cover.scaleY) / 8),
@@ -456,6 +458,45 @@ canvas.on('object:removed', function(e) {
     getimgobj(obj.customId.split('-')[1])
     canvas.remove(text_box)
 })
+
+
+
+canvas.on('selection:created', changeDistanceWithTextBox);
+canvas.on('selection:updated', changeDistanceWithTextBox);
+
+function changeDistanceWithTextBox(e) {
+    var obj = e.target || e.selected[0];
+    if(!obj) return
+    if(!obj.customId) return
+    console.log(obj.customId)
+    if(obj.customId.split('-')[0] == 'text_note') {
+        if(text_box == undefined) {
+            text_box =  canvas.getActiveObject()
+            canvas.forEachObject(function (obj) {
+                if (obj.customId == `img_note-${obj.customId.split('-')[1]}`) {
+                    img_cover = obj
+                }
+            })
+        }
+        text_box.on('changed', function(options) {
+            let textWidth = text_box.width
+            let textHeight = text_box.height
+            if(textHeight / 8 * 10 >  img_cover.height * img_cover.scaleY) {
+                var desiredWidth = 300; // Set your desired width
+                var desiredHeight = textHeight / 8 * 10; // Set your desired height
+                var scaleY = desiredHeight / 1280
+                img_cover.set({
+                    scaleY : scaleY 
+                })
+                text_box.set({
+                    top: img_cover.top + ((img_cover.height * img_cover.scaleY) / 8),
+                })
+            }
+            canvas.renderAll();
+
+        });
+    }
+}
 
 
 ///////////////////////////////////

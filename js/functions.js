@@ -46,7 +46,11 @@ function updateBrushSizeTime() {
 
 
 function activateAddingLine() {
-    
+    isCreatingStar = false;
+    isCreatingTriangle = false;
+    isCreatingCircle = false;
+    isCreatingSquare = false;
+    canvas.isDrawingMode = false;
     canvas.isDrawingMode = false;
     temporaryDrawingEnabled = false;
     isSquareDrawn = true;
@@ -61,7 +65,7 @@ function activateAddingLine() {
         });
         canvas.selection = false;
         canvas.hoverCursor = 'auto';
-        // objectSelectabilty(false);
+        objectSelectabilty(true);
     }
 }
 
@@ -81,8 +85,8 @@ function startAddingLine(o) {
         id: "linearrow",
         stroke: color,
         strokeWidth: 3,
-        selectable: false,
-        hasControls: false,
+        // selectable: false,
+        // hasControls: false,
     });
 
     canvas.add(line);
@@ -132,6 +136,10 @@ function objectSelectabilty(value) {
 }
 
 function activateAddingSingleArrowLine() {
+    isCreatingStar = false;
+    isCreatingTriangle = false;
+    isCreatingCircle = false;
+    isCreatingSquare = false;
     canvas.isDrawingMode = false;
     isSquareDrawn = true;
     temporaryDrawingEnabled = false;
@@ -276,6 +284,10 @@ function stopDrawingSingleArrowLine() {
 }
 
 function activateAddingDoubleArrowLine() {
+    isCreatingStar = false;
+    isCreatingTriangle = false;
+    isCreatingCircle = false;
+    isCreatingSquare = false;
     canvas.isDrawingMode = false;
     isSquareDrawn = true;
     addingLineBtnClicked = false;

@@ -18,7 +18,6 @@ drawStarButton.addEventListener("click", function () {
   isCreatingTriangle = false;
   isCreatingCircle = false;
   isCreatingSquare = false;
-
   canvas.selection = false;
   canvas.defaultCursor = 'crosshair';
   canvas.hoverCursor = 'crosshair';
@@ -369,14 +368,6 @@ drawSquareButton.addEventListener("click", function () {
     canvas.on('mouse:move', handleMove);
     canvas.on('mouse:up', handleEnd);
 
-    // Touch events
-    canvas.on('touch:gesture', function (event) {
-        // Handle pinch zoom or other gestures if needed
-    });
-
-    canvas.on('touch:drag', handleMove);
-
-    canvas.on('touch:up', handleEnd);
 });
 
 
