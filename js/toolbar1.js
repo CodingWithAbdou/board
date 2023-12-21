@@ -440,7 +440,7 @@ function saveCanvasState() {
     }
     canvas.forEachObject(function (obj) {
         if(!obj.customId) return 
-        if(obj.customId == 'sliceStrock')  {
+        if(obj.customId == 'sliceStrock' || obj.customId.split('-')[0] == 'img_note' || obj.customId.split('-')[0] == 'text_note')  {
             cropBox = true
         } 
     });

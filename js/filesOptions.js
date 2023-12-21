@@ -384,7 +384,7 @@ addNoteButton.addEventListener("click", function () {
             lockMovementY: true ,// Prevent movement along the Y axis
             hasControls: false,
             hasBorders: false,
-            customId: `text_note-${count_note}`
+            customId: `text_note-${count_note}`,
         });
         canvas.add(text);
         canvas.renderAll();
@@ -452,15 +452,10 @@ function cutText(e)  {
     if(!obj.customId) return
     if(obj.customId.split('-')[0] == 'img_note') {
         if(text_box.height / 8 * 10 >  img_cover.height * img_cover.scaleY) {
-            // var truncatedText = text_box.text.slice(0, Math.floor(textBox.length * (img_cover.height * img_cover.scaleY) / (text_box.height / 8 * 10 ))) + '...';
-            text_box.set({height:0})
-            text_box.set({ visible: false });
-
-            canvas.renderAll()
-        }else {
-            // var truncatedText = textBox.slice(0, Math.floor(textBox.length * (img_cover.height * img_cover.scaleY) / (text_box.height / 8 * 10 ))) + '...';
-            // text_box.set({text:truncatedText})
+            text_box.scaleToHeight((img_cover.height * img_cover.scaleY) * 8 / 10 , true)
+            console.log(text_box.left)
         }
+        canvas.renderAll()
     }
 }
 
