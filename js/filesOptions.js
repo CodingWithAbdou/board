@@ -453,7 +453,6 @@ function cutText(e)  {
     if(obj.customId.split('-')[0] == 'img_note') {
         if(text_box.height / 8 * 10 >  img_cover.height * img_cover.scaleY) {
             text_box.scaleToHeight((img_cover.height * img_cover.scaleY) * 8 / 10 , true)
-            console.log(text_box.left)
         }
         canvas.renderAll()
     }
