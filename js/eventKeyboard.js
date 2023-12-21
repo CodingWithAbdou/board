@@ -12,20 +12,20 @@ document.addEventListener('keydown', function (e) {
             canvas.renderAll();
         }
     }
-    if ((e.key === 'z' || e.key === 'Z') && (e.altKey)) {
+    if ((e.key === 'z' || e.key === 'Z'  || e.key === 'ئ') && (e.altKey)) {
         document.getElementById("addUndo").click()
     }
 
-    if ((e.key === 'm' || e.key === 'M') && (e.altKey)) {
+    if ((e.key === 'm' || e.key === 'M' || e.key === 'ة') && (e.altKey)) {
         document.getElementById("select").click()
     }
 
     
-    if ((e.key === 't' || e.key === 'T') && (e.altKey)) {
+    if ((e.key === 't' || e.key === 'T'  || e.key === 'ف') && (e.altKey)) {
         document.getElementById("text").click()
     }
 
-    if ((e.key === 'P' || e.key === 'p') && (e.altKey)) {
+    if ((e.key === 'P' || e.key === 'p' || e.key === 'ح') && (e.altKey)) {
         document.getElementById("pencil").click()
     }
     if (e.key === ' ' || e.code === 'Space') {
@@ -55,7 +55,7 @@ document.addEventListener('keydown', function (event) {
     if (event.key === '+' || event.key === '=') {
         zoom(0.1, lastMouseCoords);
     }
-    if (event.key === '-') {
+    if (event.key === '-'  || event.key === ')') {
         zoom(-0.1, lastMouseCoords);
     }
 });

@@ -160,8 +160,6 @@ body {
     z-index: 999999;
 }
 
-
-
 .toolbar {
     height: 100%;
     flex-basis: 60%;
@@ -846,6 +844,10 @@ body {
     display: flex;
     align-items: center;
     padding: .5rem 1rem;
+}
+.help_model .line span {
+    color: var(--green);
+    font-size: 11px;
 }
 
 .help_model .line {

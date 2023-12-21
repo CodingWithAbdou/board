@@ -375,7 +375,6 @@ addNoteButton.addEventListener("click", function () {
             left : bgImg.left  - 5,
             top:bgImg.top + ((bgImg.height * bgImg.scaleY) / 8),
             width: ((bgImg.width ) * bgImg.scaleX) - 10 ,
-            height: bgImg.height * bgImg.scaleY,
             fontSize: 20,
             fill: 'black', // Text color
             textAlign: 'right',
@@ -447,8 +446,27 @@ function changeDistance(e) {
     }
 }
 
+function cutText(e)  {
+    var obj = e.target;
+    if(!obj) return
+    if(!obj.customId) return
+    if(obj.customId.split('-')[0] == 'img_note') {
+        if(text_box.height / 8 * 10 >  img_cover.height * img_cover.scaleY) {
+            // var truncatedText = text_box.text.slice(0, Math.floor(textBox.length * (img_cover.height * img_cover.scaleY) / (text_box.height / 8 * 10 ))) + '...';
+            text_box.set({height:0})
+            text_box.set({ visible: false });
+
+            canvas.renderAll()
+        }else {
+            // var truncatedText = textBox.slice(0, Math.floor(textBox.length * (img_cover.height * img_cover.scaleY) / (text_box.height / 8 * 10 ))) + '...';
+            // text_box.set({text:truncatedText})
+        }
+    }
+}
+
 canvas.on('object:moving', changeDistance);
 canvas.on('object:scaling', changeDistance);
+canvas.on('object:scaling', cutText);
 
 canvas.on('object:removed', function(e) {
     var obj = e.target;
@@ -463,22 +481,16 @@ canvas.on('object:removed', function(e) {
 
 canvas.on('selection:created', changeDistanceWithTextBox);
 canvas.on('selection:updated', changeDistanceWithTextBox);
-
+let textBox = ''
 function changeDistanceWithTextBox(e) {
     var obj = e.target || e.selected[0];
     if(!obj) return
     if(!obj.customId) return
-    console.log(obj.customId)
     if(obj.customId.split('-')[0] == 'text_note') {
-        if(text_box == undefined) {
-            text_box =  canvas.getActiveObject()
-            canvas.forEachObject(function (obj) {
-                if (obj.customId == `img_note-${obj.customId.split('-')[1]}`) {
-                    img_cover = obj
-                }
-            })
-        }
+        getTextBox(obj.customId.split('-')[1])
+        getimgobj(obj.customId.split('-')[1])
         text_box.on('changed', function(options) {
+            textBox = text_box.text
             let textWidth = text_box.width
             let textHeight = text_box.height
             if(textHeight / 8 * 10 >  img_cover.height * img_cover.scaleY) {
